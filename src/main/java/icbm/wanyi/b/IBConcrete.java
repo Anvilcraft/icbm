@@ -20,9 +20,11 @@ public class IBConcrete extends ItemBlock {
             case 1: {
                 return this.getUnlocalizedName() + "Compact";
             }
+
             case 2: {
                 return this.getUnlocalizedName() + "Reinforced";
             }
+
             default: {
                 return this.getUnlocalizedName();
             }

@@ -20,7 +20,7 @@ import universalelectricity.prefab.multiblock.TileEntityMulti;
 import universalelectricity.prefab.tile.TileEntityAdvanced;
 
 public class TLauncher
-        extends TileEntityAdvanced implements ITier, IMultiBlock, IRotatable {
+    extends TileEntityAdvanced implements ITier, IMultiBlock, IRotatable {
     private int tier;
     private byte orientation;
 
@@ -44,8 +44,9 @@ public class TLauncher
         nbt.setByte("orientation", this.orientation);
         nbt.setInteger("tier", this.tier);
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     public int getInaccuracy() {
@@ -53,9 +54,11 @@ public class TLauncher
             default: {
                 return 15;
             }
+
             case 1: {
                 return 7;
             }
+
             case 2: {
                 return 0;
             }
@@ -91,12 +94,13 @@ public class TLauncher
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
-        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0,
-                2);
-        this.worldObj.setBlock(this.xCoord, this.yCoord + 1, this.zCoord,
-                Blocks.air, 0, 2);
-        this.worldObj.setBlock(this.xCoord, this.yCoord + 2, this.zCoord,
-                Blocks.air, 0, 2);
+        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 2);
+        this.worldObj.setBlock(
+            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+        );
+        this.worldObj.setBlock(
+            this.xCoord, this.yCoord + 2, this.zCoord, Blocks.air, 0, 2
+        );
     }
 
     @Override
@@ -106,27 +110,36 @@ public class TLauncher
 
     @Override
     public void onCreate(final Vector3 position) {
-        this.worldObj.setBlock(position.intX(), position.intY() + 1,
-                position.intZ(), MainBase.bJia, 0, 2);
+        this.worldObj.setBlock(
+            position.intX(), position.intY() + 1, position.intZ(), MainBase.bJia, 0, 2
+        );
         ((TileEntityMulti) this.worldObj.getTileEntity(
-                position.intX(), position.intY() + 1, position.intZ()))
-                .setMainBlock(position);
-        this.worldObj.setBlock(position.intX(), position.intY() + 2,
-                position.intZ(), MainBase.bJia, 0, 2);
+             position.intX(), position.intY() + 1, position.intZ()
+         ))
+            .setMainBlock(position);
+        this.worldObj.setBlock(
+            position.intX(), position.intY() + 2, position.intZ(), MainBase.bJia, 0, 2
+        );
         ((TileEntityMulti) this.worldObj.getTileEntity(
-                position.intX(), position.intY() + 2, position.intZ()))
-                .setMainBlock(position);
+             position.intX(), position.intY() + 2, position.intZ()
+         ))
+            .setMainBlock(position);
     }
 
     @Override
-    public ForgeDirection getDirection(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public ForgeDirection
+    getDirection(final IBlockAccess world, final int x, final int y, final int z) {
         return ForgeDirection.getOrientation((int) this.orientation);
     }
 
     @Override
-    public void setDirection(final World world, final int x, final int y,
-            final int z, final ForgeDirection facingDirection) {
+    public void setDirection(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final ForgeDirection facingDirection
+    ) {
         this.orientation = (byte) facingDirection.ordinal();
     }
 

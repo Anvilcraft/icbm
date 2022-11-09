@@ -28,36 +28,52 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TileEntityMulti.class, "ICBMMultiblock");
     }
 
-    public void preInit() {
-    }
+    public void preInit() {}
 
-    public Object getServerGuiElement(final int ID, final EntityPlayer player,
-            final World world, final int x, final int y,
-            final int z) {
+    public Object getServerGuiElement(
+        final int ID,
+        final EntityPlayer player,
+        final World world,
+        final int x,
+        final int y,
+        final int z
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity != null) {
             switch (ID) {
                 case 0: {
-                    return new ContainerTurretPlatform(player.inventory,
-                            (TPlatform) tileEntity);
+                    return new ContainerTurretPlatform(
+                        player.inventory, (TPlatform) tileEntity
+                    );
                 }
             }
         }
+
         return null;
     }
 
-    public Object getClientGuiElement(final int ID, final EntityPlayer player,
-            final World world, final int x, final int y,
-            final int z) {
+    public Object getClientGuiElement(
+        final int ID,
+        final EntityPlayer player,
+        final World world,
+        final int x,
+        final int y,
+        final int z
+    ) {
         return null;
     }
 
-    public void renderTracer(final World world, final Vector3 position,
-            final Vector3 target) {
-    }
+    public void
+    renderTracer(final World world, final Vector3 position, final Vector3 target) {}
 
-    public void renderBeam(final World world, final Vector3 position,
-            final Vector3 target, final float red,
-            final float green, final float blue, final int age) {
-    }
+    public void renderBeam(
+        final World world,
+        final Vector3 position,
+        final Vector3 target,
+        final float red,
+        final float green,
+        final float blue,
+        final int age
+    ) {}
 }

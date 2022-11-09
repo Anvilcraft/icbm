@@ -1,12 +1,13 @@
 package icbm.zhapin.jiqi;
 
+import java.util.List;
+import java.util.Random;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.core.di.BICBM;
 import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.render.RHJiQi;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -42,45 +43,61 @@ public class BMachine extends BICBM {
     }
 
     @Override
-    public void onBlockAdded(final World par1World, final int x, final int y,
-            final int z) {
+    public void
+    onBlockAdded(final World par1World, final int x, final int y, final int z) {
         this.isBeingPowered(par1World, x, y, z);
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y,
-            final int z,
-            final EntityLivingBase par5EntityLiving,
-            final ItemStack itemStack) {
-        final int angle = MathHelper.floor_double(
-                ((Entity) par5EntityLiving).rotationYaw * 4.0f / 360.0f + 0.5) &
-                0x3;
+    public void onBlockPlacedBy(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityLivingBase par5EntityLiving,
+        final ItemStack itemStack
+    ) {
+        final int angle
+            = MathHelper.floor_double(
+                  ((Entity) par5EntityLiving).rotationYaw * 4.0f / 360.0f + 0.5
+              )
+            & 0x3;
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IRotatable) {
             final IRotatable rotatableEntity = (IRotatable) tileEntity;
+
             switch (angle) {
                 case 0: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(3));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(3)
+                    );
                     break;
                 }
+
                 case 1: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(4));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(4)
+                    );
                     break;
                 }
+
                 case 2: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(2));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(2)
+                    );
                     break;
                 }
+
                 case 3: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(5));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(5)
+                    );
                     break;
                 }
             }
         }
+
         if (tileEntity instanceof IMultiBlock) {
             ((IMultiBlock) tileEntity).onCreate(new Vector3(x, y, z));
         }
@@ -88,57 +105,68 @@ public class BMachine extends BICBM {
 
     // TODO: WTF
     // @Override
-    public static boolean canBePlacedAt(final World world, final int x,
-            final int y, final int z,
-            final int metadata, final int direction) {
+    public static boolean canBePlacedAt(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final int metadata,
+        final int direction
+    ) {
         switch (metadata) {
             case 0: {
                 if (direction == 0 || direction == 2) {
-                    return world.getBlock(x, y, z) == Blocks.air &&
-                            world.getBlock(x + 1, y, z) == Blocks.air &&
-                            world.getBlock(x + 1, y + 1, z) == Blocks.air &&
-                            world.getBlock(x + 1, y + 2, z) == Blocks.air &&
-                            world.getBlock(x - 1, y, z) == Blocks.air &&
-                            world.getBlock(x - 1, y + 1, z) == Blocks.air &&
-                            world.getBlock(x - 1, y + 2, z) == Blocks.air;
+                    return world.getBlock(x, y, z) == Blocks.air
+                        && world.getBlock(x + 1, y, z) == Blocks.air
+                        && world.getBlock(x + 1, y + 1, z) == Blocks.air
+                        && world.getBlock(x + 1, y + 2, z) == Blocks.air
+                        && world.getBlock(x - 1, y, z) == Blocks.air
+                        && world.getBlock(x - 1, y + 1, z) == Blocks.air
+                        && world.getBlock(x - 1, y + 2, z) == Blocks.air;
                 }
+
                 if (direction == 1 || direction == 3) {
-                    return world.getBlock(x, y, z) == Blocks.air &&
-                            world.getBlock(x, y, z + 1) == Blocks.air &&
-                            world.getBlock(x, y + 1, z + 1) == Blocks.air &&
-                            world.getBlock(x, y + 2, z + 1) == Blocks.air &&
-                            world.getBlock(x, y, z - 1) == Blocks.air &&
-                            world.getBlock(x, y + 1, z - 1) == Blocks.air &&
-                            world.getBlock(x, y + 2, z - 1) == Blocks.air;
+                    return world.getBlock(x, y, z) == Blocks.air
+                        && world.getBlock(x, y, z + 1) == Blocks.air
+                        && world.getBlock(x, y + 1, z + 1) == Blocks.air
+                        && world.getBlock(x, y + 2, z + 1) == Blocks.air
+                        && world.getBlock(x, y, z - 1) == Blocks.air
+                        && world.getBlock(x, y + 1, z - 1) == Blocks.air
+                        && world.getBlock(x, y + 2, z - 1) == Blocks.air;
                 }
-                return world.getBlock(x, y - 1, z).getMaterial().isSolid() &&
-                        world.getBlock(x, y, z) == Blocks.air &&
-                        world.getBlock(x, y + 1, z) == Blocks.air &&
-                        world.getBlock(x, y + 2, z) == Blocks.air;
+
+                return world.getBlock(x, y - 1, z).getMaterial().isSolid()
+                    && world.getBlock(x, y, z) == Blocks.air
+                    && world.getBlock(x, y + 1, z) == Blocks.air
+                    && world.getBlock(x, y + 2, z) == Blocks.air;
             }
+
             case 2: {
-                return world.getBlock(x, y - 1, z).getMaterial().isSolid() &&
-                        world.getBlock(x, y, z) == Blocks.air &&
-                        world.getBlock(x, y + 1, z) == Blocks.air &&
-                        world.getBlock(x, y + 2, z) == Blocks.air;
+                return world.getBlock(x, y - 1, z).getMaterial().isSolid()
+                    && world.getBlock(x, y, z) == Blocks.air
+                    && world.getBlock(x, y + 1, z) == Blocks.air
+                    && world.getBlock(x, y + 2, z) == Blocks.air;
             }
+
             case 3: {
-                return world.getBlock(x, y - 1, z).getMaterial().isSolid() &&
-                        world.getBlock(x, y, z) == Blocks.air &&
-                        world.getBlock(x, y + 1, z) == Blocks.air &&
-                        world.getBlock(x + 1, y + 1, z) == Blocks.air &&
-                        world.getBlock(x - 1, y + 1, z) == Blocks.air &&
-                        world.getBlock(x, y + 1, z + 1) == Blocks.air &&
-                        world.getBlock(x, y + 1, z - 1) == Blocks.air &&
-                        world.getBlock(x + 1, y + 1, z + 1) == Blocks.air &&
-                        world.getBlock(x - 1, y + 1, z - 1) == Blocks.air &&
-                        world.getBlock(x + 1, y + 1, z - 1) == Blocks.air &&
-                        world.getBlock(x - 1, y + 1, z + 1) == Blocks.air;
+                return world.getBlock(x, y - 1, z).getMaterial().isSolid()
+                    && world.getBlock(x, y, z) == Blocks.air
+                    && world.getBlock(x, y + 1, z) == Blocks.air
+                    && world.getBlock(x + 1, y + 1, z) == Blocks.air
+                    && world.getBlock(x - 1, y + 1, z) == Blocks.air
+                    && world.getBlock(x, y + 1, z + 1) == Blocks.air
+                    && world.getBlock(x, y + 1, z - 1) == Blocks.air
+                    && world.getBlock(x + 1, y + 1, z + 1) == Blocks.air
+                    && world.getBlock(x - 1, y + 1, z - 1) == Blocks.air
+                    && world.getBlock(x + 1, y + 1, z - 1) == Blocks.air
+                    && world.getBlock(x - 1, y + 1, z + 1) == Blocks.air;
             }
+
             case 4: {
-                return world.getBlock(x, y, z) == Blocks.air &&
-                        world.getBlock(x, y + 1, z) == Blocks.air;
+                return world.getBlock(x, y, z) == Blocks.air
+                    && world.getBlock(x, y + 1, z) == Blocks.air;
             }
+
             default: {
                 return world.getBlock(x, y - 1, z).getMaterial().isSolid();
             }
@@ -146,57 +174,77 @@ public class BMachine extends BICBM {
     }
 
     @Override
-    public boolean canBlockStay(final World world, final int x, final int y,
-            final int z) {
+    public boolean
+    canBlockStay(final World world, final int x, final int y, final int z) {
         int direction = 0;
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IRotatable) {
             direction = ((IRotatable) tileEntity)
-                    .getDirection((IBlockAccess) world, x, y, z)
-                    .ordinal();
+                            .getDirection((IBlockAccess) world, x, y, z)
+                            .ordinal();
         }
-        return canBePlacedAt(world, x, y, z, world.getBlockMetadata(x, y, z),
-                direction);
+
+        return canBePlacedAt(world, x, y, z, world.getBlockMetadata(x, y, z), direction);
     }
 
     @Override
-    public void onNeighborBlockChange(final World par1World, final int x,
-            final int y, final int z,
-            final Block par5) {
+    public void onNeighborBlockChange(
+        final World par1World, final int x, final int y, final int z, final Block par5
+    ) {
         this.isBeingPowered(par1World, x, y, z);
     }
 
     @Override
-    public boolean onMachineActivated(final World par1World, final int x,
-            final int y, final int z,
-            final EntityPlayer par5EntityPlayer,
-            final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer par5EntityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
         if (par5EntityPlayer.inventory.getCurrentItem() != null) {
-            if (par5EntityPlayer.inventory.getCurrentItem().getItem() == ICBMExplosion.itLeiSheZhiBiao) {
+            if (par5EntityPlayer.inventory.getCurrentItem().getItem()
+                == ICBMExplosion.itLeiSheZhiBiao) {
                 return false;
             }
-            if (par5EntityPlayer.inventory.getCurrentItem().getItem() == ICBMExplosion.itLeiDaQiang) {
+
+            if (par5EntityPlayer.inventory.getCurrentItem().getItem()
+                == ICBMExplosion.itLeiDaQiang) {
                 return false;
             }
         }
+
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
-        return tileEntity != null && tileEntity instanceof IBlockActivate &&
-                ((IBlockActivate) tileEntity).onActivated(par5EntityPlayer);
+        return tileEntity != null && tileEntity instanceof IBlockActivate
+            && ((IBlockActivate) tileEntity).onActivated(par5EntityPlayer);
     }
 
     @Override
-    public boolean onUseWrench(final World par1World, final int x, final int y,
-            final int z, final EntityPlayer par5EntityPlayer,
-            final int side, final float hitX, final float hitY,
-            final float hitZ) {
-        return this.onMachineActivated(par1World, x, y, z, par5EntityPlayer, side,
-                hitX, hitY, hitZ);
+    public boolean onUseWrench(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer par5EntityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
+        return this.onMachineActivated(
+            par1World, x, y, z, par5EntityPlayer, side, hitX, hitY, hitZ
+        );
     }
 
-    public void isBeingPowered(final World par1World, final int x, final int y,
-            final int z) {
+    public void
+    isBeingPowered(final World par1World, final int x, final int y, final int z) {
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IRedstoneReceptor) {
             if (par1World.isBlockIndirectlyGettingPowered(x, y, z)) {
                 ((IRedstoneReceptor) tileEntity).onPowerOn();
@@ -212,23 +260,35 @@ public class BMachine extends BICBM {
     }
 
     @Override
-    public void breakBlock(final World par1World, final int x, final int y,
-            final int z, final Block par5, final int par6) {
+    public void breakBlock(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final Block par5,
+        final int par6
+    ) {
         final int metadata = par1World.getBlockMetadata(x, y, z);
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
+
         if (tileEntity != null) {
             int itemMetadata = 0;
+
             if (tileEntity instanceof ITier) {
                 itemMetadata = ((ITier) tileEntity).getTier() + metadata * 3;
             } else {
                 itemMetadata = 9 + metadata - 3;
             }
-            this.dropBlockAsItem(par1World, x, y, z,
-                    new ItemStack(ICBMExplosion.bJiQi, 1, itemMetadata));
+
+            this.dropBlockAsItem(
+                par1World, x, y, z, new ItemStack(ICBMExplosion.bJiQi, 1, itemMetadata)
+            );
+
             if (tileEntity instanceof IMultiBlock) {
                 ((IMultiBlock) tileEntity).onDestroy(tileEntity);
             }
         }
+
         super.breakBlock(par1World, x, y, z, par5, par6);
     }
 
@@ -243,6 +303,7 @@ public class BMachine extends BICBM {
                 e2.printStackTrace();
             }
         }
+
         return null;
     }
 
@@ -263,17 +324,22 @@ public class BMachine extends BICBM {
     }
 
     @Override
-    public void getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs,
-            final List par3List) {
+    public void getSubBlocks(
+        final Item par1, final CreativeTabs par2CreativeTabs, final List par3List
+    ) {
         for (int i = 0; i < JiQi.values().length + 6; ++i) {
             par3List.add(new ItemStack((Block) this, 1, i));
         }
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target,
-            final World par1World, final int x, final int y,
-            final int z) {
+    public ItemStack getPickBlock(
+        final MovingObjectPosition target,
+        final World par1World,
+        final int x,
+        final int y,
+        final int z
+    ) {
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
         return new ItemStack(ICBMExplosion.bJiQi, 1, getMachineId(tileEntity));
     }
@@ -285,25 +351,28 @@ public class BMachine extends BICBM {
 
     public static int getMachineId(final TileEntity tileEntity) {
         int itemMetadata = 0;
+
         if (tileEntity != null) {
             final int metadata = tileEntity.getBlockMetadata();
+
             if (tileEntity instanceof ITier) {
                 itemMetadata = ((ITier) tileEntity).getTier() + metadata * 3;
             } else {
                 itemMetadata = 9 + metadata - 3;
             }
         }
+
         return itemMetadata;
     }
 
     public static String getMachineName(final TileEntity tileEntity) {
-        return TranslationHelper.getLocal("icbm.machine." +
-                getMachineId(tileEntity) + ".name");
+        return TranslationHelper.getLocal(
+            "icbm.machine." + getMachineId(tileEntity) + ".name"
+        );
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     public enum JiQi {
         FaSheDi("FaSheDi", 0, TLauncherPlatform.class),
@@ -316,8 +385,11 @@ public class BMachine extends BICBM {
 
         public Class<? extends TileEntity> tileEntity;
 
-        private JiQi(final String name, final int ordinal,
-                final Class<? extends TileEntity> tileEntity) {
+        private JiQi(
+            final String name,
+            final int ordinal,
+            final Class<? extends TileEntity> tileEntity
+        ) {
             this.tileEntity = tileEntity;
         }
 
@@ -325,6 +397,7 @@ public class BMachine extends BICBM {
             if (id < values().length && id >= 0) {
                 return values()[id];
             }
+
             return null;
         }
     }

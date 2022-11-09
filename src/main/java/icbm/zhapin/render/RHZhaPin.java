@@ -21,25 +21,32 @@ public class RHZhaPin implements ISimpleBlockRenderingHandler {
     public static final int ID;
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public void renderInventoryBlock(
+        final Block block,
+        final int metadata,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         if (modelID == RHZhaPin.ID) {
             if (metadata == ZhaPin.sMine.getID()) {
                 GL11.glPushMatrix();
                 GL11.glTranslatef(0.0f, 1.5f, 0.0f);
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm", "textures/models/s-mine.png"));
+                    new ResourceLocation("icbm", "textures/models/s-mine.png")
+                );
                 MSMine.INSTANCE.render(0.0625f);
                 GL11.glPopMatrix();
             } else {
                 try {
-                    CalclaviaRenderHelper.renderNormalBlockAsItem(block, metadata,
-                            renderer);
+                    CalclaviaRenderHelper.renderNormalBlockAsItem(
+                        block, metadata, renderer
+                    );
                 } catch (final Exception e) {
-                    MainBase.LOGGER.severe("ICBM Explosive Rendering Crash with: " +
-                            block + " and metadata: " + metadata);
+                    MainBase.LOGGER.severe(
+                        "ICBM Explosive Rendering Crash with: " + block
+                        + " and metadata: " + metadata
+                    );
                     e.printStackTrace();
                 }
             }
@@ -47,16 +54,24 @@ public class RHZhaPin implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess iBlockAccess, final int x,
-            final int y, final int z, final Block block,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(
+        final IBlockAccess iBlockAccess,
+        final int x,
+        final int y,
+        final int z,
+        final Block block,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         if (modelID != RHZhaPin.ID) {
             return false;
         }
-        if (((TExplosive) iBlockAccess.getTileEntity(x, y, z)).explosiveId == ZhaPin.sMine.getID()) {
+
+        if (((TExplosive) iBlockAccess.getTileEntity(x, y, z)).explosiveId
+            == ZhaPin.sMine.getID()) {
             return false;
         }
+
         renderer.renderStandardBlock(block, x, y, z);
         return true;
     }

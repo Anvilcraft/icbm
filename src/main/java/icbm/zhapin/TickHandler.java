@@ -17,12 +17,12 @@ public class TickHandler {
     public void tickStart(final EntityPlayer player) {
         try {
             final ItemStack currentItem = player.getCurrentEquippedItem();
-            if (currentItem != null &&
-                    (player != Minecraft.getMinecraft().renderViewEntity ||
-                            Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)
-                    &&
-                    currentItem.getItem() == ICBMExplosion.itFaSheQi &&
-                    player.getItemInUseCount() <= 0) {
+
+            if (currentItem != null
+                && (player != Minecraft.getMinecraft().renderViewEntity
+                    || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)
+                && currentItem.getItem() == ICBMExplosion.itFaSheQi
+                && player.getItemInUseCount() <= 0) {
                 player.setItemInUse(currentItem, Integer.MAX_VALUE);
             }
         } catch (final Exception e) {

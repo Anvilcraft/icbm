@@ -1,10 +1,11 @@
 package icbm.gangshao.saving;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import universalelectricity.prefab.flag.NBTFileLoader;
@@ -19,6 +20,7 @@ public class SaveManager {
             MinecraftForge.EVENT_BUS.register((Object) this);
             SaveManager.isInitialized = true;
         }
+
         if (saveClass != null && !SaveManager.nbtSaveList.contains(saveClass)) {
             SaveManager.nbtSaveList.add(saveClass);
         }

@@ -8,9 +8,7 @@ import icbm.gangshao.turret.TTurretBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class PacketHandlerTurret
-        implements IMessageHandler<PacketTurret, IMessage> {
-
+public class PacketHandlerTurret implements IMessageHandler<PacketTurret, IMessage> {
     @Override
     public IMessage onMessage(PacketTurret message, MessageContext ctx) {
         World world = FMLClientHandler.instance().getWorldClient();

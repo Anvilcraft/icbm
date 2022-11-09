@@ -1,5 +1,3 @@
 package mffs.api.card;
 
-public interface ICard
-{
-}
+public interface ICard {}

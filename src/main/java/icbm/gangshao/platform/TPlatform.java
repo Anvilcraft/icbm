@@ -42,49 +42,62 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (super.prevWatts != super.wattsReceived) {
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
+
         if (!this.worldObj.isRemote) {
             for (int i = 0; i < 12; ++i) {
                 if (super.wattsReceived >= this.getRequest().getWatts()) {
                     break;
                 }
+
                 super.wattsReceived += ElectricItemHelper.dechargeItem(
-                        this.getStackInSlot(i), Math.ceil(this.getRequest().getWatts()),
-                        this.getVoltage());
+                    this.getStackInSlot(i),
+                    Math.ceil(this.getRequest().getWatts()),
+                    this.getVoltage()
+                );
             }
         }
     }
 
     @Override
     public void onReceive(final ElectricityPack electricityPack) {
-        if (UniversalElectricity.isVoltageSensitive &&
-                electricityPack.voltage > this.getVoltage()) {
+        if (UniversalElectricity.isVoltageSensitive
+            && electricityPack.voltage > this.getVoltage()) {
             final TTurretBase turret = this.getTurret(false);
+
             if (turret != null && turret instanceof IHealthTile) {
-                this.turret.onDamageTaken(CustomDamageSource.electrocution,
-                        Integer.MAX_VALUE);
+                this.turret.onDamageTaken(
+                    CustomDamageSource.electrocution, Integer.MAX_VALUE
+                );
             }
+
             return;
         }
+
         super.wattsReceived = Math.min(
-                super.wattsReceived + electricityPack.getWatts(), this.getWattBuffer());
-        if (super.prevWatts <= this.getRequest().getWatts() &&
-                super.wattsReceived >= this.getRequest().getWatts() &&
-                super.prevWatts != super.wattsReceived) {
+            super.wattsReceived + electricityPack.getWatts(), this.getWattBuffer()
+        );
+
+        if (super.prevWatts <= this.getRequest().getWatts()
+            && super.wattsReceived >= this.getRequest().getWatts()
+            && super.prevWatts != super.wattsReceived) {
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
     }
 
     @Override
     public ElectricityPack getRequest() {
-        if (this.getTurret(false) != null &&
-                super.wattsReceived < this.getTurret(false).getFiringRequest()) {
+        if (this.getTurret(false) != null
+            && super.wattsReceived < this.getTurret(false).getFiringRequest()) {
             return ElectricityPack.getFromWatts(
-                    Math.max(this.turret.getFiringRequest(), 0.0),
-                    this.getTurret(false).getVoltage());
+                Math.max(this.turret.getFiringRequest(), 0.0),
+                this.getTurret(false).getVoltage()
+            );
         }
+
         return new ElectricityPack();
     }
 
@@ -92,57 +105,81 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     public double getWattBuffer() {
         if (this.getTurret(false) != null) {
             return new ElectricityPack(
-                    Math.max(this.turret.getFiringRequest() /
-                            this.getTurret(false).getVoltage(),
-                            0.0),
-                    this.getTurret(false).getVoltage())
-                    .getWatts() *
-                    2.0;
+                       Math.max(
+                           this.turret.getFiringRequest()
+                               / this.getTurret(false).getVoltage(),
+                           0.0
+                       ),
+                       this.getTurret(false).getVoltage()
+                   )
+                       .getWatts()
+                * 2.0;
         }
+
         return 0.0;
     }
 
     public TTurretBase getTurret(final boolean getNew) {
         final Vector3 position = new Vector3(this);
-        if (getNew || this.turret == null || this.turret.isInvalid() ||
-                !new Vector3(this.turret)
-                        .equals(position.clone().modifyPositionFromSide(
-                                this.deployDirection))) {
-            final TileEntity tileEntity = position.clone()
-                    .modifyPositionFromSide(this.deployDirection)
-                    .getTileEntity((IBlockAccess) this.worldObj);
+
+        if (getNew || this.turret == null || this.turret.isInvalid()
+            || !new Vector3(this.turret)
+                    .equals(position.clone().modifyPositionFromSide(this.deployDirection)
+                    )) {
+            final TileEntity tileEntity
+                = position.clone()
+                      .modifyPositionFromSide(this.deployDirection)
+                      .getTileEntity((IBlockAccess) this.worldObj);
+
             if (tileEntity instanceof TTurretBase) {
                 this.turret = (TTurretBase) tileEntity;
             } else {
                 this.turret = null;
             }
         }
+
         return this.turret;
     }
 
     public boolean destroyTurret() {
-        final TileEntity ent = this.worldObj.getTileEntity(this.xCoord + this.deployDirection.offsetX,
-                this.yCoord + this.deployDirection.offsetY,
-                this.zCoord + this.deployDirection.offsetZ);
+        final TileEntity ent = this.worldObj.getTileEntity(
+            this.xCoord + this.deployDirection.offsetX,
+            this.yCoord + this.deployDirection.offsetY,
+            this.zCoord + this.deployDirection.offsetZ
+        );
+
         if (ent instanceof TTurretBase) {
             this.turret = null;
             ((TTurretBase) ent).destroy(false);
             return true;
         }
+
         return false;
     }
 
     public boolean destroy(final boolean doExplosion) {
         if (doExplosion) {
-            this.worldObj.createExplosion((Entity) null, (double) this.xCoord,
-                    (double) this.yCoord, (double) this.zCoord,
-                    2.0f, true);
+            this.worldObj.createExplosion(
+                (Entity) null,
+                (double) this.xCoord,
+                (double) this.yCoord,
+                (double) this.zCoord,
+                2.0f,
+                true
+            );
         }
+
         if (!this.worldObj.isRemote) {
-            this.getBlockType().dropBlockAsItem(this.worldObj, this.xCoord,
-                    this.yCoord, this.zCoord,
-                    this.getBlockMetadata(), 0);
+            this.getBlockType().dropBlockAsItem(
+                this.worldObj,
+                this.xCoord,
+                this.yCoord,
+                this.zCoord,
+                this.getBlockMetadata(),
+                0
+            );
         }
+
         return this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
     }
 
@@ -152,21 +189,24 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     }
 
     public boolean isRunning() {
-        return !this.isDisabled() && this.getTurret(false) != null &&
-                super.wattsReceived >= this.getTurret(false).getFiringRequest();
+        return !this.isDisabled() && this.getTurret(false) != null
+            && super.wattsReceived >= this.getTurret(false).getFiringRequest();
     }
 
     public ItemStack hasAmmunition(final ProjectileType projectileType) {
         for (int i = 0; i < 12; ++i) {
             final ItemStack itemStack = this.containingItems[i];
+
             if (itemStack != null) {
                 final Item item = itemStack.getItem();
-                if (item instanceof IAmmunition &&
-                        ((IAmmunition) item).getType(itemStack) == projectileType) {
+
+                if (item instanceof IAmmunition
+                    && ((IAmmunition) item).getType(itemStack) == projectileType) {
                     return itemStack;
                 }
             }
         }
+
         return null;
     }
 
@@ -175,26 +215,32 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
             if (ammoStack.getItemDamage() == ItemAmmo.AmmoType.BULLETINF.ordinal()) {
                 return true;
             }
+
             for (int i = 0; i < 12; ++i) {
                 final ItemStack itemStack = this.containingItems[i];
+
                 if (itemStack != null && itemStack.isItemEqual(ammoStack)) {
                     this.decrStackSize(i, 1);
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     public int getUpgradeCount(final ItPaoTaiUpgrades.TurretUpgradeType type) {
         int count = 0;
+
         for (int i = 12; i < 15; ++i) {
             final ItemStack itemStack = this.getStackInSlot(i);
-            if (itemStack != null && itemStack.getItem() instanceof ITurretUpgrade &&
-                    ((ITurretUpgrade) itemStack.getItem()).getType(itemStack) == type) {
+
+            if (itemStack != null && itemStack.getItem() instanceof ITurretUpgrade
+                && ((ITurretUpgrade) itemStack.getItem()).getType(itemStack) == type) {
                 ++count;
             }
         }
+
         return count;
     }
 
@@ -204,9 +250,11 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
         super.wattsReceived = nbt.getDouble("wattsReceived");
         final NBTTagList var2 = nbt.getTagList("Items", 10);
         this.containingItems = new ItemStack[this.getSizeInventory()];
+
         for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
             final NBTTagCompound var4 = (NBTTagCompound) var2.getCompoundTagAt(var3);
             final byte var5 = var4.getByte("Slot");
+
             if (var5 >= 0 && var5 < this.containingItems.length) {
                 this.containingItems[var5] = ItemStack.loadItemStackFromNBT(var4);
             }
@@ -218,6 +266,7 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
         super.writeToNBT(nbt);
         nbt.setDouble("wattsReceived", super.wattsReceived);
         final NBTTagList itemTag = new NBTTagList();
+
         for (int slots = 0; slots < this.containingItems.length; ++slots) {
             if (this.containingItems[slots] != null) {
                 final NBTTagCompound itemNbtData = new NBTTagCompound();
@@ -226,6 +275,7 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
                 itemTag.appendTag((NBTBase) itemNbtData);
             }
         }
+
         nbt.setTag("Items", (NBTBase) itemTag);
     }
 
@@ -246,6 +296,7 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
             this.containingItems[par1] = null;
             return var2;
         }
+
         return null;
     }
 
@@ -254,24 +305,28 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
         if (this.containingItems[par1] == null) {
             return null;
         }
+
         if (this.containingItems[par1].stackSize <= par2) {
             final ItemStack var3 = this.containingItems[par1];
             this.containingItems[par1] = null;
             return var3;
         }
+
         final ItemStack var3 = this.containingItems[par1].splitStack(par2);
+
         if (this.containingItems[par1].stackSize == 0) {
             this.containingItems[par1] = null;
         }
+
         return var3;
     }
 
     @Override
-    public void setInventorySlotContents(final int par1,
-            final ItemStack par2ItemStack) {
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
         this.containingItems[par1] = par2ItemStack;
-        if (par2ItemStack != null &&
-                par2ItemStack.stackSize > this.getInventoryStackLimit()) {
+
+        if (par2ItemStack != null
+            && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
             par2ItemStack.stackSize = this.getInventoryStackLimit();
         }
     }
@@ -287,12 +342,10 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean canConnect(final ForgeDirection direction) {
@@ -305,8 +358,7 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     }
 
     @Override
-    public boolean isItemValidForSlot(final int slotID,
-            final ItemStack itemStack) {
+    public boolean isItemValidForSlot(final int slotID, final ItemStack itemStack) {
         return slotID < 12 && itemStack.getItem() instanceof IAmmunition;
     }
 
@@ -325,23 +377,29 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
     public boolean addStackToInventory(final ItemStack itemStack) {
         for (int i = 0; i < 12; ++i) {
             final ItemStack checkStack = this.getStackInSlot(i);
+
             if (itemStack.stackSize <= 0) {
                 return true;
             }
+
             if (checkStack == null) {
                 this.setInventorySlotContents(i, itemStack);
                 return true;
             }
+
             if (checkStack.isItemEqual(itemStack)) {
-                final int inputStack = Math.min(checkStack.stackSize + itemStack.stackSize,
-                        checkStack.getMaxStackSize()) -
-                        checkStack.stackSize;
+                final int inputStack = Math.min(
+                                           checkStack.stackSize + itemStack.stackSize,
+                                           checkStack.getMaxStackSize()
+                                       )
+                    - checkStack.stackSize;
                 itemStack.stackSize -= inputStack;
                 final ItemStack itemStack2 = checkStack;
                 itemStack2.stackSize += inputStack;
                 this.setInventorySlotContents(i, checkStack);
             }
         }
+
         return false;
     }
 }

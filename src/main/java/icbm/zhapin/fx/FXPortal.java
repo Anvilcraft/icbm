@@ -12,9 +12,15 @@ import universalelectricity.core.vector.Vector3;
 
 @SideOnly(Side.CLIENT)
 public class FXPortal extends EntityPortalFX {
-    public FXPortal(final World par1World, final Vector3 position, final float red,
-            final float green, final float blue, final float scale,
-            final double distance) {
+    public FXPortal(
+        final World par1World,
+        final Vector3 position,
+        final float red,
+        final float green,
+        final float blue,
+        final float scale,
+        final double distance
+    ) {
         super(par1World, position.x, position.y, position.z, 0.0, 0.0, 0.0);
         this.particleScale = scale;
         this.portalParticleScale = scale;

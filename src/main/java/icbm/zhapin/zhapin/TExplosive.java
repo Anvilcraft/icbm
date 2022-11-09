@@ -12,8 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.prefab.implement.IRotatable;
 
-public class TExplosive
-        extends TileEntity implements IExplosiveContainer, IRotatable {
+public class TExplosive extends TileEntity implements IExplosiveContainer, IRotatable {
     public boolean exploding;
     public int explosiveId;
 
@@ -62,21 +61,28 @@ public class TExplosive
 
         nbt.setInteger("explosiveID", this.explosiveId);
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     @Override
-    public ForgeDirection getDirection(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public ForgeDirection
+    getDirection(final IBlockAccess world, final int x, final int y, final int z) {
         return ForgeDirection.getOrientation(this.getBlockMetadata());
     }
 
     @Override
-    public void setDirection(final World world, final int x, final int y,
-            final int z, final ForgeDirection facingDirection) {
+    public void setDirection(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final ForgeDirection facingDirection
+    ) {
         this.worldObj.setBlockMetadataWithNotify(
-                this.xCoord, this.yCoord, this.zCoord, facingDirection.ordinal(), 2);
+            this.xCoord, this.yCoord, this.zCoord, facingDirection.ordinal(), 2
+        );
     }
 
     @Override

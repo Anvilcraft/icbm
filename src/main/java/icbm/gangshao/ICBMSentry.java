@@ -58,7 +58,9 @@ import universalelectricity.prefab.flag.NBTFileLoader;
 public class ICBMSentry extends MainBase {
     public static final String NAME = "ICBM|Sentry";
     public static final String CHANNEL = "ICBM";
-    @SidedProxy(clientSide = "icbm.gangshao.ClientProxy", serverSide = "icbm.gangshao.CommonProxy")
+    @SidedProxy(
+        clientSide = "icbm.gangshao.ClientProxy", serverSide = "icbm.gangshao.CommonProxy"
+    )
     public static CommonProxy proxy;
     @Mod.Instance("ICBM|Sentry")
     public static ICBMSentry instance;
@@ -82,8 +84,9 @@ public class ICBMSentry extends MainBase {
     @Override
     public void preInit(final FMLPreInitializationEvent event) {
         super.preInit(event);
-        NetworkRegistry.INSTANCE.registerGuiHandler((Object) this,
-                (IGuiHandler) ICBMSentry.proxy);
+        NetworkRegistry.INSTANCE.registerGuiHandler(
+            (Object) this, (IGuiHandler) ICBMSentry.proxy
+        );
         MinecraftForge.EVENT_BUS.register((Object) this);
         MainBase.CONFIGURATION.load();
         ICBMSentry.blockTurret = (Block) new BlockTurret();
@@ -95,18 +98,24 @@ public class ICBMSentry extends MainBase {
         ICBMSentry.conventionalBullet = new ItemStack(ICBMSentry.itemAmmo, 1, 1);
         ICBMSentry.railgunBullet = new ItemStack(ICBMSentry.itemAmmo, 1, 2);
         ICBMSentry.antimatterBullet = new ItemStack(ICBMSentry.itemAmmo, 1, 3);
-        GameRegistry.registerBlock(ICBMSentry.blockTurret, ItemBlockTurret.class,
-                "ICBMTurret");
+        GameRegistry.registerBlock(
+            ICBMSentry.blockTurret, ItemBlockTurret.class, "ICBMTurret"
+        );
         GameRegistry.registerBlock(ICBMSentry.blockPlatform, "ICBMPlatform");
         EntityRegistry.registerGlobalEntityID(
-                ESeat.class, "ICBMFake", EntityRegistry.findGlobalUniqueEntityId());
-        EntityRegistry.registerModEntity(ESeat.class, "ICBMFake", 57, (Object) this,
-                50, 5, true);
+            ESeat.class, "ICBMFake", EntityRegistry.findGlobalUniqueEntityId()
+        );
+        EntityRegistry.registerModEntity(
+            ESeat.class, "ICBMFake", 57, (Object) this, 50, 5, true
+        );
         EntityRegistry.registerGlobalEntityID(
-                EntityTileDamagable.class, "ICBMFakeTile",
-                EntityRegistry.findGlobalUniqueEntityId());
-        EntityRegistry.registerModEntity(EntityTileDamagable.class, "ICBMFakeTile",
-                58, (Object) this, 50, 5, true);
+            EntityTileDamagable.class,
+            "ICBMFakeTile",
+            EntityRegistry.findGlobalUniqueEntityId()
+        );
+        EntityRegistry.registerModEntity(
+            EntityTileDamagable.class, "ICBMFakeTile", 58, (Object) this, 50, 5, true
+        );
 
         GameRegistry.registerItem(itemAmmo, "icbm:itemAmmo");
         GameRegistry.registerItem(itemUpgrade, "icbm:itemUpgrade");
@@ -118,8 +127,9 @@ public class ICBMSentry extends MainBase {
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("icbm_sentry");
         int pktId = 0;
 
-        channel.registerMessage(PacketHandlerTurret.class, PacketTurret.class,
-                pktId++, Side.CLIENT);
+        channel.registerMessage(
+            PacketHandlerTurret.class, PacketTurret.class, pktId++, Side.CLIENT
+        );
     }
 
     @Mod.EventHandler
@@ -132,53 +142,111 @@ public class ICBMSentry extends MainBase {
     public void postInit(final FMLPostInitializationEvent event) {
         super.postInit(event);
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.itemAmmo, 16, 0),
-                new Object[] { "T", "T", 'T', "ingotTin" }));
+            new ItemStack(ICBMSentry.itemAmmo, 16, 0),
+            new Object[] { "T", "T", 'T', "ingotTin" }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.itemAmmo, 16, 1),
-                new Object[] { "SBS", "SGS", "SSS", 'B', Items.iron_ingot, 'G',
-                        Items.gunpowder, 'S', ICBMSentry.bulletShell.copy() }));
+            new ItemStack(ICBMSentry.itemAmmo, 16, 1),
+            new Object[] { "SBS",
+                           "SGS",
+                           "SSS",
+                           'B',
+                           Items.iron_ingot,
+                           'G',
+                           Items.gunpowder,
+                           'S',
+                           ICBMSentry.bulletShell.copy() }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.itemAmmo, 2, 2),
-                new Object[] { "D", "B", "B", 'D', Items.diamond, 'B',
-                        ICBMSentry.conventionalBullet }));
+            new ItemStack(ICBMSentry.itemAmmo, 2, 2),
+            new Object[] {
+                "D", "B", "B", 'D', Items.diamond, 'B', ICBMSentry.conventionalBullet }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                ICBMSentry.antimatterBullet,
-                new Object[] { "A", "B", 'A', "antimatterGram", 'B',
-                        ICBMSentry.railgunBullet }));
+            ICBMSentry.antimatterBullet,
+            new Object[] {
+                "A", "B", 'A', "antimatterGram", 'B', ICBMSentry.railgunBullet }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                ICBMSentry.blockPlatform,
-                new Object[] { "SPS", "CBC", "SAS", 'P', Blocks.piston, 'A',
-                        UniversalRecipes.BATTERY, 'S', "plateSteel", 'C',
-                        Blocks.chest, 'B', "calclavia:CIRCUIT_T1" }));
+            ICBMSentry.blockPlatform,
+            new Object[] { "SPS",
+                           "CBC",
+                           "SAS",
+                           'P',
+                           Blocks.piston,
+                           'A',
+                           UniversalRecipes.BATTERY,
+                           'S',
+                           "plateSteel",
+                           'C',
+                           Blocks.chest,
+                           'B',
+                           "calclavia:CIRCUIT_T1" }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.blockTurret, 1, 0),
-                new Object[] { "SSS", "CS ", 'C', "calclavia:CIRCUIT_T1", 'S',
-                        "ingotSteel" }));
+            new ItemStack(ICBMSentry.blockTurret, 1, 0),
+            new Object[] { "SSS", "CS ", 'C', "calclavia:CIRCUIT_T1", 'S', "ingotSteel" }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.blockTurret, 1, 1),
-                new Object[] { "DDD", "CS ", "GS ", 'D', Items.diamond, 'S',
-                        "plateSteel", 'C', "calclavia:CIRCUIT_T3", 'G',
-                        new ItemStack(ICBMSentry.blockTurret, 1, 0) }));
+            new ItemStack(ICBMSentry.blockTurret, 1, 1),
+            new Object[] { "DDD",
+                           "CS ",
+                           "GS ",
+                           'D',
+                           Items.diamond,
+                           'S',
+                           "plateSteel",
+                           'C',
+                           "calclavia:CIRCUIT_T3",
+                           'G',
+                           new ItemStack(ICBMSentry.blockTurret, 1, 0) }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.blockTurret, 1, 2),
-                new Object[] { "DDS", "CS ", "GS ", 'D', "plateBronze", 'S',
-                        "plateSteel", 'C', "calclavia:CIRCUIT_T2", 'G',
-                        new ItemStack(ICBMSentry.blockTurret, 1, 0) }));
+            new ItemStack(ICBMSentry.blockTurret, 1, 2),
+            new Object[] { "DDS",
+                           "CS ",
+                           "GS ",
+                           'D',
+                           "plateBronze",
+                           'S',
+                           "plateSteel",
+                           'C',
+                           "calclavia:CIRCUIT_T2",
+                           'G',
+                           new ItemStack(ICBMSentry.blockTurret, 1, 0) }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.blockTurret, 1, 3),
-                new Object[] { "DDG", "CS ", "GS ", 'D', "plateBronze", 'S',
-                        "plateSteel", 'C', "calclavia:CIRCUIT_T1", 'D',
-                        Blocks.glass, 'G', Blocks.glass }));
+            new ItemStack(ICBMSentry.blockTurret, 1, 3),
+            new Object[] { "DDG",
+                           "CS ",
+                           "GS ",
+                           'D',
+                           "plateBronze",
+                           'S',
+                           "plateSteel",
+                           'C',
+                           "calclavia:CIRCUIT_T1",
+                           'D',
+                           Blocks.glass,
+                           'G',
+                           Blocks.glass }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.itemUpgrade, 3,
-                        ItPaoTaiUpgrades.TurretUpgradeType.RANGE.ordinal()),
-                new Object[] { "B", "I", 'B', Items.bow, 'I', Items.iron_ingot }));
+            new ItemStack(
+                ICBMSentry.itemUpgrade,
+                3,
+                ItPaoTaiUpgrades.TurretUpgradeType.RANGE.ordinal()
+            ),
+            new Object[] { "B", "I", 'B', Items.bow, 'I', Items.iron_ingot }
+        ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMSentry.itemUpgrade, 1,
-                        ItPaoTaiUpgrades.TurretUpgradeType.COLLECTOR.ordinal()),
-                new Object[] { "BBB", " I ", "BBB", 'B', Items.bucket, 'I',
-                        Items.bowl }));
+            new ItemStack(
+                ICBMSentry.itemUpgrade,
+                1,
+                ItPaoTaiUpgrades.TurretUpgradeType.COLLECTOR.ordinal()
+            ),
+            new Object[] { "BBB", " I ", "BBB", 'B', Items.bucket, 'I', Items.bowl }
+        ));
         CommandRegistry.register(new CommandAccess());
         CommandRegistry.register(new CommandDestroy());
         CommandRegistry.register(new CommandUser());
@@ -188,34 +256,37 @@ public class ICBMSentry extends MainBase {
         ICBMSentry.proxy.init();
     }
 
-    public static boolean isProtected(final World world, final Vector3 diDian,
-            final String banFlag) {
-        return FlagRegistry.getModFlag("ModFlags") != null &&
-                (FlagRegistry.getModFlag("ModFlags")
-                        .containsValue(world, ICBMFlags.FLAG_BAN_GLOBAL, "true", diDian) ||
-                        FlagRegistry.getModFlag("ModFlags")
-                                .containsValue(world, banFlag, "true", diDian));
+    public static boolean
+    isProtected(final World world, final Vector3 diDian, final String banFlag) {
+        return FlagRegistry.getModFlag("ModFlags") != null
+            && (FlagRegistry.getModFlag("ModFlags")
+                    .containsValue(world, ICBMFlags.FLAG_BAN_GLOBAL, "true", diDian)
+                || FlagRegistry.getModFlag("ModFlags")
+                       .containsValue(world, banFlag, "true", diDian));
     }
 
     @Mod.EventHandler
     @Override
     public void serverStarting(final FMLServerStartingEvent event) {
         FlagRegistry.registerModFlag(
-                "ModFlags", new ModFlag(NBTFileLoader.loadData("ModFlags")));
-        final ICommandManager commandManager = FMLCommonHandler.instance()
-                .getMinecraftServerInstance()
-                .getCommandManager();
-        final ServerCommandManager serverCommandManager = (ServerCommandManager) commandManager;
-        serverCommandManager.registerCommand(
-                (ICommand) new CommandFlag(FlagRegistry.getModFlag("ModFlags")));
+            "ModFlags", new ModFlag(NBTFileLoader.loadData("ModFlags"))
+        );
+        final ICommandManager commandManager
+            = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager(
+            );
+        final ServerCommandManager serverCommandManager
+            = (ServerCommandManager) commandManager;
+        serverCommandManager.registerCommand((ICommand
+        ) new CommandFlag(FlagRegistry.getModFlag("ModFlags")));
     }
 
     @SubscribeEvent
     @Override
     public void worldSave(final WorldEvent.Save evt) {
         if (!((WorldEvent) evt).world.isRemote) {
-            NBTFileLoader.saveData("ModFlags",
-                    FlagRegistry.getModFlag("ModFlags").getNBT());
+            NBTFileLoader.saveData(
+                "ModFlags", FlagRegistry.getModFlag("ModFlags").getNBT()
+            );
         }
     }
 

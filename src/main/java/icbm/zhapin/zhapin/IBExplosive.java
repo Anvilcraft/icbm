@@ -13,20 +13,30 @@ public class IBExplosive extends ItemBlock {
         this.setHasSubtypes(true);
     }
 
-    public boolean placeBlockAt(final ItemStack itemStack,
-            final EntityPlayer player, final World world,
-            final int x, final int y, final int z,
-            final int side, final float hitX,
-            final float hitY, final float hitZ,
-            final int metadata) {
+    public boolean placeBlockAt(
+        final ItemStack itemStack,
+        final EntityPlayer player,
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ,
+        final int metadata
+    ) {
         if (!world.setBlock(x, y, z, this.field_150939_a, 0, 3)) {
             return false;
         }
+
         if (world.getBlock(x, y, z) == this.field_150939_a) {
-            ((TExplosive) world.getTileEntity(x, y, z)).explosiveId = itemStack.getItemDamage();
+            ((TExplosive) world.getTileEntity(x, y, z)).explosiveId
+                = itemStack.getItemDamage();
             this.field_150939_a.onBlockPlacedBy(world, x, y, z, player, itemStack);
             this.field_150939_a.onPostBlockPlaced(world, x, y, z, metadata);
         }
+
         return true;
     }
 
@@ -35,8 +45,8 @@ public class IBExplosive extends ItemBlock {
     }
 
     public String getUnlocalizedName(final ItemStack itemstack) {
-        return this.getUnlocalizedName() + "." +
-                ZhaPin.list[itemstack.getItemDamage()].getUnlocalizedName();
+        return this.getUnlocalizedName() + "."
+            + ZhaPin.list[itemstack.getItemDamage()].getUnlocalizedName();
     }
 
     public String getUnlocalizedName() {

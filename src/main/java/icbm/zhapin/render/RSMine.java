@@ -8,16 +8,21 @@ import icbm.zhapin.zhapin.ZhaPin;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RSMine extends TileEntitySpecialRenderer {
     @Override
-    public void renderTileEntityAt(final TileEntity var1, final double x,
-            final double y, final double z, final float var8) {
+    public void renderTileEntityAt(
+        final TileEntity var1,
+        final double x,
+        final double y,
+        final double z,
+        final float var8
+    ) {
         final TExplosive tileEntity = (TExplosive) var1;
         final Object[] data = ZhaPin.list[tileEntity.explosiveId].getRenderData();
+
         if (data != null) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x + 0.5f, (float) y + 1.5f, (float) z + 0.5f);

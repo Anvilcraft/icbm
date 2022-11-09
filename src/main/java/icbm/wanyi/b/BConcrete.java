@@ -1,11 +1,12 @@
 package icbm.wanyi.b;
 
+import java.util.List;
+
 import atomicscience.api.IAntiPoisonBlock;
 import atomicscience.api.poison.Poison;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.core.di.BICBM;
-import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,9 +35,11 @@ public class BConcrete extends BICBM implements IAntiPoisonBlock {
             case 1: {
                 return this.iconCompact;
             }
+
             case 2: {
                 return this.iconReinforced;
             }
+
             default: {
                 return this.blockIcon;
             }
@@ -48,24 +51,35 @@ public class BConcrete extends BICBM implements IAntiPoisonBlock {
     public void registerBlockIcons(final IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
         this.iconCompact = iconRegister.registerIcon(
-                this.getUnlocalizedName().replace("tile.", "") + "Compact");
+            this.getUnlocalizedName().replace("tile.", "") + "Compact"
+        );
         this.iconReinforced = iconRegister.registerIcon(
-                this.getUnlocalizedName().replace("tile.", "") + "Reinforced");
+            this.getUnlocalizedName().replace("tile.", "") + "Reinforced"
+        );
     }
 
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world,
-            final int x, final int y, final int z,
-            final double explosionX, final double explosionY,
-            final double explosionZ) {
+    public float getExplosionResistance(
+        final Entity par1Entity,
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final double explosionX,
+        final double explosionY,
+        final double explosionZ
+    ) {
         final int metadata = world.getBlockMetadata(x, y, z);
+
         switch (metadata) {
             case 1: {
                 return 38.0f;
             }
+
             case 2: {
                 return 48.0f;
             }
+
             default: {
                 return this.getExplosionResistance(par1Entity);
             }
@@ -73,17 +87,18 @@ public class BConcrete extends BICBM implements IAntiPoisonBlock {
     }
 
     @Override
-    public void getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs,
-            final List par3List) {
+    public void getSubBlocks(
+        final Item par1, final CreativeTabs par2CreativeTabs, final List par3List
+    ) {
         for (int i = 0; i < 3; ++i) {
             par3List.add(new ItemStack(par1, 1, i));
         }
     }
 
     @Override
-    public boolean isPoisonPrevention(final World par1World, final int x,
-            final int y, final int z,
-            final Poison type) {
+    public boolean isPoisonPrevention(
+        final World par1World, final int x, final int y, final int z, final Poison type
+    ) {
         return true;
     }
 

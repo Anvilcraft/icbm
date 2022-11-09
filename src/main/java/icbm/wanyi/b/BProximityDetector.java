@@ -17,30 +17,47 @@ public class BProximityDetector extends BICBM {
     @Override
     public IIcon getIcon(final int side, final int metadata) {
         return (side == 0) ? super.iconBottom
-                : ((side == 1) ? super.iconTop : super.iconSide);
+                           : ((side == 1) ? super.iconTop : super.iconSide);
     }
 
     @Override
-    public boolean onMachineActivated(final World par1World, final int x,
-            final int y, final int z,
-            final EntityPlayer par5EntityPlayer,
-            final int side, final float hitX,
-            final float hitY, final float hitZ) {
-        par5EntityPlayer.openGui((Object) ICBMContraption.instance, 4, par1World, x, y,
-                z);
+    public boolean onMachineActivated(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer par5EntityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
+        par5EntityPlayer.openGui(
+            (Object) ICBMContraption.instance, 4, par1World, x, y, z
+        );
         return true;
     }
 
     @Override
-    public boolean onUseWrench(final World par1World, final int x, final int y,
-            final int z, final EntityPlayer par5EntityPlayer,
-            final int side, final float hitX, final float hitY,
-            final float hitZ) {
+    public boolean onUseWrench(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer par5EntityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
+
         if (tileEntity instanceof TProximityDetector) {
-            ((TProximityDetector) tileEntity).isInverted = !((TProximityDetector) tileEntity).isInverted;
+            ((TProximityDetector) tileEntity).isInverted
+                = !((TProximityDetector) tileEntity).isInverted;
             return true;
         }
+
         return false;
     }
 

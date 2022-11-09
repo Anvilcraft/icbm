@@ -33,7 +33,7 @@ import universalelectricity.prefab.multiblock.IMultiBlock;
 import universalelectricity.prefab.tile.TileEntityAdvanced;
 
 public class TLauncherPlatform extends TileEntityAdvanced
-        implements ILauncherContainer, IRotatable, ITier, IMultiBlock, IInventory {
+    implements ILauncherContainer, IRotatable, ITier, IMultiBlock, IInventory {
     public IMissile daoDan;
     public TLauncher jiaZi;
     private ItemStack[] containingItems;
@@ -65,15 +65,19 @@ public class TLauncherPlatform extends TileEntityAdvanced
         if (this.containingItems[par1] == null) {
             return null;
         }
+
         if (this.containingItems[par1].stackSize <= par2) {
             final ItemStack var3 = this.containingItems[par1];
             this.containingItems[par1] = null;
             return var3;
         }
+
         final ItemStack var3 = this.containingItems[par1].splitStack(par2);
+
         if (this.containingItems[par1].stackSize == 0) {
             this.containingItems[par1] = null;
         }
+
         return var3;
     }
 
@@ -84,15 +88,16 @@ public class TLauncherPlatform extends TileEntityAdvanced
             this.containingItems[par1] = null;
             return var2;
         }
+
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(final int par1,
-            final ItemStack par2ItemStack) {
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
         this.containingItems[par1] = par2ItemStack;
-        if (par2ItemStack != null &&
-                par2ItemStack.stackSize > this.getInventoryStackLimit()) {
+
+        if (par2ItemStack != null
+            && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
             par2ItemStack.stackSize = this.getInventoryStackLimit();
         }
     }
@@ -105,30 +110,41 @@ public class TLauncherPlatform extends TileEntityAdvanced
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (this.jiaZi == null) {
             for (byte i = 2; i < 6; ++i) {
-                final Vector3 position = new Vector3(this.xCoord, this.yCoord, this.zCoord);
+                final Vector3 position
+                    = new Vector3(this.xCoord, this.yCoord, this.zCoord);
                 position.modifyPositionFromSide(ForgeDirection.getOrientation((int) i));
                 final TileEntity tileEntity = this.worldObj.getTileEntity(
-                        position.intX(), position.intY(), position.intZ());
+                    position.intX(), position.intY(), position.intZ()
+                );
+
                 if (tileEntity instanceof TLauncher) {
                     (this.jiaZi = (TLauncher) tileEntity)
-                            .setDirection(this.worldObj, this.xCoord, this.yCoord,
-                                    this.zCoord,
-                                    VectorHelper.getOrientationFromSide(
-                                            ForgeDirection.getOrientation((int) i),
-                                            ForgeDirection.NORTH));
+                        .setDirection(
+                            this.worldObj,
+                            this.xCoord,
+                            this.yCoord,
+                            this.zCoord,
+                            VectorHelper.getOrientationFromSide(
+                                ForgeDirection.getOrientation((int) i),
+                                ForgeDirection.NORTH
+                            )
+                        );
                 }
             }
         } else if (this.jiaZi.isInvalid()) {
             this.jiaZi = null;
         } else if (this.packetGengXin ||
-                (super.ticks % 600L == 0L && this.jiaZi != null &&
-                        !this.worldObj.isRemote)) {
+            (super.ticks % 600L == 0L && this.jiaZi != null &&
+                !this.worldObj.isRemote)) {
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
+
         if (!this.worldObj.isRemote) {
             this.setMissile();
+
             if (this.packetGengXin || super.ticks % 600L == 0L) {
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                 this.packetGengXin = false;
@@ -143,8 +159,9 @@ public class TLauncherPlatform extends TileEntityAdvanced
         nbt.setByte("orientation", this.orientation);
         nbt.setInteger("tier", this.tier);
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     @Override
@@ -157,40 +174,52 @@ public class TLauncherPlatform extends TileEntityAdvanced
 
     private void setMissile() {
         if (!this.worldObj.isRemote) {
-            if (this.containingItems[0] != null && this.containingItems[0].getItem() instanceof ItMissile) {
+            if (this.containingItems[0] != null
+                && this.containingItems[0].getItem() instanceof ItMissile) {
                 int haoMa = this.containingItems[0].getItemDamage();
-                if (!ICBMExplosion.shiBaoHu(this.worldObj, new Vector3(this),
-                        ZhaPin.ZhaPinType.DAO_DAN, haoMa)) {
+
+                if (!ICBMExplosion.shiBaoHu(
+                        this.worldObj, new Vector3(this), ZhaPin.ZhaPinType.DAO_DAN, haoMa
+                    )) {
                     if (this.containingItems[0].getItem() instanceof ItModuleMissile) {
                         haoMa += 100;
                     }
+
                     if (this.daoDan == null) {
                         final Vector3 position = new Vector3(
-                                this.xCoord + 0.5f, this.yCoord + 2, this.zCoord + 0.5f);
-                        this.daoDan = new EMissile(this.worldObj, position, new Vector3(this), haoMa);
+                            this.xCoord + 0.5f, this.yCoord + 2, this.zCoord + 0.5f
+                        );
+                        this.daoDan = new EMissile(
+                            this.worldObj, position, new Vector3(this), haoMa
+                        );
                         this.worldObj.spawnEntityInWorld((Entity) this.daoDan);
                         return;
                     }
-                    if (this.daoDan.getExplosiveType() != null &&
-                            this.daoDan.getExplosiveType().getID() == haoMa) {
+
+                    if (this.daoDan.getExplosiveType() != null
+                        && this.daoDan.getExplosiveType().getID() == haoMa) {
                         return;
                     }
                 }
             }
+
             if (this.daoDan != null) {
                 ((Entity) this.daoDan).setDead();
             }
+
             this.daoDan = null;
         }
     }
 
     public void launchMissile(final Vector3 target, final int gaoDu) {
         float inaccuracy;
+
         if (this.jiaZi != null) {
             inaccuracy = (float) this.jiaZi.getInaccuracy();
         } else {
             inaccuracy = 30.0f;
         }
+
         inaccuracy *= (float) Math.random() * 2.0f - 1.0f;
         target.x += inaccuracy;
         target.z += inaccuracy;
@@ -200,31 +229,40 @@ public class TLauncherPlatform extends TileEntityAdvanced
     }
 
     public boolean isInRange(final Vector3 target) {
-        return target != null && !this.shiTaiYuan(target) &&
-                !this.shiTaiJin(target);
+        return target != null && !this.shiTaiYuan(target) && !this.shiTaiJin(target);
     }
 
     public boolean shiTaiJin(final Vector3 target) {
-        return Vector3.distance(new Vector3(this.xCoord, 0.0, this.zCoord),
-                new Vector3(target.x, 0.0, target.z)) < 10.0;
+        return Vector3.distance(
+                   new Vector3(this.xCoord, 0.0, this.zCoord),
+                   new Vector3(target.x, 0.0, target.z)
+               )
+            < 10.0;
     }
 
     public boolean shiTaiYuan(final Vector3 target) {
         if (this.tier == 0) {
-            if (Vector3.distance(new Vector3(this.xCoord, 0.0, this.zCoord),
-                    new Vector3(target.x, 0.0, target.z)) < MainBase.DAO_DAN_ZUI_YUAN / 10) {
+            if (Vector3.distance(
+                    new Vector3(this.xCoord, 0.0, this.zCoord),
+                    new Vector3(target.x, 0.0, target.z)
+                )
+                < MainBase.DAO_DAN_ZUI_YUAN / 10) {
                 return false;
             }
         } else if (this.tier == 1) {
-            if (Vector3.distance(new Vector3(this.xCoord, 0.0, this.zCoord),
-                    new Vector3(target.x, 0.0, target.z)) < MainBase.DAO_DAN_ZUI_YUAN / 5) {
+            if (Vector3.distance(
+                    new Vector3(this.xCoord, 0.0, this.zCoord),
+                    new Vector3(target.x, 0.0, target.z)
+                )
+                < MainBase.DAO_DAN_ZUI_YUAN / 5) {
                 return false;
             }
         } else if (this.tier == 2 &&
-                Vector3.distance(new Vector3(this.xCoord, 0.0, this.zCoord),
-                        new Vector3(target.x, 0.0, target.z)) < MainBase.DAO_DAN_ZUI_YUAN) {
+            Vector3.distance(new Vector3(this.xCoord, 0.0, this.zCoord),
+                new Vector3(target.x, 0.0, target.z)) < MainBase.DAO_DAN_ZUI_YUAN) {
             return false;
         }
+
         return true;
     }
 
@@ -235,9 +273,11 @@ public class TLauncherPlatform extends TileEntityAdvanced
         this.tier = nbt.getInteger("tier");
         this.orientation = nbt.getByte("facingDirection");
         this.containingItems = new ItemStack[this.getSizeInventory()];
+
         for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
             final NBTTagCompound var4 = (NBTTagCompound) var2.getCompoundTagAt(var3);
             final byte var5 = var4.getByte("Slot");
+
             if (var5 >= 0 && var5 < this.containingItems.length) {
                 this.containingItems[var5] = ItemStack.loadItemStackFromNBT(var4);
             }
@@ -250,6 +290,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
         nbt.setInteger("tier", this.tier);
         nbt.setByte("facingDirection", this.orientation);
         final NBTTagList var2 = new NBTTagList();
+
         for (int var3 = 0; var3 < this.containingItems.length; ++var3) {
             if (this.containingItems[var3] != null) {
                 final NBTTagCompound var4 = new NBTTagCompound();
@@ -258,6 +299,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 var2.appendTag((NBTBase) var4);
             }
         }
+
         nbt.setTag("Items", (NBTBase) var2);
     }
 
@@ -268,18 +310,18 @@ public class TLauncherPlatform extends TileEntityAdvanced
 
     @Override
     public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this &&
-                par1EntityPlayer.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5,
-                        this.zCoord + 0.5) <= 64.0;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
+            && par1EntityPlayer.getDistanceSq(
+                   this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5
+               )
+            <= 64.0;
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public int getTier() {
@@ -293,16 +335,24 @@ public class TLauncherPlatform extends TileEntityAdvanced
 
     @Override
     public boolean onActivated(final EntityPlayer entityPlayer) {
-        if (entityPlayer.inventory.getCurrentItem() != null &&
-                this.getStackInSlot(0) == null &&
-                entityPlayer.inventory.getCurrentItem().getItem() instanceof ItMissile) {
+        if (entityPlayer.inventory.getCurrentItem() != null
+            && this.getStackInSlot(0) == null
+            && entityPlayer.inventory.getCurrentItem().getItem() instanceof ItMissile) {
             this.setInventorySlotContents(0, entityPlayer.inventory.getCurrentItem());
             entityPlayer.inventory.setInventorySlotContents(
-                    entityPlayer.inventory.currentItem, (ItemStack) null);
+                entityPlayer.inventory.currentItem, (ItemStack) null
+            );
             return true;
         }
-        entityPlayer.openGui((Object) ICBMExplosion.instance, 7, this.worldObj,
-                this.xCoord, this.yCoord, this.zCoord);
+
+        entityPlayer.openGui(
+            (Object) ICBMExplosion.instance,
+            7,
+            this.worldObj,
+            this.xCoord,
+            this.yCoord,
+            this.zCoord
+        );
         return true;
     }
 
@@ -310,93 +360,178 @@ public class TLauncherPlatform extends TileEntityAdvanced
     public void onCreate(final Vector3 position) {
         if (this.orientation == 3 || this.orientation == 2) {
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(1.0, 0.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(1.0, 0.0, 0.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(1.0, 1.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(1.0, 1.0, 0.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(1.0, 2.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(1.0, 2.0, 0.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(-1.0, 0.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(-1.0, 0.0, 0.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(-1.0, 1.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(-1.0, 1.0, 0.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(-1.0, 2.0, 0.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(-1.0, 2.0, 0.0)),
+                new Vector3(this)
+            );
         } else {
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 0.0, 1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 0.0, 1.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 1.0, 1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 1.0, 1.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 2.0, 1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 2.0, 1.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 0.0, -1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 0.0, -1.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 1.0, -1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 1.0, -1.0)),
+                new Vector3(this)
+            );
             MainBase.bJia.makeFakeBlock(
-                    this.worldObj, Vector3.add(position, new Vector3(0.0, 2.0, -1.0)),
-                    new Vector3(this));
+                this.worldObj,
+                Vector3.add(position, new Vector3(0.0, 2.0, -1.0)),
+                new Vector3(this)
+            );
         }
     }
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
         final Vector3 position = new Vector3(this.xCoord, this.yCoord, this.zCoord);
+
         if (this.orientation == 3 || this.orientation == 2) {
-            this.worldObj.setBlock((int) position.x, (int) position.y, (int) position.z,
-                    Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x + 1, (int) position.y,
-                    (int) position.z, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x + 1, (int) position.y + 1,
-                    (int) position.z, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x + 1, (int) position.y + 2,
-                    (int) position.z, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x - 1, (int) position.y,
-                    (int) position.z, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x - 1, (int) position.y + 1,
-                    (int) position.z, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x - 1, (int) position.y + 2,
-                    (int) position.z, Blocks.air, 0, 2);
+            this.worldObj.setBlock(
+                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x + 1, (int) position.y, (int) position.z, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x + 1,
+                (int) position.y + 1,
+                (int) position.z,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x + 1,
+                (int) position.y + 2,
+                (int) position.z,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x - 1, (int) position.y, (int) position.z, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x - 1,
+                (int) position.y + 1,
+                (int) position.z,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x - 1,
+                (int) position.y + 2,
+                (int) position.z,
+                Blocks.air,
+                0,
+                2
+            );
         } else {
-            this.worldObj.setBlock((int) position.x, (int) position.y, (int) position.z,
-                    Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y,
-                    (int) position.z + 1, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y + 1,
-                    (int) position.z + 1, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y + 2,
-                    (int) position.z + 1, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y,
-                    (int) position.z - 1, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y + 1,
-                    (int) position.z - 1, Blocks.air, 0, 2);
-            this.worldObj.setBlock((int) position.x, (int) position.y + 2,
-                    (int) position.z - 1, Blocks.air, 0, 2);
+            this.worldObj.setBlock(
+                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x, (int) position.y, (int) position.z + 1, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x,
+                (int) position.y + 1,
+                (int) position.z + 1,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x,
+                (int) position.y + 2,
+                (int) position.z + 1,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x, (int) position.y, (int) position.z - 1, Blocks.air, 0, 2
+            );
+            this.worldObj.setBlock(
+                (int) position.x,
+                (int) position.y + 1,
+                (int) position.z - 1,
+                Blocks.air,
+                0,
+                2
+            );
+            this.worldObj.setBlock(
+                (int) position.x,
+                (int) position.y + 2,
+                (int) position.z - 1,
+                Blocks.air,
+                0,
+                2
+            );
         }
+
         if (this.daoDan != null) {
             ((Entity) this.daoDan).setDead();
         }
     }
 
     @Override
-    public ForgeDirection getDirection(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public ForgeDirection
+    getDirection(final IBlockAccess world, final int x, final int y, final int z) {
         return ForgeDirection.getOrientation((int) this.orientation);
     }
 
     @Override
-    public void setDirection(final World world, final int x, final int y,
-            final int z, final ForgeDirection facingDirection) {
+    public void setDirection(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final ForgeDirection facingDirection
+    ) {
         this.orientation = (byte) facingDirection.ordinal();
     }
 
@@ -411,8 +546,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
     }
 
     @Override
-    public boolean isItemValidForSlot(final int slotID,
-            final ItemStack itemStack) {
+    public boolean isItemValidForSlot(final int slotID, final ItemStack itemStack) {
         return itemStack.getItem() instanceof ItMissile;
     }
 
@@ -430,12 +564,16 @@ public class TLauncherPlatform extends TileEntityAdvanced
     public ILauncherController getController() {
         for (byte i = 2; i < 6; ++i) {
             final Vector3 position = new Vector3(this).modifyPositionFromSide(
-                    ForgeDirection.getOrientation((int) i));
-            final TileEntity tileEntity = position.getTileEntity((IBlockAccess) this.worldObj);
+                ForgeDirection.getOrientation((int) i)
+            );
+            final TileEntity tileEntity
+                = position.getTileEntity((IBlockAccess) this.worldObj);
+
             if (tileEntity instanceof ILauncherController) {
                 return (ILauncherController) tileEntity;
             }
         }
+
         return null;
     }
 }

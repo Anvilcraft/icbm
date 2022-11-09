@@ -1,14 +1,14 @@
 package atomicscience.api.poison;
 
-import atomicscience.api.IAntiPoisonArmor;
 import java.util.EnumSet;
+
+import atomicscience.api.IAntiPoisonArmor;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import universalelectricity.core.vector.Vector3;
 
 public abstract class Poison {
-
     public static Poison[] list = new Poison[32];
     protected String name;
     protected EnumSet<Poison.ArmorType> armorRequired;
@@ -16,6 +16,7 @@ public abstract class Poison {
     public Poison(String name, int id) {
         this.armorRequired = EnumSet.range(Poison.ArmorType.HELM, Poison.ArmorType.BOOTS);
         this.name = name;
+
         if (list == null) {
             list = new Poison[32];
         }
@@ -31,26 +32,31 @@ public abstract class Poison {
         return this.armorRequired;
     }
 
-    public void poisonEntity(Vector3 emitPosition, EntityLivingBase entity,
-            int amplifier) {
+    public void
+    poisonEntity(Vector3 emitPosition, EntityLivingBase entity, int amplifier) {
         EnumSet<Poison.ArmorType> armorWorn = EnumSet.of(Poison.ArmorType.UNKNOWN);
+
         if (entity instanceof EntityPlayer) {
             EntityPlayer entityPlayer = (EntityPlayer) entity;
 
             for (int i = 0; i < entityPlayer.inventory.armorInventory.length; ++i) {
-                if (entityPlayer.inventory.armorInventory[i] != null &&
-                        entityPlayer.inventory.armorInventory[i].getItem() instanceof IAntiPoisonArmor &&
-                        ((IAntiPoisonArmor) entityPlayer.inventory.armorInventory[i]
-                                .getItem())
-                                .isProtectedFromPoison(entityPlayer.inventory.armorInventory[i],
-                                        entity, this)) {
-                    ((IAntiPoisonArmor) entityPlayer.inventory.armorInventory[i].getItem())
-                            .onProtectFromPoison(entityPlayer.inventory.armorInventory[i],
-                                    entity, this);
-                    armorWorn.add(
-                            ((IAntiPoisonArmor) entityPlayer.inventory.armorInventory[i]
-                                    .getItem())
-                                    .getArmorType());
+                if (entityPlayer.inventory.armorInventory[i] != null
+                    && entityPlayer.inventory.armorInventory[i].getItem()
+                            instanceof IAntiPoisonArmor
+                    && ((IAntiPoisonArmor) entityPlayer.inventory.armorInventory[i]
+                            .getItem())
+                           .isProtectedFromPoison(
+                               entityPlayer.inventory.armorInventory[i], entity, this
+                           )) {
+                    ((IAntiPoisonArmor) entityPlayer.inventory.armorInventory[i].getItem()
+                    )
+                        .onProtectFromPoison(
+                            entityPlayer.inventory.armorInventory[i], entity, this
+                        );
+                    armorWorn.add(((IAntiPoisonArmor) entityPlayer.inventory
+                                       .armorInventory[i]
+                                       .getItem())
+                                      .getArmorType());
                 }
             }
         }
@@ -64,8 +70,9 @@ public abstract class Poison {
         this.poisonEntity(emitPosition, entity, 0);
     }
 
-    protected abstract void doPoisonEntity(Vector3 var1, EntityLivingBase var2,
-            EnumSet<Poison.ArmorType> var3, int var4);
+    protected abstract void doPoisonEntity(
+        Vector3 var1, EntityLivingBase var2, EnumSet<Poison.ArmorType> var3, int var4
+    );
 
     public static enum ArmorType {
         HELM,

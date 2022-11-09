@@ -42,45 +42,65 @@ public class ClientProxy extends CommonProxy {
     public void init() {
         super.init();
         ClientRegistry.bindTileEntitySpecialRenderer(
-                TMachineGunTurret.class, (TileEntitySpecialRenderer) new RGunTurret());
+            TMachineGunTurret.class, (TileEntitySpecialRenderer) new RGunTurret()
+        );
         ClientRegistry.bindTileEntitySpecialRenderer(
-                TAATurret.class, (TileEntitySpecialRenderer) new RAATurret());
+            TAATurret.class, (TileEntitySpecialRenderer) new RAATurret()
+        );
         ClientRegistry.bindTileEntitySpecialRenderer(
-                TRailgunTurret.class, (TileEntitySpecialRenderer) new RRailgun());
+            TRailgunTurret.class, (TileEntitySpecialRenderer) new RRailgun()
+        );
         ClientRegistry.bindTileEntitySpecialRenderer(
-                TLaserTurret.class, (TileEntitySpecialRenderer) new RLaserTurret());
-        RenderingRegistry.registerEntityRenderingHandler(ESeat.class,
-                (Render) new RESeat());
-        RenderingRegistry.registerBlockHandler(
-                (ISimpleBlockRenderingHandler) new BlockRenderingHandler());
+            TLaserTurret.class, (TileEntitySpecialRenderer) new RLaserTurret()
+        );
+        RenderingRegistry.registerEntityRenderingHandler(
+            ESeat.class, (Render) new RESeat()
+        );
+        RenderingRegistry.registerBlockHandler((ISimpleBlockRenderingHandler
+        ) new BlockRenderingHandler());
     }
 
     @Override
-    public Object getClientGuiElement(final int ID, final EntityPlayer player,
-            final World world, final int x, final int y,
-            final int z) {
+    public Object getClientGuiElement(
+        final int ID,
+        final EntityPlayer player,
+        final World world,
+        final int x,
+        final int y,
+        final int z
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity != null) {
             switch (ID) {
                 case 0: {
                     return new GuiPlatformSlots(player.inventory, (TPlatform) tileEntity);
                 }
+
                 case 1: {
                     return new GuiPlatformTerminal(player, (TPlatform) tileEntity);
                 }
+
                 case 2: {
                     return new GuiPlatformAccess(player, (TPlatform) tileEntity);
                 }
             }
         }
+
         return null;
     }
 
     @Override
-    public void renderBeam(final World world, final Vector3 position,
-            final Vector3 target, final float red,
-            final float green, final float blue, final int age) {
-        FMLClientHandler.instance().getClient().effectRenderer.addEffect(
-                (EntityFX) new FXBeam(world, position, target, red, green, blue, age));
+    public void renderBeam(
+        final World world,
+        final Vector3 position,
+        final Vector3 target,
+        final float red,
+        final float green,
+        final float blue,
+        final int age
+    ) {
+        FMLClientHandler.instance().getClient().effectRenderer.addEffect((EntityFX
+        ) new FXBeam(world, position, target, red, green, blue, age));
     }
 }

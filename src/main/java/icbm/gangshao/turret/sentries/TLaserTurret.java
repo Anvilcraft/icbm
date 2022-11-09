@@ -2,8 +2,8 @@ package icbm.gangshao.turret.sentries;
 
 import calclavia.lib.CalculationHelper;
 import icbm.api.sentry.IAATarget;
-import icbm.gangshao.ProjectileType;
 import icbm.gangshao.ICBMSentry;
+import icbm.gangshao.ProjectileType;
 import icbm.gangshao.damage.TileDamageSource;
 import icbm.gangshao.platform.TPlatform;
 import net.minecraft.entity.EntityLiving;
@@ -29,10 +29,13 @@ public class TLaserTurret extends TAutomaticTurret {
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (this.worldObj.isRemote) {
             this.barrelRotation = MathHelper.wrapAngleTo180_float(
-                    this.barrelRotation + this.barrelRotationVelocity);
-            this.barrelRotationVelocity = Math.max(this.barrelRotationVelocity - 0.1f, 0.0f);
+                this.barrelRotation + this.barrelRotationVelocity
+            );
+            this.barrelRotationVelocity
+                = Math.max(this.barrelRotationVelocity - 0.1f, 0.0f);
         }
     }
 
@@ -53,30 +56,51 @@ public class TLaserTurret extends TAutomaticTurret {
 
     @Override
     public void playFiringSound() {
-        this.worldObj.playSoundEffect((double) this.xCoord, (double) this.yCoord,
-                (double) this.zCoord, "icbm.lasershot", 5.0f,
-                1.0f - this.worldObj.rand.nextFloat() * 0.2f);
+        this.worldObj.playSoundEffect(
+            (double) this.xCoord,
+            (double) this.yCoord,
+            (double) this.zCoord,
+            "icbm.lasershot",
+            5.0f,
+            1.0f - this.worldObj.rand.nextFloat() * 0.2f
+        );
     }
 
     @Override
     public void renderShot(final Vector3 target) {
         final Vector3 center = this.getCenter();
         ICBMSentry.proxy.renderBeam(
-                this.worldObj,
-                Vector3.add(center, CalculationHelper
-                        .getDeltaPositionFromRotation(
-                                super.currentRotationYaw - 6.0f,
-                                super.currentRotationPitch * 1.4f)
-                        .multiply(1.2)),
-                target, 1.0f, 0.4f, 0.4f, 5);
+            this.worldObj,
+            Vector3.add(
+                center,
+                CalculationHelper
+                    .getDeltaPositionFromRotation(
+                        super.currentRotationYaw - 6.0f, super.currentRotationPitch * 1.4f
+                    )
+                    .multiply(1.2)
+            ),
+            target,
+            1.0f,
+            0.4f,
+            0.4f,
+            5
+        );
         ICBMSentry.proxy.renderBeam(
-                this.worldObj,
-                Vector3.add(center, CalculationHelper
-                        .getDeltaPositionFromRotation(
-                                super.currentRotationYaw + 6.0f,
-                                super.currentRotationPitch * 1.4f)
-                        .multiply(1.2)),
-                target, 1.0f, 0.4f, 0.4f, 5);
+            this.worldObj,
+            Vector3.add(
+                center,
+                CalculationHelper
+                    .getDeltaPositionFromRotation(
+                        super.currentRotationYaw + 6.0f, super.currentRotationPitch * 1.4f
+                    )
+                    .multiply(1.2)
+            ),
+            target,
+            1.0f,
+            0.4f,
+            0.4f,
+            5
+        );
         ++this.barrelRotationVelocity;
     }
 
@@ -87,22 +111,27 @@ public class TLaserTurret extends TAutomaticTurret {
                 final TPlatform platform = this.getPlatform();
                 platform.wattsReceived -= this.getFiringRequest();
                 super.target.attackEntityFrom(
-                        (DamageSource) TileDamageSource.doLaserDamage(this), 2);
+                    (DamageSource) TileDamageSource.doLaserDamage(this), 2
+                );
                 super.target.setFire(3);
                 return true;
             }
+
             if (super.target instanceof IAATarget) {
                 if (this.worldObj.rand.nextFloat() > 0.2) {
                     final int damage = ((IAATarget) super.target).doDamage(10);
+
                     if (damage == -1 && this.worldObj.rand.nextFloat() > 0.7) {
                         ((IAATarget) super.target).destroyCraft();
                     } else if (damage <= 0) {
                         ((IAATarget) super.target).destroyCraft();
                     }
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 }

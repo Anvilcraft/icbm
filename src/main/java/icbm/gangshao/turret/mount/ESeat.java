@@ -20,8 +20,12 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
         super.noClip = true;
     }
 
-    public ESeat(final World par1World, final Vector3 position,
-            final TileEntity controller, final boolean sit) {
+    public ESeat(
+        final World par1World,
+        final Vector3 position,
+        final TileEntity controller,
+        final boolean sit
+    ) {
         this(par1World);
         super.isImmuneToFire = true;
         this.setPosition(position.x, position.y, position.z);
@@ -44,6 +48,7 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
         } else {
             MainBase.LOGGER.severe("Failed to send ridable turret packet!");
         }
+
         data.writeBoolean(this.shouldSit);
     }
 
@@ -51,7 +56,8 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
     public void readSpawnData(final ByteBuf data) {
         try {
             this.controller = super.worldObj.getTileEntity(
-                    data.readInt(), data.readInt(), data.readInt());
+                data.readInt(), data.readInt(), data.readInt()
+            );
             this.shouldSit = data.readBoolean();
         } catch (final Exception e) {
             e.printStackTrace();
@@ -64,16 +70,20 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
             this.setDead();
             return;
         }
+
         if (this.controller.isInvalid()) {
             this.setDead();
             return;
         }
+
         if (this.controller instanceof TPaoTaiQi) {
             ((TPaoTaiQi) this.controller).entityFake = this;
         }
+
         if (super.worldObj.isRemote && super.riddenByEntity != null) {
             super.riddenByEntity.updateRiderPosition();
         }
+
         super.posY = this.controller.yCoord + 1.2;
     }
 
@@ -93,8 +103,7 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
-    protected void entityInit() {
-    }
+    protected void entityInit() {}
 
     @Override
     protected void readEntityFromNBT(final NBTTagCompound nbt) {

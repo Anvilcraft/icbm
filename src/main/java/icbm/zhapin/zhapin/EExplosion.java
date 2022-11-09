@@ -1,10 +1,11 @@
 package icbm.zhapin.zhapin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import icbm.zhapin.ICBMExplosion;
 import io.netty.buffer.ByteBuf;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -36,8 +37,12 @@ public class EExplosion extends Entity implements IEntityAdditionalSpawnData {
         super.ignoreFrustumCheck = true;
     }
 
-    public EExplosion(final World par1World, final Vector3 position,
-            final int explosionID, final boolean isMobile) {
+    public EExplosion(
+        final World par1World,
+        final Vector3 position,
+        final int explosionID,
+        final boolean isMobile
+    ) {
         this(par1World);
         this.jiaoShuMu = 0;
         this.haoMa = explosionID;
@@ -45,9 +50,13 @@ public class EExplosion extends Entity implements IEntityAdditionalSpawnData {
         this.setPosition(position.x, position.y, position.z);
     }
 
-    public EExplosion(final World par1World, final Vector3 position,
-            final int explosionID, final boolean isMobile,
-            final int metadata) {
+    public EExplosion(
+        final World par1World,
+        final Vector3 position,
+        final int explosionID,
+        final boolean isMobile,
+        final int metadata
+    ) {
         this(par1World, position, explosionID, isMobile);
         this.metadata = metadata;
     }
@@ -72,8 +81,7 @@ public class EExplosion extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
-    protected void entityInit() {
-    }
+    protected void entityInit() {}
 
     @Override
     protected boolean canTriggerWalking() {
@@ -87,39 +95,50 @@ public class EExplosion extends Entity implements IEntityAdditionalSpawnData {
 
     @Override
     public void onUpdate() {
-        if (!super.worldObj.isRemote &&
-                ICBMExplosion.shiBaoHu(super.worldObj, new Vector3(this),
-                        ZhaPin.ZhaPinType.ZHA_DAN, this.haoMa)) {
+        if (!super.worldObj.isRemote
+            && ICBMExplosion.shiBaoHu(
+                super.worldObj, new Vector3(this), ZhaPin.ZhaPinType.ZHA_DAN, this.haoMa
+            )) {
             this.setDead();
             return;
         }
-        if (this.isMobile && (super.motionX != 0.0 || super.motionY != 0.0 ||
-                super.motionZ != 0.0)) {
+
+        if (this.isMobile
+            && (super.motionX != 0.0 || super.motionY != 0.0 || super.motionZ != 0.0)) {
             this.moveEntity(super.motionX, super.motionY, super.motionZ);
         }
+
         if (super.ticksExisted == 1) {
-            ZhaPin.list[this.haoMa].baoZhaQian(super.worldObj, new Vector3(this),
-                    this);
+            ZhaPin.list[this.haoMa].baoZhaQian(super.worldObj, new Vector3(this), this);
         }
+
         if (this.tickCallCounter >= ZhaPin.list[this.haoMa].proceduralInterval(
-                super.worldObj, this.jiaoShuMu)) {
-            if (!this.endExplosion &&
-                    ZhaPin.list[this.haoMa].doBaoZha(
-                            super.worldObj, new Vector3(super.posX, super.posY, super.posZ),
-                            this, this.metadata, this.jiaoShuMu)) {
+                super.worldObj, this.jiaoShuMu
+            )) {
+            if (!this.endExplosion
+                && ZhaPin.list[this.haoMa].doBaoZha(
+                    super.worldObj,
+                    new Vector3(super.posX, super.posY, super.posZ),
+                    this,
+                    this.metadata,
+                    this.jiaoShuMu
+                )) {
                 this.jiaoShuMu += ZhaPin.list[this.haoMa].countIncrement();
                 this.tickCallCounter = 0;
             } else {
                 ZhaPin.list[this.haoMa].baoZhaHou(
-                        super.worldObj, new Vector3(super.posX, super.posY, super.posZ),
-                        this);
+                    super.worldObj, new Vector3(super.posX, super.posY, super.posZ), this
+                );
                 this.setDead();
             }
         }
+
         ++this.tickCallCounter;
         ZhaPin.list[this.haoMa].gengXin(
-                super.worldObj, new Vector3(super.posX, super.posY, super.posZ),
-                super.ticksExisted);
+            super.worldObj,
+            new Vector3(super.posX, super.posY, super.posZ),
+            super.ticksExisted
+        );
         ++super.ticksExisted;
     }
 

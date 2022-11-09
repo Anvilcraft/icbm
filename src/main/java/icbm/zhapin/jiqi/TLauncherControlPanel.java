@@ -20,7 +20,7 @@ import universalelectricity.prefab.implement.ITier;
 import universalelectricity.prefab.multiblock.IBlockActivate;
 
 public class TLauncherControlPanel
-        extends TLauncherController implements IBlockActivate, ITier, IRotatable {
+    extends TLauncherController implements IBlockActivate, ITier, IRotatable {
     private boolean isPowered;
     private byte direction;
     private int tier;
@@ -38,14 +38,18 @@ public class TLauncherControlPanel
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (!this.isDisabled()) {
             if (this.faSheDi == null) {
                 for (byte i = 2; i < 6; ++i) {
-                    final Vector3 position = new Vector3(this.xCoord, this.yCoord, this.zCoord);
-                    position.modifyPositionFromSide(
-                            ForgeDirection.getOrientation((int) i));
+                    final Vector3 position
+                        = new Vector3(this.xCoord, this.yCoord, this.zCoord);
+                    position.modifyPositionFromSide(ForgeDirection.getOrientation((int) i)
+                    );
                     final TileEntity tileEntity = this.worldObj.getTileEntity(
-                            position.intX(), position.intY(), position.intZ());
+                        position.intX(), position.intY(), position.intZ()
+                    );
+
                     if (tileEntity != null && tileEntity instanceof TLauncherPlatform) {
                         this.faSheDi = (TLauncherPlatform) tileEntity;
                         this.direction = i;
@@ -54,11 +58,13 @@ public class TLauncherControlPanel
             } else if (this.faSheDi.isInvalid()) {
                 this.faSheDi = null;
             }
+
             if (this.isPowered) {
                 this.isPowered = false;
                 this.launch();
             }
         }
+
         if (!this.worldObj.isRemote) {
             if (super.ticks % 10L == 0L) {
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -76,8 +82,9 @@ public class TLauncherControlPanel
         nbt.setInteger("frequency", this.getFrequency());
         nbt.setShort("height", this.height);
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     @Override
@@ -123,10 +130,9 @@ public class TLauncherControlPanel
 
     @Override
     public boolean canLaunch() {
-        return this.faSheDi != null && !this.isDisabled() &&
-                this.faSheDi.daoDan != null &&
-                this.getJoules() >= this.getMaxJoules() &&
-                this.faSheDi.isInRange(super.target);
+        return this.faSheDi != null && !this.isDisabled() && this.faSheDi.daoDan != null
+            && this.getJoules() >= this.getMaxJoules()
+            && this.faSheDi.isInRange(super.target);
     }
 
     @Override
@@ -141,6 +147,7 @@ public class TLauncherControlPanel
     public String getStatus() {
         String color = "§4";
         String status = "Idle";
+
         if (this.isDisabled()) {
             status = "Disabled";
         } else if (this.faSheDi == null) {
@@ -159,6 +166,7 @@ public class TLauncherControlPanel
             color = "§2";
             status = "Ready to launch!";
         }
+
         return color + status;
     }
 
@@ -184,9 +192,11 @@ public class TLauncherControlPanel
             default: {
                 return 120.0;
             }
+
             case 1: {
                 return 240.0;
             }
+
             case 2: {
                 return 480.0;
             }
@@ -214,14 +224,19 @@ public class TLauncherControlPanel
     }
 
     @Override
-    public ForgeDirection getDirection(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public ForgeDirection
+    getDirection(final IBlockAccess world, final int x, final int y, final int z) {
         return ForgeDirection.getOrientation((int) this.direction);
     }
 
     @Override
-    public void setDirection(final World world, final int x, final int y,
-            final int z, final ForgeDirection facingDirection) {
+    public void setDirection(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final ForgeDirection facingDirection
+    ) {
         this.direction = (byte) facingDirection.ordinal();
     }
 
@@ -231,9 +246,11 @@ public class TLauncherControlPanel
             case 0: {
                 return 400000.0;
             }
+
             case 1: {
                 return 60000.0;
             }
+
             default: {
                 return 800000.0;
             }
@@ -242,8 +259,14 @@ public class TLauncherControlPanel
 
     @Override
     public boolean onActivated(final EntityPlayer entityPlayer) {
-        entityPlayer.openGui((Object) ICBMExplosion.instance, 2, this.worldObj,
-                this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(
+            (Object) ICBMExplosion.instance,
+            2,
+            this.worldObj,
+            this.xCoord,
+            this.yCoord,
+            this.zCoord
+        );
         return true;
     }
 
@@ -257,6 +280,7 @@ public class TLauncherControlPanel
         if (this.faSheDi != null) {
             return this.faSheDi.getContainingMissile();
         }
+
         return null;
     }
 

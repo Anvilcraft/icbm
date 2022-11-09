@@ -17,8 +17,9 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
     private TileEntityTerminal tileEntity;
     private GuiTextField commandLine;
 
-    public GuiPlatformTerminal(final EntityPlayer entityPlayer,
-            final TPlatform tileEntity) {
+    public GuiPlatformTerminal(
+        final EntityPlayer entityPlayer, final TPlatform tileEntity
+    ) {
         super(entityPlayer, tileEntity);
         this.tileEntity = tileEntity;
     }
@@ -28,9 +29,9 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
         super.initGui();
         final int width = (this.width - super.xSize) / 2;
         final int height = (this.height - super.ySize) / 2;
-        (this.commandLine = new GuiTextField(this.fontRendererObj, width + 12,
-                height + 165, 135, 11))
-                .setMaxStringLength(30);
+        (this.commandLine
+         = new GuiTextField(this.fontRendererObj, width + 12, height + 165, 135, 11))
+            .setMaxStringLength(30);
         this.buttonList.add(new GuiButtonArrow(4, width + 151, height + 21, false));
         this.buttonList.add(new GuiButtonArrow(5, width + 151, height + 152, true));
         Keyboard.enableRepeatEvents(true);
@@ -51,6 +52,7 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
     public void handleMouseInput() {
         super.handleMouseInput();
         final int wheel = Mouse.getEventDWheel();
+
         if (wheel > 0) {
             this.tileEntity.scroll(-2);
         } else if (wheel < 0) {
@@ -61,11 +63,13 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
     @Override
     protected void actionPerformed(final GuiButton button) {
         super.actionPerformed(button);
+
         switch (button.id) {
             case 4: {
                 this.tileEntity.scroll(-1);
                 break;
             }
+
             case 5: {
                 this.tileEntity.scroll(1);
                 break;
@@ -97,12 +101,11 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
     }
 
     @Override
-    protected void drawForegroundLayer(final int x, final int y,
-            final float var1) {
+    protected void drawForegroundLayer(final int x, final int y, final float var1) {
         final String title = "Terminal";
         this.fontRendererObj.drawString(
-                "§7" + title, (int) (super.xSize / 2 - title.length() * 2.5), 4,
-                4210752);
+            "§7" + title, (int) (super.xSize / 2 - title.length() * 2.5), 4, 4210752
+        );
         this.drawConsole(25, 16, 15);
         super.drawForegroundLayer(x, y, var1);
     }
@@ -113,25 +116,29 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
         GL11.glPushMatrix();
         final float scale = 0.92f;
         GL11.glScalef(scale, scale, scale);
+
         for (int i = 0; i < lines; ++i) {
             final int currentLine = i + this.tileEntity.getScroll();
-            if (currentLine < this.tileEntity.getTerminalOuput().size() &&
-                    currentLine >= 0) {
+
+            if (currentLine < this.tileEntity.getTerminalOuput().size()
+                && currentLine >= 0) {
                 final String line = this.tileEntity.getTerminalOuput().get(currentLine);
+
                 if (line != null && line != "") {
                     this.fontRendererObj.drawString(line, y, spacing * i + x, color);
                 }
             }
         }
+
         GL11.glPopMatrix();
     }
 
     @Override
-    protected void drawBackgroundLayer(final int x, final int y,
-            final float var1) {
+    protected void drawBackgroundLayer(final int x, final int y, final float var1) {
         super.drawBackgroundLayer(x, y, var1);
         this.mc.renderEngine.bindTexture(
-                new ResourceLocation("icbm", "textures/gui/gui_platform_terminal.png"));
+            new ResourceLocation("icbm", "textures/gui/gui_platform_terminal.png")
+        );
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         final int var2 = (this.width - super.xSize) / 2;
         final int var3 = (this.height - super.ySize) / 2;

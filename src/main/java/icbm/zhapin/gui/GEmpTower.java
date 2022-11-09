@@ -23,13 +23,16 @@ public class GEmpTower extends GuiBase {
         super.initGui();
         this.buttonList.clear();
         this.buttonList.add(new GuiButton(
-                0, this.width / 2 - 77, this.height / 2 - 10, 50, 20, "Missiles"));
+            0, this.width / 2 - 77, this.height / 2 - 10, 50, 20, "Missiles"
+        ));
         this.buttonList.add(new GuiButton(
-                1, this.width / 2 - 25, this.height / 2 - 10, 65, 20, "Electricity"));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 43,
-                this.height / 2 - 10, 35, 20, "Both"));
+            1, this.width / 2 - 25, this.height / 2 - 10, 65, 20, "Electricity"
+        ));
+        this.buttonList.add(
+            new GuiButton(2, this.width / 2 + 43, this.height / 2 - 10, 35, 20, "Both")
+        );
         (this.textFieldBanJing = new GuiTextField(this.fontRendererObj, 72, 28, 30, 12))
-                .setMaxStringLength(3);
+            .setMaxStringLength(3);
         this.textFieldBanJing.setText(this.tileEntity.radius + "");
         // TODO: WTF
         // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
@@ -51,15 +54,18 @@ public class GEmpTower extends GuiBase {
                 this.tileEntity.holzOhJa = 1;
                 break;
             }
+
             case 1: {
                 this.tileEntity.holzOhJa = 2;
                 break;
             }
+
             case 2: {
                 this.tileEntity.holzOhJa = 0;
                 break;
             }
         }
+
         // TODO: WTF
         // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
         // this.tileEntity, 3, this.tileEntity.muoShi));
@@ -69,41 +75,44 @@ public class GEmpTower extends GuiBase {
     public void keyTyped(final char par1, final int par2) {
         super.keyTyped(par1, par2);
         this.textFieldBanJing.textboxKeyTyped(par1, par2);
+
         try {
             final int radius = Math.min(
-                    Math.max(Integer.parseInt(this.textFieldBanJing.getText()), 10), 150);
+                Math.max(Integer.parseInt(this.textFieldBanJing.getText()), 10), 150
+            );
             this.tileEntity.radius = radius;
             // TODO: WTF
             // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
             // this.tileEntity, 2, this.tileEntity.banJing));
-        } catch (final NumberFormatException ex) {
-        }
+        } catch (final NumberFormatException ex) {}
     }
 
     @Override
     public void mouseClicked(final int par1, final int par2, final int par3) {
         super.mouseClicked(par1, par2, par3);
-        this.textFieldBanJing.mouseClicked(par1 - this.containerWidth,
-                par2 - this.containerHeight, par3);
+        this.textFieldBanJing.mouseClicked(
+            par1 - this.containerWidth, par2 - this.containerHeight, par3
+        );
     }
 
     @Override
-    protected void drawForegroundLayer(final int var2, final int var3,
-            final float var1) {
+    protected void drawForegroundLayer(final int var2, final int var3, final float var1) {
         this.fontRendererObj.drawString("§7EMP Tower", 65, 6, 4210752);
-        this.fontRendererObj.drawString("EMP Radius:          blocks", 12, 30,
-                4210752);
+        this.fontRendererObj.drawString("EMP Radius:          blocks", 12, 30, 4210752);
         this.textFieldBanJing.drawTextBox();
         this.fontRendererObj.drawString("EMP Effect:", 12, 55, 4210752);
         String mode = "Debilitate Electronics";
+
         if (this.tileEntity.holzOhJa == 1) {
             mode = "Disrupt Missiles";
         } else if (this.tileEntity.holzOhJa == 2) {
             mode = "Deplete Electricity";
         }
+
         this.fontRendererObj.drawString("Mode: " + mode, 12, 105, 4210752);
         String color = "§4";
         String status = "Idle";
+
         if (this.tileEntity.isDisabled()) {
             status = "Disabled";
         } else if (this.tileEntity.getJoules() < this.tileEntity.getMaxJoules()) {
@@ -112,36 +121,41 @@ public class GEmpTower extends GuiBase {
             color = "§2";
             status = "Ready to blast!";
         }
-        this.fontRendererObj.drawString(color + "Status: " + status, 12, 120,
-                4210752);
+
+        this.fontRendererObj.drawString(color + "Status: " + status, 12, 120, 4210752);
         this.fontRendererObj.drawString(
-                "Voltage: " + this.tileEntity.getVoltage() + "v", 12, 135, 4210752);
+            "Voltage: " + this.tileEntity.getVoltage() + "v", 12, 135, 4210752
+        );
         this.fontRendererObj.drawString(
-                ElectricityDisplay.getDisplayShort(
-                        this.tileEntity.getJoules(),
-                        ElectricityDisplay.ElectricUnit.JOULES) +
-                        "/" +
-                        ElectricityDisplay.getDisplayShort(
-                                this.tileEntity.getMaxJoules(),
-                                ElectricityDisplay.ElectricUnit.JOULES),
-                12, 150, 4210752);
+            ElectricityDisplay.getDisplayShort(
+                this.tileEntity.getJoules(), ElectricityDisplay.ElectricUnit.JOULES
+            ) + "/"
+                + ElectricityDisplay.getDisplayShort(
+                    this.tileEntity.getMaxJoules(), ElectricityDisplay.ElectricUnit.JOULES
+                ),
+            12,
+            150,
+            4210752
+        );
     }
 
     @Override
-    protected void drawBackgroundLayer(final int var2, final int var3,
-            final float var1) {
+    protected void drawBackgroundLayer(final int var2, final int var3, final float var1) {
         this.mc.renderEngine.bindTexture(
-                new ResourceLocation("icbm", "textures/gui/gui_empty.png"));
+            new ResourceLocation("icbm", "textures/gui/gui_empty.png")
+        );
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.containerWidth = (this.width - super.xSize) / 2;
         this.containerHeight = (this.height - super.ySize) / 2;
-        this.drawTexturedModalRect(this.containerWidth, this.containerHeight, 0, 0,
-                super.xSize, super.ySize);
+        this.drawTexturedModalRect(
+            this.containerWidth, this.containerHeight, 0, 0, super.xSize, super.ySize
+        );
     }
 
     @Override
     public void updateScreen() {
         super.updateScreen();
+
         if (!this.textFieldBanJing.isFocused()) {
             this.textFieldBanJing.setText(this.tileEntity.radius + "");
         }

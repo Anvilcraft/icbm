@@ -1,5 +1,7 @@
 package icbm.zhapin.zhapin;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.api.explosion.ExplosionEvent;
@@ -35,7 +37,6 @@ import icbm.zhapin.zhapin.ex.ExSMine;
 import icbm.zhapin.zhapin.ex.ExShrapnel;
 import icbm.zhapin.zhapin.ex.ExSonic;
 import icbm.zhapin.zhapin.ex.ExThermobaric;
-import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -99,14 +100,18 @@ public abstract class ZhaPin implements ITier, IExplosive {
 
     protected ZhaPin(final String name, final int ID, final int tier) {
         this.isMobile = false;
+
         if (ZhaPin.list == null) {
             ZhaPin.list = new ZhaPin[32];
         }
+
         if (ZhaPin.list[ID] != null) {
             throw new IllegalArgumentException(
-                    "Explosive " + ID + " is already occupied by " +
-                            ZhaPin.list[ID].getClass().getSimpleName() + "!");
+                "Explosive " + ID + " is already occupied by "
+                + ZhaPin.list[ID].getClass().getSimpleName() + "!"
+            );
         }
+
         ZhaPin.list[ID] = this;
         this.name = name;
         this.tier = tier;
@@ -116,8 +121,8 @@ public abstract class ZhaPin implements ITier, IExplosive {
         this.qiZi = FlagRegistry.registerFlag("ban_" + this.name);
         MainBase.CONFIGURATION.load();
         this.isDisabled = MainBase.CONFIGURATION
-                .get("Disable_Explosives", "Disable " + this.name, false)
-                .getBoolean(false);
+                              .get("Disable_Explosives", "Disable " + this.name, false)
+                              .getBoolean(false);
         MainBase.CONFIGURATION.save();
     }
 
@@ -173,10 +178,11 @@ public abstract class ZhaPin implements ITier, IExplosive {
         worldObj.playSoundAtEntity(entity, "random.fuse", 1.0f, 1.0f);
     }
 
-    public void onYinZha(final World worldObj, final Vector3 position,
-            final int fuseTicks) {
-        worldObj.spawnParticle("smoke", position.x, position.y + 0.5, position.z,
-                0.0, 0.0, 0.0);
+    public void
+    onYinZha(final World worldObj, final Vector3 position, final int fuseTicks) {
+        worldObj.spawnParticle(
+            "smoke", position.x, position.y + 0.5, position.z, 0.0, 0.0, 0.0
+        );
     }
 
     public int onBeiZha() {
@@ -191,10 +197,12 @@ public abstract class ZhaPin implements ITier, IExplosive {
         return this.proceduralInterval();
     }
 
-    public void baoZhaQian(final World worldObj, final Vector3 position,
-            final Entity explosionSource) {
+    public void baoZhaQian(
+        final World worldObj, final Vector3 position, final Entity explosionSource
+    ) {
         MinecraftForge.EVENT_BUS.post(new ExplosionEvent.PreExplosionEvent(
-                worldObj, position.x, position.y, position.z, this));
+            worldObj, position.x, position.y, position.z, this
+        ));
     }
 
     // TODO: WTF
@@ -204,64 +212,81 @@ public abstract class ZhaPin implements ITier, IExplosive {
         return null;
     }
 
-    public void doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource) {
+    public void
+    doBaoZha(final World worldObj, final Vector3 position, final Entity explosionSource) {
     }
 
-    public boolean doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource, final int callCount) {
+    public boolean doBaoZha(
+        final World worldObj,
+        final Vector3 position,
+        final Entity explosionSource,
+        final int callCount
+    ) {
         this.doBaoZha(worldObj, position, explosionSource);
         return false;
     }
 
-    public boolean doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource, final int metadata,
-            final int callCount) {
+    public boolean doBaoZha(
+        final World worldObj,
+        final Vector3 position,
+        final Entity explosionSource,
+        final int metadata,
+        final int callCount
+    ) {
         return this.doBaoZha(worldObj, position, explosionSource, callCount);
     }
 
-    public void gengXin(final World worldObj, final Vector3 position,
-            final int ticksExisted) {
-    }
+    public void
+    gengXin(final World worldObj, final Vector3 position, final int ticksExisted) {}
 
-    public void baoZhaHou(final World worldObj, final Vector3 position,
-            final Entity explosionSource) {
+    public void baoZhaHou(
+        final World worldObj, final Vector3 position, final Entity explosionSource
+    ) {
         MinecraftForge.EVENT_BUS.post(new ExplosionEvent.PostExplosionEvent(
-                worldObj, position.x, position.y, position.z, this));
+            worldObj, position.x, position.y, position.z, this
+        ));
     }
 
     public int countIncrement() {
         return 1;
     }
 
-    public void spawnZhaDan(final World worldObj, final Vector3 position,
-            final ForgeDirection orientation, final byte cause) {
+    public void spawnZhaDan(
+        final World worldObj,
+        final Vector3 position,
+        final ForgeDirection orientation,
+        final byte cause
+    ) {
         if (!this.isDisabled) {
             position.add(0.5);
             final EExplosive eZhaDan = new EExplosive(
-                    worldObj, position, (byte) orientation.ordinal(), this.getID());
+                worldObj, position, (byte) orientation.ordinal(), this.getID()
+            );
+
             switch (cause) {
                 case 1: {
                     eZhaDan.destroyedByExplosion();
                     break;
                 }
+
                 case 2: {
                     eZhaDan.setFire(10);
                     break;
                 }
             }
+
             worldObj.spawnEntityInWorld((Entity) eZhaDan);
         }
     }
 
-    public void spawnZhaDan(final World worldObj, final Vector3 position,
-            final byte orientation) {
-        this.spawnZhaDan(worldObj, position,
-                ForgeDirection.getOrientation((int) orientation), (byte) 0);
+    public void
+    spawnZhaDan(final World worldObj, final Vector3 position, final byte orientation) {
+        this.spawnZhaDan(
+            worldObj, position, ForgeDirection.getOrientation((int) orientation), (byte) 0
+        );
     }
 
-    public void init() {
-    }
+    public void init() {}
 
     public ItemStack getItemStack() {
         return new ItemStack(ICBMExplosion.bExplosives, 1, this.getID());
@@ -277,78 +302,111 @@ public abstract class ZhaPin implements ITier, IExplosive {
                 return explosive;
             }
         }
+
         return null;
     }
 
-    public static void createExplosion(final World worldObj, final Double x,
-            final Double y, final Double z,
-            final Entity entity,
-            final Integer explosiveID) {
+    public static void createExplosion(
+        final World worldObj,
+        final Double x,
+        final Double y,
+        final Double z,
+        final Entity entity,
+        final Integer explosiveID
+    ) {
         createExplosion(worldObj, new Vector3(x, y, z), entity, explosiveID);
     }
 
-    public static void createExplosion(final World worldObj,
-            final Vector3 position,
-            final Entity entity,
-            final int explosiveID) {
+    public static void createExplosion(
+        final World worldObj,
+        final Vector3 position,
+        final Entity entity,
+        final int explosiveID
+    ) {
         if (!ZhaPin.list[explosiveID].isDisabled) {
             if (ZhaPin.list[explosiveID].proceduralInterval(worldObj, -1) > 0) {
                 if (!worldObj.isRemote) {
-                    worldObj.spawnEntityInWorld(
-                            (Entity) new EExplosion(worldObj, position.clone(), explosiveID,
-                                    ZhaPin.list[explosiveID].isMobile));
+                    worldObj.spawnEntityInWorld((Entity) new EExplosion(
+                        worldObj,
+                        position.clone(),
+                        explosiveID,
+                        ZhaPin.list[explosiveID].isMobile
+                    ));
                 }
             } else {
                 ZhaPin.list[explosiveID].baoZhaQian(worldObj, position.clone(), entity);
-                ZhaPin.list[explosiveID].doBaoZha(worldObj, position.clone(), entity,
-                        explosiveID, -1);
+                ZhaPin.list[explosiveID].doBaoZha(
+                    worldObj, position.clone(), entity, explosiveID, -1
+                );
                 ZhaPin.list[explosiveID].baoZhaHou(worldObj, position.clone(), entity);
             }
         }
     }
 
-    public void doDamageEntities(final World worldObj, final Vector3 position,
-            final float radius, final float power) {
+    public void doDamageEntities(
+        final World worldObj,
+        final Vector3 position,
+        final float radius,
+        final float power
+    ) {
         this.doDamageEntities(worldObj, position, radius, power, true);
     }
 
-    public void doDamageEntities(final World worldObj, final Vector3 position,
-            float radius, final float power,
-            final boolean destroyItem) {
+    public void doDamageEntities(
+        final World worldObj,
+        final Vector3 position,
+        float radius,
+        final float power,
+        final boolean destroyItem
+    ) {
         radius *= 2.0f;
         final Vector3 minCoord = position.clone();
         minCoord.add(-radius - 1.0f);
         final Vector3 maxCoord = position.clone();
         maxCoord.add(radius + 1.0f);
         final List<Entity> allEntities = worldObj.getEntitiesWithinAABB(
-                Entity.class, AxisAlignedBB.getBoundingBox(
-                        (double) minCoord.intX(), (double) minCoord.intY(),
-                        (double) minCoord.intZ(), (double) maxCoord.intX(),
-                        (double) maxCoord.intY(), (double) maxCoord.intZ()));
+            Entity.class,
+            AxisAlignedBB.getBoundingBox(
+                (double) minCoord.intX(),
+                (double) minCoord.intY(),
+                (double) minCoord.intZ(),
+                (double) maxCoord.intX(),
+                (double) maxCoord.intY(),
+                (double) maxCoord.intZ()
+            )
+        );
         final Vec3 var31 = Vec3.createVectorHelper(position.x, position.y, position.z);
+
         for (int i = 0; i < allEntities.size(); ++i) {
             final Entity entity = allEntities.get(i);
+
             if (!this.onDamageEntity(entity)) {
                 if (entity instanceof EMissile) {
                     ((EMissile) entity).setExplode();
                 } else if (!(entity instanceof EntityItem) || destroyItem) {
-                    final double distance = entity.getDistance(position.x, position.y, position.z) / radius;
+                    final double distance
+                        = entity.getDistance(position.x, position.y, position.z) / radius;
+
                     if (distance <= 1.0) {
                         double xDifference = entity.posX - position.x;
                         double yDifference = entity.posY - position.y;
                         double zDifference = entity.posZ - position.z;
                         final double var32 = MathHelper.sqrt_double(
-                                xDifference * xDifference + yDifference * yDifference +
-                                        zDifference * zDifference);
+                            xDifference * xDifference + yDifference * yDifference
+                            + zDifference * zDifference
+                        );
                         xDifference /= var32;
                         yDifference /= var32;
                         zDifference /= var32;
-                        final double var33 = worldObj.getBlockDensity(var31, entity.boundingBox);
+                        final double var33
+                            = worldObj.getBlockDensity(var31, entity.boundingBox);
                         final double var34 = (1.0 - distance) * var33;
                         int damage = 0;
-                        damage = (int) ((var34 * var34 + var34) / 2.0 * 8.0 * power + 1.0);
+                        damage
+                            = (int) ((var34 * var34 + var34) / 2.0 * 8.0 * power + 1.0);
                         entity.attackEntityFrom(
-                                DamageSource.setExplosionSource((Explosion) null), damage);
+                            DamageSource.setExplosionSource((Explosion) null), damage
+                        );
                         final Entity entity2 = entity;
                         entity2.motionX += xDifference * var34;
                         final Entity entity3 = entity;
@@ -366,62 +424,75 @@ public abstract class ZhaPin implements ITier, IExplosive {
     }
 
     static {
-        condensed = new ExCondensed("condensed",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
-        shrapnel = new ExShrapnel("shrapnel",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
-        indenciary = new ExIncendiary("incendiary",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+        condensed
+            = new ExCondensed("condensed", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+        shrapnel
+            = new ExShrapnel("shrapnel", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+        indenciary = new ExIncendiary(
+            "incendiary", HaoMa.getID(ZhaPin.class.getSimpleName()), 1
+        );
         debilitation = new ExDebilitation(
-                "debilitation", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
-        chemical = new ExChemical("chemical",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+            "debilitation", HaoMa.getID(ZhaPin.class.getSimpleName()), 1
+        );
+        chemical
+            = new ExChemical("chemical", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
         anvil = new ExShrapnel("anvil", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
-        repulsive = new ExPushPull("repulsive",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
-        attractive = new ExPushPull("attractive",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+        repulsive
+            = new ExPushPull("repulsive", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
+        attractive
+            = new ExPushPull("attractive", HaoMa.getID(ZhaPin.class.getSimpleName()), 1);
         E_YI_ID = ZhaPin.attractive.getID() + 1;
         fragmentation = new ExShrapnel(
-                "fragmentation", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
-        contagious = new ExChemical("contagious",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
+            "fragmentation", HaoMa.getID(ZhaPin.class.getSimpleName()), 2
+        );
+        contagious
+            = new ExChemical("contagious", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
         sonic = new ExSonic("sonic", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
-        breaching = new ExBreaching("breaching",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
+        breaching
+            = new ExBreaching("breaching", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
         rejuvenation = new ExRejuvenation(
-                "rejuvenation", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
+            "rejuvenation", HaoMa.getID(ZhaPin.class.getSimpleName()), 2
+        );
         thermobaric = new ExThermobaric(
-                "thermobaric", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
+            "thermobaric", HaoMa.getID(ZhaPin.class.getSimpleName()), 2
+        );
         E_ER_ID = ZhaPin.thermobaric.getID() + 1;
         nuclear = new ExNuclear("nuclear", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
         emp = new ExEmp("emp", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
-        exothermic = new ExExothermic("exothermic",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+        exothermic = new ExExothermic(
+            "exothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
         endothermic = new ExEndothermic(
-                "endothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+            "endothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
         antiGravitational = new ExAntiGravitational(
-                "antiGravitational", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+            "antiGravitational", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
         ender = new ExEnder("ender", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
-        hypersonic = new ExHypersonic("hypersonic",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+        hypersonic = new ExHypersonic(
+            "hypersonic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
         E_SAN_ID = ZhaPin.hypersonic.getID() + 1;
-        antimatter = new ExAntimatter("antimatter",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 4);
-        redMatter = new ExRedMatter("redMatter",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 4);
+        antimatter = new ExAntimatter(
+            "antimatter", HaoMa.getID(ZhaPin.class.getSimpleName()), 4
+        );
+        redMatter
+            = new ExRedMatter("redMatter", HaoMa.getID(ZhaPin.class.getSimpleName()), 4);
         E_SI_ID = ZhaPin.redMatter.getID() + 1;
         sMine = new ExSMine("sMine", HaoMa.getID(ZhaPin.class.getSimpleName()), 2);
         empWave = new ExEmpWave("emp", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
         empSignal = new ExEmpSignal("emp", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
         exothermic2 = new ExExothermic2(
-                "exothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
-        decayLand = new ExDecayLand("decayLand",
-                HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+            "exothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
+        decayLand
+            = new ExDecayLand("decayLand", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
         mutateLiving = new ExMutateLiving(
-                "mutateLiving", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+            "mutateLiving", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
         endothermic2 = new ExEndothermic2(
-                "endothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3);
+            "endothermic", HaoMa.getID(ZhaPin.class.getSimpleName()), 3
+        );
     }
 
     public enum ZhaPinType {
@@ -431,13 +502,13 @@ public abstract class ZhaPin implements ITier, IExplosive {
         DAO_DAN("DAO_DAN", 3),
         CHE("CHE", 4);
 
-        private ZhaPinType(final String name, final int ordinal) {
-        }
+        private ZhaPinType(final String name, final int ordinal) {}
 
         public static ZhaPinType get(final int id) {
             if (id >= 0 && id < values().length) {
                 return values()[id];
             }
+
             return null;
         }
     }

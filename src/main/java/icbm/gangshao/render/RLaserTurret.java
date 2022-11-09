@@ -20,17 +20,21 @@ public class RLaserTurret extends RenderTaggedTile {
     public static final MLeiShe MODEL;
 
     @Override
-    public void renderTileEntityAt(final TileEntity t, final double x,
-            final double y, final double z,
-            final float f) {
+    public void renderTileEntityAt(
+        final TileEntity t, final double x, final double y, final double z, final float f
+    ) {
         super.renderTileEntityAt(t, x, y, z, f);
+
         if (t instanceof TLaserTurret) {
             final TLaserTurret tileEntity = (TLaserTurret) t;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x + 0.5f, (float) y + 1.5f, (float) z + 0.5f);
             this.setTextureBaseOnState(tileEntity);
-            render(tileEntity.currentRotationYaw, tileEntity.currentRotationPitch,
-                    tileEntity.barrelRotation);
+            render(
+                tileEntity.currentRotationYaw,
+                tileEntity.currentRotationPitch,
+                tileEntity.barrelRotation
+            );
             GL11.glPopMatrix();
         }
     }
@@ -39,8 +43,8 @@ public class RLaserTurret extends RenderTaggedTile {
         render(renderYaw, renderPitch, 0.0f);
     }
 
-    public static void render(final float renderYaw, final float renderPitch,
-            final float barrelRotation) {
+    public static void
+    render(final float renderYaw, final float renderPitch, final float barrelRotation) {
         GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
         GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
         GL11.glRotatef(renderYaw, 0.0f, 1.0f, 0.0f);
@@ -51,21 +55,29 @@ public class RLaserTurret extends RenderTaggedTile {
 
     public void setTextureBaseOnState(final TTurretBase tileEntity) {
         final EntityPlayer player = this.getPlayer();
+
         if (tileEntity.getPlatform() != null) {
-            final AccessLevel level = tileEntity.getPlatform().getUserAccess(player.getDisplayName());
+            final AccessLevel level
+                = tileEntity.getPlatform().getUserAccess(player.getDisplayName());
+
             if (level == AccessLevel.ADMIN) {
                 this.bindTexture(new ResourceLocation(
-                        "icbm", "textures/models/laser_turret_neutral.png"));
+                    "icbm", "textures/models/laser_turret_neutral.png"
+                ));
                 return;
             }
+
             if (level.ordinal() >= AccessLevel.USER.ordinal()) {
                 this.bindTexture(new ResourceLocation(
-                        "icbm", "textures/models/laser_turret_friendly.png"));
+                    "icbm", "textures/models/laser_turret_friendly.png"
+                ));
                 return;
             }
         }
-        this.bindTexture(new ResourceLocation(
-                "icbm", "textures/models/laser_turret_hostile.png"));
+
+        this.bindTexture(
+            new ResourceLocation("icbm", "textures/models/laser_turret_hostile.png")
+        );
     }
 
     static {

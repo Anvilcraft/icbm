@@ -1,23 +1,21 @@
 package icbm.api.explosion;
 
-
 public interface IExplosive {
+    int getID();
 
-   int getID();
+    String getUnlocalizedName();
 
-   String getUnlocalizedName();
+    String getExplosiveName();
 
-   String getExplosiveName();
+    String getGrenadeName();
 
-   String getGrenadeName();
+    String getMissileName();
 
-   String getMissileName();
+    String getMinecartName();
 
-   String getMinecartName();
+    float getRadius();
 
-   float getRadius();
+    int getTier();
 
-   int getTier();
-
-   double getEnergy();
+    double getEnergy();
 }

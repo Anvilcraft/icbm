@@ -1,12 +1,13 @@
 package icbm.gangshao.platform;
 
+import java.util.Random;
+
 import icbm.core.ICBMTab;
 import icbm.core.di.BICBM;
 import icbm.gangshao.IAmmunition;
-import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.ICBMSentry;
+import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.access.AccessLevel;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -34,40 +35,59 @@ public class BlockTurretPlatform extends BICBM {
     @Override
     public IIcon getIcon(final int side, final int metadata) {
         return (side == 0) ? super.iconBottom
-                : ((side == 1) ? super.iconTop : super.iconSide);
+                           : ((side == 1) ? super.iconTop : super.iconSide);
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y,
-            final int z, final EntityLivingBase entity,
-            final ItemStack itemStack) {
+    public void onBlockPlacedBy(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityLivingBase entity,
+        final ItemStack itemStack
+    ) {
         if (entity instanceof EntityPlayer && !world.isRemote) {
             final TileEntity ent = world.getTileEntity(x, y, z);
+
             if (ent instanceof ISpecialAccess) {
                 ((ISpecialAccess) ent)
-                        .addUserAccess(((EntityPlayer) entity).getDisplayName(),
-                                AccessLevel.OWNER, true);
+                    .addUserAccess(
+                        ((EntityPlayer) entity).getDisplayName(), AccessLevel.OWNER, true
+                    );
             }
         }
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y,
-            final int z, final EntityPlayer player,
-            final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer player,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (!(tileEntity instanceof TPlatform)) {
             return false;
         }
-        if (player.getCurrentEquippedItem() != null &&
-                side == ((TPlatform) tileEntity).deployDirection.ordinal() &&
-                player.getCurrentEquippedItem().getItem() == Item.getItemFromBlock(ICBMSentry.blockTurret)) {
+
+        if (player.getCurrentEquippedItem() != null
+            && side == ((TPlatform) tileEntity).deployDirection.ordinal()
+            && player.getCurrentEquippedItem().getItem()
+                == Item.getItemFromBlock(ICBMSentry.blockTurret)) {
             return false;
         }
+
         if (((TPlatform) tileEntity).getTurret(false) != null && !world.isRemote) {
             player.openGui((Object) ICBMSentry.instance, 0, world, x, y, z);
         }
+
         return true;
     }
 
@@ -77,49 +97,74 @@ public class BlockTurretPlatform extends BICBM {
     }
 
     @Override
-    public void dropEntireInventory(final World world, final int x, final int y,
-            final int z, final Block par5,
-            final int par6) {
+    public void dropEntireInventory(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final Block par5,
+        final int par6
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity != null && tileEntity instanceof IInventory) {
             final IInventory inventory = (IInventory) tileEntity;
+
             for (int slot = 0; slot < inventory.getSizeInventory(); ++slot) {
                 ItemStack itemStack = inventory.getStackInSlot(slot);
+
                 if (itemStack != null) {
                     boolean flag = true;
                     final Item item = itemStack.getItem();
+
                     if (item instanceof IAmmunition) {
                         if (((IAmmunition) item).canDrop(itemStack.getItemDamage())) {
                             flag = true;
-                            itemStack = ((IAmmunition) item).onDroppedIntoWorld(itemStack.copy());
+                            itemStack = ((IAmmunition) item)
+                                            .onDroppedIntoWorld(itemStack.copy());
                         } else {
                             flag = false;
                         }
                     }
+
                     if (flag) {
                         final Random random = new Random();
                         final float var8 = random.nextFloat() * 0.8f + 0.1f;
                         final float var9 = random.nextFloat() * 0.8f + 0.1f;
                         final float var10 = random.nextFloat() * 0.8f + 0.1f;
+
                         while (itemStack.stackSize > 0) {
                             int var11 = random.nextInt(21) + 10;
+
                             if (var11 > itemStack.stackSize) {
                                 var11 = itemStack.stackSize;
                             }
+
                             final ItemStack itemStack2 = itemStack;
                             itemStack2.stackSize -= var11;
-                            final EntityItem var12 = new EntityItem(world, (double) (x + var8), (double) (y + var9),
-                                    (double) (z + var10),
-                                    new ItemStack(itemStack.getItem(), var11,
-                                            itemStack.getItemDamage()));
+                            final EntityItem var12 = new EntityItem(
+                                world,
+                                (double) (x + var8),
+                                (double) (y + var9),
+                                (double) (z + var10),
+                                new ItemStack(
+                                    itemStack.getItem(), var11, itemStack.getItemDamage()
+                                )
+                            );
+
                             if (itemStack.hasTagCompound()) {
                                 var12.getEntityItem().setTagCompound(
-                                        (NBTTagCompound) itemStack.getTagCompound().copy());
+                                    (NBTTagCompound) itemStack.getTagCompound().copy()
+                                );
                             }
+
                             final float var13 = 0.05f;
-                            ((Entity) var12).motionX = (float) random.nextGaussian() * var13;
-                            ((Entity) var12).motionY = (float) random.nextGaussian() * var13 + 0.2f;
-                            ((Entity) var12).motionZ = (float) random.nextGaussian() * var13;
+                            ((Entity) var12).motionX
+                                = (float) random.nextGaussian() * var13;
+                            ((Entity) var12).motionY
+                                = (float) random.nextGaussian() * var13 + 0.2f;
+                            ((Entity) var12).motionZ
+                                = (float) random.nextGaussian() * var13;
                             world.spawnEntityInWorld((Entity) var12);
                         }
                     }

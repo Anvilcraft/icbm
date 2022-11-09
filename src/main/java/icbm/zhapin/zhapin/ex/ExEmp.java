@@ -20,18 +20,22 @@ public class ExEmp extends ZhaPin {
     }
 
     @Override
-    public boolean doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource, int radius,
-            final int callCount) {
+    public boolean doBaoZha(
+        final World worldObj,
+        final Vector3 position,
+        final Entity explosionSource,
+        int radius,
+        final int callCount
+    ) {
         if (radius < 0) {
             radius = (int) this.getRadius();
         }
-        ZhaPin.empSignal.doBaoZha(worldObj, position, explosionSource, radius,
-                callCount);
-        ZhaPin.empWave.doBaoZha(worldObj, position, explosionSource, radius,
-                callCount);
-        ICBMExplosion.proxy.spawnParticle("shockwave", worldObj, position, 0.0, 0.0,
-                0.0, 0.0f, 0.0f, 255.0f, 10.0f, 3.0);
+
+        ZhaPin.empSignal.doBaoZha(worldObj, position, explosionSource, radius, callCount);
+        ZhaPin.empWave.doBaoZha(worldObj, position, explosionSource, radius, callCount);
+        ICBMExplosion.proxy.spawnParticle(
+            "shockwave", worldObj, position, 0.0, 0.0, 0.0, 0.0f, 0.0f, 255.0f, 10.0f, 3.0
+        );
         return false;
     }
 
@@ -39,14 +43,25 @@ public class ExEmp extends ZhaPin {
     public void init() {
         if (OreDictionary.getOres(UniversalRecipes.BATTERY).size() > 0) {
             RecipeHelper.addRecipe(
-                    (IRecipe) new ShapedOreRecipe(
-                            this.getItemStack(),
-                            new Object[] {
-                                    "RBR", "BTB", "RBR", 'T', ZhaPin.repulsive.getItemStack(), 'R',
-                                    Blocks.redstone_block, 'B',
-                                    ElectricItemHelper.getUncharged(
-                                            OreDictionary.getOres(UniversalRecipes.BATTERY).get(0)) }),
-                    this.getUnlocalizedName(), MainBase.CONFIGURATION, true);
+                (IRecipe) new ShapedOreRecipe(
+                    this.getItemStack(),
+                    new Object[] {
+                        "RBR",
+                        "BTB",
+                        "RBR",
+                        'T',
+                        ZhaPin.repulsive.getItemStack(),
+                        'R',
+                        Blocks.redstone_block,
+                        'B',
+                        ElectricItemHelper.getUncharged(
+                            OreDictionary.getOres(UniversalRecipes.BATTERY).get(0)
+                        ) }
+                ),
+                this.getUnlocalizedName(),
+                MainBase.CONFIGURATION,
+                true
+            );
         }
     }
 

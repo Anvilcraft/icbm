@@ -13,8 +13,7 @@ public class ItemUsePacket implements IMessage {
         this.pos = pos;
     }
 
-    public ItemUsePacket() {
-    }
+    public ItemUsePacket() {}
 
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -40,6 +39,7 @@ public class ItemUsePacket implements IMessage {
             if (id >= 0 && id < values().length) {
                 return values()[id];
             }
+
             return Type.UNSPECIFIED;
         }
     }

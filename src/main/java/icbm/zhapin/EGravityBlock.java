@@ -15,8 +15,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import universalelectricity.core.vector.Vector3;
 
-public class EGravityBlock
-        extends Entity implements IEntityAdditionalSpawnData {
+public class EGravityBlock extends Entity implements IEntityAdditionalSpawnData {
     public Block block;
     public int metadata;
     public float yawChange;
@@ -36,8 +35,9 @@ public class EGravityBlock
         this.setSize(1.0f, 1.0f);
     }
 
-    public EGravityBlock(final World world, final Vector3 position,
-            final Block block, final int metadata) {
+    public EGravityBlock(
+        final World world, final Vector3 position, final Block block, final int metadata
+    ) {
         super(world);
         this.yawChange = 0.0f;
         this.pitchChange = 0.0f;
@@ -54,9 +54,13 @@ public class EGravityBlock
         this.metadata = metadata;
     }
 
-    public EGravityBlock(final World world, final Vector3 position,
-            final Block block, final int metadata,
-            final float gravity) {
+    public EGravityBlock(
+        final World world,
+        final Vector3 position,
+        final Block block,
+        final int metadata,
+        final float gravity
+    ) {
         this(world, position, block, metadata);
         this.gravity = gravity;
     }
@@ -81,38 +85,44 @@ public class EGravityBlock
     }
 
     @Override
-    protected void entityInit() {
-    }
+    protected void entityInit() {}
 
     @Override
     public void onUpdate() {
-        if (super.posY > 400.0 || this.block == null ||
-                this.block == MainBase.bJia || this.block == Blocks.piston_head ||
-                this.block == Blocks.flowing_water ||
-                this.block == Blocks.flowing_lava) {
+        if (super.posY > 400.0 || this.block == null || this.block == MainBase.bJia
+            || this.block == Blocks.piston_head || this.block == Blocks.flowing_water
+            || this.block == Blocks.flowing_lava) {
             this.setDead();
             return;
         }
+
         super.motionY -= this.gravity;
+
         if (super.isCollided) {
             this.func_145771_j(
-                    super.posX, (super.boundingBox.minY + super.boundingBox.maxY) / 2.0,
-                    super.posZ);
+                super.posX,
+                (super.boundingBox.minY + super.boundingBox.maxY) / 2.0,
+                super.posZ
+            );
         }
+
         this.moveEntity(super.motionX, super.motionY, super.motionZ);
+
         if (this.yawChange > 0.0f) {
             super.rotationYaw += this.yawChange;
             this.yawChange -= 2.0f;
         }
+
         if (this.pitchChange > 0.0f) {
             super.rotationPitch += this.pitchChange;
             this.pitchChange -= 2.0f;
         }
-        if ((super.onGround && super.ticksExisted > 20) ||
-                super.ticksExisted > 2400) {
+
+        if ((super.onGround && super.ticksExisted > 20) || super.ticksExisted > 2400) {
             this.setBlock();
             return;
         }
+
         ++super.ticksExisted;
     }
 
@@ -123,19 +133,23 @@ public class EGravityBlock
             final int k = MathHelper.floor_double(super.posZ);
             super.worldObj.setBlock(i, j, k, this.block, this.metadata, 2);
         }
+
         this.setDead();
     }
 
     @Override
     public AxisAlignedBB getCollisionBox(final Entity par1Entity) {
-        if (par1Entity instanceof EntityLiving && this.block != null &&
-                !(this.block instanceof BlockLiquid) &&
-                (super.motionX > 2.0 || super.motionY > 2.0 || super.motionZ > 2.0)) {
-            final int damage = (int) (1.2 * (Math.abs(super.motionX) + Math.abs(super.motionY) +
-                    Math.abs(super.motionZ)));
+        if (par1Entity instanceof EntityLiving && this.block != null
+            && !(this.block instanceof BlockLiquid)
+            && (super.motionX > 2.0 || super.motionY > 2.0 || super.motionZ > 2.0)) {
+            final int damage = (int
+            ) (1.2
+               * (Math.abs(super.motionX) + Math.abs(super.motionY)
+                  + Math.abs(super.motionZ)));
             ((EntityLiving) par1Entity)
-                    .attackEntityFrom(DamageSource.fallingBlock, damage);
+                .attackEntityFrom(DamageSource.fallingBlock, damage);
         }
+
         return null;
     }
 

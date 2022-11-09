@@ -11,8 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.implement.IRotatable;
 
-public class EExplosive
-        extends Entity implements IRotatable, IEntityAdditionalSpawnData {
+public class EExplosive extends Entity implements IRotatable, IEntityAdditionalSpawnData {
     public int fuse;
     public int haoMa;
     private int metadata;
@@ -30,8 +29,12 @@ public class EExplosive
         super.yOffset = super.height / 2.0f;
     }
 
-    public EExplosive(final World par1World, final Vector3 position,
-            final byte orientation, final int explosiveID) {
+    public EExplosive(
+        final World par1World,
+        final Vector3 position,
+        final byte orientation,
+        final int explosiveID
+    ) {
         this(par1World);
         this.setPosition(position.x, position.y, position.z);
         final float var8 = (float) (Math.random() * 3.141592653589793 * 2.0);
@@ -47,9 +50,13 @@ public class EExplosive
         ZhaPin.list[explosiveID].yinZhaQian(par1World, this);
     }
 
-    public EExplosive(final World par1World, final Vector3 position,
-            final int explosiveID, final byte orientation,
-            final int metadata) {
+    public EExplosive(
+        final World par1World,
+        final Vector3 position,
+        final int explosiveID,
+        final byte orientation,
+        final int metadata
+    ) {
         this(par1World, position, orientation, explosiveID);
         this.metadata = metadata;
     }
@@ -61,15 +68,22 @@ public class EExplosive
 
     @Override
     public void onUpdate() {
-        if (!super.worldObj.isRemote &&
-                ICBMExplosion.shiBaoHu(super.worldObj, new Vector3(this),
-                        ZhaPin.ZhaPinType.ZHA_DAN, this.haoMa)) {
-            ICBMExplosion.bExplosives.dropBlockAsItem(super.worldObj, (int) super.posX,
-                    (int) super.posY, (int) super.posZ,
-                    this.haoMa, 0);
+        if (!super.worldObj.isRemote
+            && ICBMExplosion.shiBaoHu(
+                super.worldObj, new Vector3(this), ZhaPin.ZhaPinType.ZHA_DAN, this.haoMa
+            )) {
+            ICBMExplosion.bExplosives.dropBlockAsItem(
+                super.worldObj,
+                (int) super.posX,
+                (int) super.posY,
+                (int) super.posZ,
+                this.haoMa,
+                0
+            );
             this.setDead();
             return;
         }
+
         super.prevPosX = super.posX;
         super.prevPosY = super.posY;
         super.prevPosZ = super.posZ;
@@ -77,20 +91,23 @@ public class EExplosive
         super.motionY -= 0.045;
         super.motionZ *= 0.95;
         this.moveEntity(super.motionX, super.motionY, super.motionZ);
+
         if (this.fuse < 1) {
             this.explode();
         } else {
             ZhaPin.list[this.haoMa].onYinZha(
-                    super.worldObj, new Vector3(super.posX, super.posY, super.posZ),
-                    this.fuse);
+                super.worldObj, new Vector3(super.posX, super.posY, super.posZ), this.fuse
+            );
         }
+
         --this.fuse;
         super.onUpdate();
     }
 
     public void explode() {
-        super.worldObj.spawnParticle("hugeexplosion", super.posX, super.posY,
-                super.posZ, 0.0, 0.0, 0.0);
+        super.worldObj.spawnParticle(
+            "hugeexplosion", super.posX, super.posY, super.posZ, 0.0, 0.0, 0.0
+        );
         ZhaPin.createExplosion(super.worldObj, new Vector3(this), this, this.haoMa);
         this.setDead();
     }
@@ -119,8 +136,7 @@ public class EExplosive
     }
 
     @Override
-    protected void entityInit() {
-    }
+    protected void entityInit() {}
 
     @Override
     protected boolean canTriggerWalking() {
@@ -138,14 +154,19 @@ public class EExplosive
     }
 
     @Override
-    public ForgeDirection getDirection(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public ForgeDirection
+    getDirection(final IBlockAccess world, final int x, final int y, final int z) {
         return ForgeDirection.getOrientation((int) this.orientation);
     }
 
     @Override
-    public void setDirection(final World world, final int x, final int y,
-            final int z, final ForgeDirection facingDirection) {
+    public void setDirection(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final ForgeDirection facingDirection
+    ) {
         this.orientation = (byte) facingDirection.ordinal();
     }
 

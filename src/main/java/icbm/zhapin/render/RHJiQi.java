@@ -17,18 +17,25 @@ public class RHJiQi implements ISimpleBlockRenderingHandler {
     public static final int ID;
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public void renderInventoryBlock(
+        final Block block,
+        final int metadata,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         if (modelID == RHJiQi.ID) {
             GL11.glPushMatrix();
+
             if (metadata < BMachine.JiQi.FaSheDi.ordinal() * 3 + 3) {
                 final int tier = metadata;
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glScalef(0.4f, 0.4f, 0.4f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/launcher_" + tier + ".png"));
+                    new ResourceLocation(
+                        "icbm", "textures/models/launcher_" + tier + ".png"
+                    )
+                );
+
                 if (tier == 0) {
                     RFaSheDi.modelBase0.render(0.0625f);
                     RFaSheDi.modelRail0.render(0.0625f);
@@ -49,8 +56,11 @@ public class RHJiQi implements ISimpleBlockRenderingHandler {
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glRotatef(180.0f, 0.0f, 180.0f, 1.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/launcher_" + tier + ".png"));
+                    new ResourceLocation(
+                        "icbm", "textures/models/launcher_" + tier + ".png"
+                    )
+                );
+
                 if (tier == 0) {
                     RLauncherControlPanel.model0.render(0.0625f);
                 } else if (tier == 1) {
@@ -63,29 +73,32 @@ public class RHJiQi implements ISimpleBlockRenderingHandler {
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glScalef(0.8f, 0.4f, 0.8f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm", "textures/models/launcher_0.png"));
+                    new ResourceLocation("icbm", "textures/models/launcher_0.png")
+                );
                 RFaSheJia.MODEL.render(0.0625f);
             } else if (metadata == BMachine.JiQi.LeiDaTai.ordinal() + 6) {
                 GL11.glTranslatef(0.0f, 0.2f, 0.0f);
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glScalef(0.55f, 0.6f, 0.55f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm", "textures/models/radar.png"));
+                    new ResourceLocation("icbm", "textures/models/radar.png")
+                );
                 RRadarTower.MODEL.render(1.2f, 0.0625f);
             } else if (metadata == BMachine.JiQi.DianCiQi.ordinal() + 6) {
                 GL11.glTranslatef(0.0f, 0.3f, 0.0f);
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glScalef(0.6f, 0.6f, 0.6f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm", "textures/models/emp_tower.png"));
+                    new ResourceLocation("icbm", "textures/models/emp_tower.png")
+                );
                 REmpTower.MODEL.render(0.0f, 0.0625f);
             } else if (metadata == BMachine.JiQi.XiaoFaSheQi.ordinal() + 6) {
                 GL11.glTranslatef(0.0f, 0.4f, 0.0f);
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glScalef(0.55f, 0.5f, 0.55f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/cruise_launcher.png"));
+                    new ResourceLocation("icbm", "textures/models/cruise_launcher.png")
+                );
                 RXiaoFaSheQi.MODEL0.render(0.0625f);
                 RXiaoFaSheQi.MODEL1.render(0.0625f);
             } else if (metadata == BMachine.JiQi.YinDaoQi.ordinal() + 6) {
@@ -93,19 +106,27 @@ public class RHJiQi implements ISimpleBlockRenderingHandler {
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation(
-                                "icbm", "textures/models/missile_coordinator_off.png"));
+                    new ResourceLocation(
+                        "icbm", "textures/models/missile_coordinator_off.png"
+                    )
+                );
                 RYinDaoQi.MODEL.render(0.0f, 0.0625f);
             }
+
             GL11.glPopMatrix();
         }
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess iBlockAccess, final int x,
-            final int y, final int z, final Block block,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(
+        final IBlockAccess iBlockAccess,
+        final int x,
+        final int y,
+        final int z,
+        final Block block,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         return false;
     }
 

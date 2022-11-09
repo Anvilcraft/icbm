@@ -21,51 +21,79 @@ public class ExEmpWave extends ZhaPin {
     }
 
     @Override
-    public boolean doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource, final int radius,
-            final int callCount) {
+    public boolean doBaoZha(
+        final World worldObj,
+        final Vector3 position,
+        final Entity explosionSource,
+        final int radius,
+        final int callCount
+    ) {
         for (int r = radius, x = -r; x < r; ++x) {
             for (int y = -r; y < r; ++y) {
                 for (int z = -r; z < r; ++z) {
-                    final double dist = MathHelper.sqrt_double((double) (x * x + y * y + z * z));
-                    final Vector3 searchPosition = Vector3.add(position, new Vector3(x, y, z));
+                    final double dist
+                        = MathHelper.sqrt_double((double) (x * x + y * y + z * z));
+                    final Vector3 searchPosition
+                        = Vector3.add(position, new Vector3(x, y, z));
+
                     if (dist <= r) {
                         if (Math.round(position.x + y) == position.intY()) {
-                            worldObj.spawnParticle("largesmoke", searchPosition.x,
-                                    searchPosition.y, searchPosition.z, 0.0,
-                                    0.0, 0.0);
+                            worldObj.spawnParticle(
+                                "largesmoke",
+                                searchPosition.x,
+                                searchPosition.y,
+                                searchPosition.z,
+                                0.0,
+                                0.0,
+                                0.0
+                            );
                         }
-                        final Block block = searchPosition.getBlock((IBlockAccess) worldObj);
-                        final TileEntity tileEntity = searchPosition.getTileEntity((IBlockAccess) worldObj);
+
+                        final Block block
+                            = searchPosition.getBlock((IBlockAccess) worldObj);
+                        final TileEntity tileEntity
+                            = searchPosition.getTileEntity((IBlockAccess) worldObj);
+
                         if (block != null) {
                             if (block instanceof IForceFieldBlock) {
                                 ((IForceFieldBlock) block)
-                                        .weakenForceField(worldObj, searchPosition.intX(),
-                                                searchPosition.intY(),
-                                                searchPosition.intZ(), 1000);
+                                    .weakenForceField(
+                                        worldObj,
+                                        searchPosition.intX(),
+                                        searchPosition.intY(),
+                                        searchPosition.intZ(),
+                                        1000
+                                    );
                             } else if (block instanceof IEMPBlock) {
                                 ((IEMPBlock) block)
-                                        .onEMP(worldObj, searchPosition, ZhaPin.emp);
+                                    .onEMP(worldObj, searchPosition, ZhaPin.emp);
                             } else if (tileEntity != null) {
                                 if (tileEntity instanceof IElectricityStorage) {
                                     ((IElectricityStorage) tileEntity).setJoules(0.0);
                                 }
+
                                 if (tileEntity instanceof IDisableable) {
                                     ((IDisableable) tileEntity).onDisable(400);
                                 }
+
                                 if (tileEntity instanceof IFortronStorage) {
                                     ((IFortronStorage) tileEntity)
-                                            .provideFortron((int) worldObj.rand.nextFloat() *
-                                                    ((IFortronStorage) tileEntity)
-                                                            .getFortronCapacity(),
-                                                    true);
+                                        .provideFortron(
+                                            (int) worldObj.rand.nextFloat()
+                                                * ((IFortronStorage) tileEntity)
+                                                      .getFortronCapacity(),
+                                            true
+                                        );
                                 }
+
                                 // TODO: WTF: IC2
                                 // if (tileEntity instanceof IEnergyStorage) {
                                 // ((IEnergyStorage) tileEntity).setStored(0);
                                 // }
                                 if (tileEntity instanceof TileEntityElectricityRunnable) {
-                                    ((TileEntityElectricityRunnable) tileEntity).wattsReceived = 0.0;
+                                    ((TileEntityElectricityRunnable) tileEntity)
+                                        .wattsReceived
+                                        = 0.0;
                                 }
                             }
                         }
@@ -73,11 +101,15 @@ public class ExEmpWave extends ZhaPin {
                 }
             }
         }
+
         worldObj.playSoundEffect(
-                position.x, position.y, position.z, "icbm.emp", 4.0f,
-                (1.0f +
-                        (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) *
-                        0.7f);
+            position.x,
+            position.y,
+            position.z,
+            "icbm.emp",
+            4.0f,
+            (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f
+        );
         return false;
     }
 

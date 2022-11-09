@@ -7,22 +7,22 @@ import universalelectricity.prefab.implement.IRotatable;
 import universalelectricity.prefab.tile.TileEntityElectricityRunnable;
 
 public abstract class TileEntityUniversalRunnable
-        extends TileEntityElectricityRunnable implements IUniversalEnergyTile {
+    extends TileEntityElectricityRunnable implements IUniversalEnergyTile {
     @Override
     public boolean canConnect(ForgeDirection direction) {
-        return this instanceof IRotatable
-                ? direction == ForgeDirection.getOrientation(this.getBlockMetadata())
-                        .getOpposite()
-                : true;
+        return this instanceof IRotatable ? direction
+                == ForgeDirection.getOrientation(this.getBlockMetadata()).getOpposite()
+                                          : true;
     }
 
     public ForgeDirection getDirection(IBlockAccess world, int x, int y, int z) {
         return ForgeDirection.getOrientation(this.getBlockMetadata());
     }
 
-    public void setDirection(World world, int x, int y, int z,
-            ForgeDirection facingDirection) {
+    public void
+    setDirection(World world, int x, int y, int z, ForgeDirection facingDirection) {
         this.worldObj.setBlockMetadataWithNotify(
-                this.xCoord, this.yCoord, this.zCoord, facingDirection.ordinal(), 2);
+            this.xCoord, this.yCoord, this.zCoord, facingDirection.ordinal(), 2
+        );
     }
 }

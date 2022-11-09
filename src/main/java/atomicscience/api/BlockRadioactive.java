@@ -1,10 +1,11 @@
 package atomicscience.api;
 
+import java.util.List;
+import java.util.Random;
+
 import atomicscience.api.poison.PoisonRadiation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -46,25 +47,26 @@ public class BlockRadioactive extends Block {
 
     @Override
     public IIcon getIcon(int side, int metadata) {
-        return side == 1 ? this.iconTop
-                : (side == 0 ? this.iconBottom : this.blockIcon);
+        return side == 1 ? this.iconTop : (side == 0 ? this.iconBottom : this.blockIcon);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
-        this.blockIcon = iconRegister.registerIcon(
-                this.getUnlocalizedName().replace("tile.", ""));
+        this.blockIcon
+            = iconRegister.registerIcon(this.getUnlocalizedName().replace("tile.", ""));
         this.iconTop = iconRegister.registerIcon(
-                this.getUnlocalizedName().replace("tile.", "") + "_top");
+            this.getUnlocalizedName().replace("tile.", "") + "_top"
+        );
         this.iconBottom = iconRegister.registerIcon(
-                this.getUnlocalizedName().replace("tile.", "") + "_bottom");
+            this.getUnlocalizedName().replace("tile.", "") + "_bottom"
+        );
     }
 
     @Override
-    public void onBlockClicked(World world, int x, int y, int z,
-            EntityPlayer par5EntityPlayer) {
+    public void
+    onBlockClicked(World world, int x, int y, int z, EntityPlayer par5EntityPlayer) {
         if ((double) world.rand.nextFloat() > 0.8D) {
             this.updateTick(world, x, y, z, world.rand);
         }
@@ -75,15 +77,22 @@ public class BlockRadioactive extends Block {
         if (!world.isRemote) {
             if (this.isRandomlyRadioactive) {
                 AxisAlignedBB i = AxisAlignedBB.getBoundingBox(
-                        (double) ((float) x - this.radius), (double) ((float) y - this.radius),
-                        (double) ((float) z - this.radius), (double) ((float) x + this.radius),
-                        (double) ((float) y + this.radius), (double) ((float) z + this.radius));
-                List<EntityLiving> newX = world.getEntitiesWithinAABB(EntityLiving.class, i);
+                    (double) ((float) x - this.radius),
+                    (double) ((float) y - this.radius),
+                    (double) ((float) z - this.radius),
+                    (double) ((float) x + this.radius),
+                    (double) ((float) y + this.radius),
+                    (double) ((float) z + this.radius)
+                );
+                List<EntityLiving> newX
+                    = world.getEntitiesWithinAABB(EntityLiving.class, i);
 
                 for (EntityLiving newZ : newX) {
                     PoisonRadiation.INSTANCE.poisonEntity(
-                            new Vector3((double) x, (double) y, (double) z), newZ,
-                            this.amplifier);
+                        new Vector3((double) x, (double) y, (double) z),
+                        newZ,
+                        this.amplifier
+                    );
                 }
             }
 
@@ -93,8 +102,9 @@ public class BlockRadioactive extends Block {
                     int yOffset = y + rand.nextInt(5) - 3;
                     int zOffset = z + rand.nextInt(3) - 1;
                     Block block = world.getBlock(xOffset, yOffset, zOffset);
-                    if ((double) rand.nextFloat() > 0.4D &&
-                            (block == Blocks.farmland || block == Blocks.grass)) {
+
+                    if ((double) rand.nextFloat() > 0.4D
+                        && (block == Blocks.farmland || block == Blocks.grass)) {
                         world.setBlock(xOffset, yOffset, zOffset, this);
                     }
                 }
@@ -107,12 +117,11 @@ public class BlockRadioactive extends Block {
     }
 
     @Override
-    public void onEntityWalking(World par1World, int x, int y, int z,
-            Entity par5Entity) {
+    public void onEntityWalking(World par1World, int x, int y, int z, Entity par5Entity) {
         if (par5Entity instanceof EntityLiving && this.canWalkPoison) {
             PoisonRadiation.INSTANCE.poisonEntity(
-                    new Vector3((double) x, (double) y, (double) z),
-                    (EntityLiving) par5Entity);
+                new Vector3((double) x, (double) y, (double) z), (EntityLiving) par5Entity
+            );
         }
     }
 
@@ -123,8 +132,7 @@ public class BlockRadioactive extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z,
-            Random par5Random) {
+    public void randomDisplayTick(World world, int x, int y, int z, Random par5Random) {
         if (Minecraft.getMinecraft().gameSettings.particleSetting == 0) {
             byte radius = 3;
 
@@ -134,8 +142,14 @@ public class BlockRadioactive extends Block {
                 diDian.y += Math.random() * (double) radius - (double) (radius / 2);
                 diDian.z += Math.random() * (double) radius - (double) (radius / 2);
                 EntitySmokeFX fx = new EntitySmokeFX(
-                        world, diDian.x, diDian.y, diDian.z, (Math.random() - 0.5D) / 2.0D,
-                        (Math.random() - 0.5D) / 2.0D, (Math.random() - 0.5D) / 2.0D);
+                    world,
+                    diDian.x,
+                    diDian.y,
+                    diDian.z,
+                    (Math.random() - 0.5D) / 2.0D,
+                    (Math.random() - 0.5D) / 2.0D,
+                    (Math.random() - 0.5D) / 2.0D
+                );
                 fx.setRBGColorF(0.2F, 0.8F, 0.0F);
                 Minecraft.getMinecraft().effectRenderer.addEffect(fx);
             }

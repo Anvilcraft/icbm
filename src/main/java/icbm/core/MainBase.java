@@ -1,5 +1,9 @@
 package icbm.core;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
 import atomicscience.api.poison.PotionRadiation;
 import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -12,9 +16,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import icbm.core.di.ItICBM;
-import java.io.File;
-import java.util.Arrays;
-import java.util.logging.Logger;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandManager;
@@ -77,22 +78,31 @@ public class MainBase {
             MinecraftForge.EVENT_BUS.register((Object) MainBase.INSTANCE);
             MainBase.CONFIGURATION.load();
             PotionRadiation.INSTANCE.getId();
-            MainBase.ZAI_KUAI = MainBase.CONFIGURATION.get("general", "Allow Chunk Loading", true)
-                    .getBoolean(true);
-            MainBase.DAO_DAN_ZUI_YUAN = MainBase.CONFIGURATION
-                    .get("general", "Max Missile Distance", MainBase.DAO_DAN_ZUI_YUAN)
-                    .getInt(MainBase.DAO_DAN_ZUI_YUAN);
+            MainBase.ZAI_KUAI
+                = MainBase.CONFIGURATION.get("general", "Allow Chunk Loading", true)
+                      .getBoolean(true);
+            MainBase.DAO_DAN_ZUI_YUAN
+                = MainBase.CONFIGURATION
+                      .get("general", "Max Missile Distance", MainBase.DAO_DAN_ZUI_YUAN)
+                      .getInt(MainBase.DAO_DAN_ZUI_YUAN);
             MainBase.bLiu = (Block) new BSulfurOre();
             MainBase.bJia = new BlockMulti()
-                    .setTextureName("icbm:machine")
-                    .setChannel(this.getChannel());
+                                .setTextureName("icbm:machine")
+                                .setChannel(this.getChannel());
             MainBase.itDu = new ItICBM("poisonPowder");
             MainBase.itSulfur = new ItICBM("sulfur");
             GameRegistry.registerBlock(MainBase.bLiu, "bLiu");
             GameRegistry.registerBlock((Block) MainBase.bJia, "bJia");
-            MainBase.liuGenData = new GenSulfur("Sulfur Ore", "oreSulfur", new ItemStack(MainBase.bLiu),
-                    Blocks.air, 40, 20, 4)
-                    .enable(MainBase.CONFIGURATION);
+            MainBase.liuGenData = new GenSulfur(
+                                      "Sulfur Ore",
+                                      "oreSulfur",
+                                      new ItemStack(MainBase.bLiu),
+                                      Blocks.air,
+                                      40,
+                                      20,
+                                      4
+            )
+                                      .enable(MainBase.CONFIGURATION);
 
             MainBase.CONFIGURATION.save();
             OreDictionary.registerOre("dustSulfur", MainBase.itSulfur);
@@ -106,22 +116,32 @@ public class MainBase {
     public void postInit(final FMLPostInitializationEvent event) {
         if (!MainBase.isPostInit) {
             UniversalRecipes.init();
-            GameRegistry.addSmelting(MainBase.bLiu,
-                    new ItemStack(MainBase.itSulfur, 4), 0.8f);
+            GameRegistry.addSmelting(
+                MainBase.bLiu, new ItemStack(MainBase.itSulfur, 4), 0.8f
+            );
             GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                    new ItemStack(Items.gunpowder, 3),
-                    new Object[] { "@@@", "@?@", "@@@", '@', "dustSulfur", '?',
-                            Items.coal }));
+                new ItemStack(Items.gunpowder, 3),
+                new Object[] { "@@@", "@?@", "@@@", '@', "dustSulfur", '?', Items.coal }
+            ));
             GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                    new ItemStack(Items.gunpowder, 3),
-                    new Object[] { "@@@", "@?@", "@@@", '@', "dustSulfur", '?',
-                            new ItemStack(Items.coal, 1, 1) }));
+                new ItemStack(Items.gunpowder, 3),
+                new Object[] { "@@@",
+                               "@?@",
+                               "@@@",
+                               '@',
+                               "dustSulfur",
+                               '?',
+                               new ItemStack(Items.coal, 1, 1) }
+            ));
             GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-                    Blocks.tnt, new Object[] { "@@@", "@R@", "@@@", '@', Items.gunpowder,
-                            'R', Items.redstone }));
+                Blocks.tnt,
+                new Object[] {
+                    "@@@", "@R@", "@@@", '@', Items.gunpowder, 'R', Items.redstone }
+            ));
             GameRegistry.addRecipe((IRecipe) new ShapelessOreRecipe(
-                    new ItemStack(MainBase.itDu, 3),
-                    new Object[] { Items.spider_eye, Items.rotten_flesh }));
+                new ItemStack(MainBase.itDu, 3),
+                new Object[] { Items.spider_eye, Items.rotten_flesh }
+            ));
             MainBase.isPostInit = true;
         }
     }
@@ -129,25 +149,27 @@ public class MainBase {
     @Mod.EventHandler
     public void serverStarting(final FMLServerStartingEvent event) {
         FlagRegistry.registerModFlag(
-                "ModFlags", new ModFlag(NBTFileLoader.loadData("ModFlags")));
-        final ICommandManager commandManager = FMLCommonHandler.instance()
-                .getMinecraftServerInstance()
-                .getCommandManager();
-        final ServerCommandManager serverCommandManager = (ServerCommandManager) commandManager;
-        serverCommandManager.registerCommand(
-                (ICommand) new CommandFlag(FlagRegistry.getModFlag("ModFlags")));
+            "ModFlags", new ModFlag(NBTFileLoader.loadData("ModFlags"))
+        );
+        final ICommandManager commandManager
+            = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager(
+            );
+        final ServerCommandManager serverCommandManager
+            = (ServerCommandManager) commandManager;
+        serverCommandManager.registerCommand((ICommand
+        ) new CommandFlag(FlagRegistry.getModFlag("ModFlags")));
     }
 
     @SubscribeEvent
     public void worldSave(final WorldEvent.Save evt) {
         if (!((WorldEvent) evt).world.isRemote) {
-            NBTFileLoader.saveData("ModFlags",
-                    FlagRegistry.getModFlag("ModFlags").getNBT());
+            NBTFileLoader.saveData(
+                "ModFlags", FlagRegistry.getModFlag("ModFlags").getNBT()
+            );
         }
     }
 
-    public static Vector3 getLook(final float rotationYaw,
-            final float rotationPitch) {
+    public static Vector3 getLook(final float rotationYaw, final float rotationPitch) {
         final float var2 = MathHelper.cos(-rotationYaw * 0.017453292f - 3.1415927f);
         final float var3 = MathHelper.sin(-rotationYaw * 0.017453292f - 3.1415927f);
         final float var4 = -MathHelper.cos(-rotationPitch * 0.017453292f);
@@ -155,11 +177,11 @@ public class MainBase {
         return new Vector3(var3 * var4, var5, var2 * var4);
     }
 
-    public static void setModMetadata(final String id,
-            final ModMetadata metadata) {
+    public static void setModMetadata(final String id, final ModMetadata metadata) {
         metadata.modId = id;
         metadata.name = "ICBM";
-        metadata.description = "ICBM is a Minecraft Mod that introduces intercontinental ballistic missiles to Minecraft. But the fun doesn't end there! This mod also features many different explosives, missiles and machines classified in three different tiers. If strategic warfare, carefully coordinated airstrikes, messing with matter and general destruction are up your alley, then this mod is for you!";
+        metadata.description
+            = "ICBM is a Minecraft Mod that introduces intercontinental ballistic missiles to Minecraft. But the fun doesn't end there! This mod also features many different explosives, missiles and machines classified in three different tiers. If strategic warfare, carefully coordinated airstrikes, messing with matter and general destruction are up your alley, then this mod is for you!";
         metadata.url = "http://www.universalelectricity.com/icbm/";
         metadata.logoFile = "/icbm_logo.png";
         metadata.version = "1.2.1";
@@ -175,8 +197,8 @@ public class MainBase {
     static {
         INSTANCE = new MainBase();
         MainBase.DAO_DAN_ZUI_YUAN = 10000;
-        CONFIGURATION = new Configuration(
-                new File(Loader.instance().getConfigDir(), "ICBM.cfg"));
+        CONFIGURATION
+            = new Configuration(new File(Loader.instance().getConfigDir(), "ICBM.cfg"));
         LOGGER = Logger.getLogger("ICBM");
     }
 }

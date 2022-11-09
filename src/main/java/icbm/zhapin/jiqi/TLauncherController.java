@@ -11,8 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.vector.Vector3;
 
-public abstract class TLauncherController extends TileEntityUniversalStorable
-        implements ILauncherController, IPeripheral {
+public abstract class TLauncherController
+    extends TileEntityUniversalStorable implements ILauncherController, IPeripheral {
     protected Vector3 target;
     protected int frequency;
 
@@ -36,6 +36,7 @@ public abstract class TLauncherController extends TileEntityUniversalStorable
                 this.target = new Vector3(this.xCoord, 0.0, this.zCoord);
             }
         }
+
         return this.target;
     }
 
@@ -61,39 +62,51 @@ public abstract class TLauncherController extends TileEntityUniversalStorable
 
     @Override
     public String[] getMethodNames() {
-        return new String[] { "launch", "getTarget", "setTarget",
-                "canLaunch", "setFrequency", "getFrequency",
-                "getMissile" };
+        return new String[] { "launch",       "getTarget",    "setTarget", "canLaunch",
+                              "setFrequency", "getFrequency", "getMissile" };
     }
 
     @Override
-    public Object[] callMethod(final IComputerAccess computer, ILuaContext ctx, final int method,
-            final Object[] arguments) throws LuaException {
+    public Object[] callMethod(
+        final IComputerAccess computer,
+        ILuaContext ctx,
+        final int method,
+        final Object[] arguments
+    ) throws LuaException {
         switch (method) {
             case 0: {
                 this.launch();
                 return null;
             }
+
             case 1: {
-                return new Object[] { this.getTarget().x, this.getTarget().y,
-                        this.getTarget().z };
+                return new Object[] { this.getTarget().x,
+                                      this.getTarget().y,
+                                      this.getTarget().z };
             }
+
             case 2: {
-                if (arguments[0] != null && arguments[1] != null &&
-                        arguments[2] != null) {
+                if (arguments[0] != null && arguments[1] != null
+                    && arguments[2] != null) {
                     try {
-                        this.setTarget(new Vector3((double) arguments[0], (double) arguments[1],
-                                (double) arguments[2]));
+                        this.setTarget(new Vector3(
+                            (double) arguments[0],
+                            (double) arguments[1],
+                            (double) arguments[2]
+                        ));
                     } catch (final Exception e) {
                         e.printStackTrace();
                         throw new LuaException("Target Parameter is Invalid.");
                     }
                 }
+
                 return null;
             }
+
             case 3: {
                 return new Object[] { this.canLaunch() };
             }
+
             case 4: {
                 if (arguments[0] != null) {
                     try {
@@ -105,18 +118,24 @@ public abstract class TLauncherController extends TileEntityUniversalStorable
                         throw new LuaException("Frequency Parameter is Invalid.");
                     }
                 }
+
                 return null;
             }
+
             case 5: {
                 return new Object[] { this.getFrequency() };
             }
+
             case 6: {
                 if (this.getMissile() != null) {
                     return new Object[] {
-                            this.getMissile().getExplosiveType().getMissileName() };
+                        this.getMissile().getExplosiveType().getMissileName()
+                    };
                 }
+
                 return null;
             }
+
             default: {
                 throw new LuaException("Invalid ICBM Launcher Function.");
             }
@@ -124,12 +143,10 @@ public abstract class TLauncherController extends TileEntityUniversalStorable
     }
 
     @Override
-    public void attach(final IComputerAccess computer) {
-    }
+    public void attach(final IComputerAccess computer) {}
 
     @Override
-    public void detach(final IComputerAccess computer) {
-    }
+    public void detach(final IComputerAccess computer) {}
 
     @Override
     public void readFromNBT(final NBTTagCompound nbt) {
@@ -142,6 +159,7 @@ public abstract class TLauncherController extends TileEntityUniversalStorable
     public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setInteger("frequency", this.getFrequency());
+
         if (this.target != null) {
             nbt.setTag("target", this.target.writeToNBT(new NBTTagCompound()));
         }

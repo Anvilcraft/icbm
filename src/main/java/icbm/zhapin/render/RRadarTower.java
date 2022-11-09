@@ -13,8 +13,13 @@ import org.lwjgl.opengl.GL11;
 public class RRadarTower extends TileEntitySpecialRenderer {
     public static final MLeiDa MODEL;
 
-    public void renderAModelAt(final TRadarTower tileEntity, final double x,
-            final double y, final double z, final float f) {
+    public void renderAModelAt(
+        final TRadarTower tileEntity,
+        final double x,
+        final double y,
+        final double z,
+        final float f
+    ) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5f, (float) y + 1.5f, (float) z + 0.5f);
         this.bindTexture(new ResourceLocation("icbm", "textures/models/radar.png"));
@@ -24,9 +29,13 @@ public class RRadarTower extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity tileentity, final double d,
-            final double d1, final double d2,
-            final float f) {
+    public void renderTileEntityAt(
+        final TileEntity tileentity,
+        final double d,
+        final double d1,
+        final double d2,
+        final float f
+    ) {
         this.renderAModelAt((TRadarTower) tileentity, d, d1, d2, f);
     }
 

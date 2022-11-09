@@ -1,5 +1,8 @@
 package icbm.gangshao.turret;
 
+import java.util.List;
+import java.util.Random;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.core.ICBMTab;
@@ -11,8 +14,6 @@ import icbm.gangshao.turret.mount.TRailgunTurret;
 import icbm.gangshao.turret.sentries.TAATurret;
 import icbm.gangshao.turret.sentries.TLaserTurret;
 import icbm.gangshao.turret.sentries.TMachineGunTurret;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -44,11 +45,14 @@ public class BlockTurret extends BICBM {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(final IBlockAccess world, final int x,
-            final int y, final int z) {
+    public void setBlockBoundsBasedOnState(
+        final IBlockAccess world, final int x, final int y, final int z
+    ) {
         final TileEntity ent = world.getTileEntity(x, y, z);
+
         if (ent instanceof TTurretBase) {
             final EntityTileDamagable dEnt = ((TTurretBase) ent).getDamageEntity();
+
             if (dEnt != null) {
                 this.setBlockBounds(0.2f, 0.0f, 0.2f, 0.8f, 0.4f, 0.8f);
             } else {
@@ -64,77 +68,115 @@ public class BlockTurret extends BICBM {
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y,
-            final int z,
-            final EntityLivingBase par5EntityLiving,
-            final ItemStack itemStack) {
-        final int angle = MathHelper.floor_double(
-                ((Entity) par5EntityLiving).rotationYaw * 4.0f / 360.0f + 0.5) &
-                0x3;
+    public void onBlockPlacedBy(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityLivingBase par5EntityLiving,
+        final ItemStack itemStack
+    ) {
+        final int angle
+            = MathHelper.floor_double(
+                  ((Entity) par5EntityLiving).rotationYaw * 4.0f / 360.0f + 0.5
+              )
+            & 0x3;
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IRotatable) {
             final IRotatable rotatableEntity = (IRotatable) tileEntity;
+
             switch (angle) {
                 case 0: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(3));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(3)
+                    );
                     break;
                 }
+
                 case 1: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(4));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(4)
+                    );
                     break;
                 }
+
                 case 2: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(2));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(2)
+                    );
                     break;
                 }
+
                 case 3: {
-                    rotatableEntity.setDirection(world, x, y, z,
-                            ForgeDirection.getOrientation(5));
+                    rotatableEntity.setDirection(
+                        world, x, y, z, ForgeDirection.getOrientation(5)
+                    );
                     break;
                 }
             }
         }
+
         if (tileEntity instanceof IMultiBlock) {
             ((IMultiBlock) tileEntity).onCreate(new Vector3(x, y, z));
         }
     }
 
     @Override
-    public boolean onUseWrench(final World world, final int x, final int y,
-            final int z, final EntityPlayer entityPlayer,
-            final int side, final float hitX, final float hitY,
-            final float hitZ) {
+    public boolean onUseWrench(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer entityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
         final TileEntity ent = world.getTileEntity(x, y, z);
+
         if (ent instanceof TTurretBase) {
             final Random random = new Random();
             ((TTurretBase) ent).setHealth(5 + random.nextInt(7), true);
             return true;
         }
+
         return false;
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
-            final EntityPlayer entityPlayer, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onMachineActivated(
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final EntityPlayer entityPlayer,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IBlockActivate) {
             return ((IBlockActivate) tileEntity).onActivated(entityPlayer);
         }
+
         final Block block = world.getBlock(x, y - 1, z);
-        return block instanceof BlockAdvanced &&
-                ((BlockAdvanced) block)
-                        .onMachineActivated(world, x, y - 1, z, entityPlayer, side, hitX,
-                                hitY, hitZ);
+        return block instanceof BlockAdvanced
+            && ((BlockAdvanced) block)
+                   .onMachineActivated(
+                       world, x, y - 1, z, entityPlayer, side, hitX, hitY, hitZ
+                   );
     }
 
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y,
-            final int z, Block block) {
+    public void onNeighborBlockChange(
+        final World world, final int x, final int y, final int z, Block block
+    ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
+
         if (tileEntity instanceof TTurretBase) {
             if (this.canBlockStay(world, x, y, z)) {
                 if (tileEntity instanceof IRedstoneReceptor) {
@@ -151,12 +193,20 @@ public class BlockTurret extends BICBM {
     }
 
     @Override
-    public void breakBlock(final World par1World, final int x, final int y,
-            final int z, final Block par5, final int par6) {
+    public void breakBlock(
+        final World par1World,
+        final int x,
+        final int y,
+        final int z,
+        final Block par5,
+        final int par6
+    ) {
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
+
         if (tileEntity instanceof IMultiBlock) {
             ((IMultiBlock) tileEntity).onDestroy(tileEntity);
         }
+
         super.breakBlock(par1World, x, y, z, par5, par6);
     }
 
@@ -169,6 +219,7 @@ public class BlockTurret extends BICBM {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 
@@ -188,21 +239,20 @@ public class BlockTurret extends BICBM {
     }
 
     @Override
-    public boolean canPlaceBlockAt(final World world, final int x, final int y,
-            final int z) {
-        return super.canPlaceBlockAt(world, x, y, z) &&
-                this.canBlockStay(world, x, y, z);
+    public boolean
+    canPlaceBlockAt(final World world, final int x, final int y, final int z) {
+        return super.canPlaceBlockAt(world, x, y, z) && this.canBlockStay(world, x, y, z);
     }
 
     @Override
-    public boolean canBlockStay(final World world, final int x, final int y,
-            final int z) {
+    public boolean
+    canBlockStay(final World world, final int x, final int y, final int z) {
         return world.getBlock(x, y - 1, z) == ICBMSentry.blockPlatform;
     }
 
     @Override
-    public void getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs,
-            final List list) {
+    public void
+    getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs, final List list) {
         for (int i = 0; i < TurretType.values().length; ++i) {
             list.add(new ItemStack(par1, 1, i));
         }

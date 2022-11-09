@@ -5,22 +5,21 @@ import icbm.api.explosion.IExplosiveContainer;
 import universalelectricity.core.vector.Vector3;
 
 public interface IMissile extends IExplosiveContainer {
+    void explode();
 
-   void explode();
+    void setExplode();
 
-   void setExplode();
+    void normalExplode();
 
-   void normalExplode();
+    void setNormalExplode();
 
-   void setNormalExplode();
+    void dropMissileAsItem();
 
-   void dropMissileAsItem();
+    int getTicksInAir();
 
-   int getTicksInAir();
+    ILauncherContainer getLauncher();
 
-   ILauncherContainer getLauncher();
+    void launch(Vector3 var1);
 
-   void launch(Vector3 var1);
-
-   void launch(Vector3 var1, int var2);
+    void launch(Vector3 var1, int var2);
 }

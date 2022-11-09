@@ -17,47 +17,61 @@ public class BlockRenderingHandler implements ISimpleBlockRenderingHandler {
     public static final int ID;
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public void renderInventoryBlock(
+        final Block block,
+        final int metadata,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         if (modelID == BlockRenderingHandler.ID) {
             GL11.glPushMatrix();
+
             if (metadata == BlockTurret.TurretType.GUN.ordinal()) {
                 GL11.glTranslatef(0.1f, 1.0f, 0.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/gun_turret_neutral.png"));
+                    new ResourceLocation("icbm", "textures/models/gun_turret_neutral.png")
+                );
                 RGunTurret.render(0.0f, 0.0f);
             }
+
             if (metadata == BlockTurret.TurretType.LASER.ordinal()) {
                 GL11.glTranslatef(0.4f, 1.4f, 0.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/laser_turret_neutral.png"));
+                    new ResourceLocation(
+                        "icbm", "textures/models/laser_turret_neutral.png"
+                    )
+                );
                 RLaserTurret.render(0.0f, 0.0f);
             } else if (metadata == BlockTurret.TurretType.AA.ordinal()) {
                 GL11.glTranslatef(0.2f, 0.3f, 0.0f);
                 GL11.glScalef(0.45f, 0.45f, 0.45f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm",
-                                "textures/models/aa_turret_neutral.png"));
+                    new ResourceLocation("icbm", "textures/models/aa_turret_neutral.png")
+                );
                 RAATurret.render(0.0f, 0.0f);
             } else if (metadata == BlockTurret.TurretType.RAILGUN.ordinal()) {
                 GL11.glTranslatef(0.0f, 0.9f, 0.0f);
                 GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(
-                        new ResourceLocation("icbm", "textures/models/railgun.png"));
+                    new ResourceLocation("icbm", "textures/models/railgun.png")
+                );
                 RRailgun.MODEL.render(90.0f, 0.0f, 0.0625f);
             }
+
             GL11.glPopMatrix();
         }
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess iBlockAccess, final int x,
-            final int y, final int z, final Block block,
-            final int modelID,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(
+        final IBlockAccess iBlockAccess,
+        final int x,
+        final int y,
+        final int z,
+        final Block block,
+        final int modelID,
+        final RenderBlocks renderer
+    ) {
         return false;
     }
 

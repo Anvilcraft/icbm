@@ -19,10 +19,11 @@ public class RAATurret extends RenderTaggedTile {
     public static final ModelAATurret MODEL;
 
     @Override
-    public void renderTileEntityAt(final TileEntity t, final double x,
-            final double y, final double z,
-            final float f) {
+    public void renderTileEntityAt(
+        final TileEntity t, final double x, final double y, final double z, final float f
+    ) {
         super.renderTileEntityAt(t, x, y, z, f);
+
         if (t instanceof TTurretBase) {
             final TTurretBase tileEntity = (TTurretBase) t;
             GL11.glPushMatrix();
@@ -45,21 +46,29 @@ public class RAATurret extends RenderTaggedTile {
 
     public void setTextureBaseOnState(final TTurretBase tileEntity) {
         final EntityPlayer player = this.getPlayer();
+
         if (tileEntity.getPlatform() != null) {
-            final AccessLevel level = tileEntity.getPlatform().getUserAccess(player.getDisplayName());
+            final AccessLevel level
+                = tileEntity.getPlatform().getUserAccess(player.getDisplayName());
+
             if (level == AccessLevel.ADMIN) {
-                this.bindTexture(new ResourceLocation(
-                        "icbm", "textures/models/aa_turret_neutral.png"));
+                this.bindTexture(
+                    new ResourceLocation("icbm", "textures/models/aa_turret_neutral.png")
+                );
                 return;
             }
+
             if (level.ordinal() >= AccessLevel.USER.ordinal()) {
-                this.bindTexture(new ResourceLocation(
-                        "icbm", "textures/models/aa_turret_friendly.png"));
+                this.bindTexture(
+                    new ResourceLocation("icbm", "textures/models/aa_turret_friendly.png")
+                );
                 return;
             }
         }
+
         this.bindTexture(
-                new ResourceLocation("icbm", "textures/models/aa_turret_hostile.png"));
+            new ResourceLocation("icbm", "textures/models/aa_turret_hostile.png")
+        );
     }
 
     static {

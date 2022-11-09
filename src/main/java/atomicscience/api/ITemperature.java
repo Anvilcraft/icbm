@@ -1,9 +1,7 @@
 package atomicscience.api;
 
-
 public interface ITemperature {
+    float getTemperature();
 
-   float getTemperature();
-
-   void setTemperature(float var1);
+    void setTemperature(float var1);
 }

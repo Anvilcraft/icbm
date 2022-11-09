@@ -9,9 +9,15 @@ import universalelectricity.core.vector.Vector3;
 
 @SideOnly(Side.CLIENT)
 public class FXSmoke extends EntitySmokeFX {
-    public FXSmoke(final World par1World, final Vector3 position, final float red,
-            final float green, final float blue, final float scale,
-            final double distance) {
+    public FXSmoke(
+        final World par1World,
+        final Vector3 position,
+        final float red,
+        final float green,
+        final float blue,
+        final float scale,
+        final double distance
+    ) {
         super(par1World, position.x, position.y, position.z, 0.0, 0.0, 0.0, scale);
         ((Entity) this).renderDistanceWeight = distance;
         this.particleRed = red;

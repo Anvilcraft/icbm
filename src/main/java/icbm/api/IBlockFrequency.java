@@ -1,9 +1,7 @@
 package icbm.api;
 
-
 public interface IBlockFrequency {
+    int getFrequency();
 
-   int getFrequency();
-
-   void setFrequency(int var1);
+    void setFrequency(int var1);
 }

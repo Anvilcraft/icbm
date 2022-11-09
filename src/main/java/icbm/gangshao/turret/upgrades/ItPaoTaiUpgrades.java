@@ -1,10 +1,11 @@
 package icbm.gangshao.turret.upgrades;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.core.di.ItICBM;
 import icbm.gangshao.ITurretUpgrade;
-import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -27,8 +28,8 @@ public class ItPaoTaiUpgrades extends ItICBM implements ITurretUpgrade {
 
     @Override
     public String getUnlocalizedName(final ItemStack itemStack) {
-        return "item.icbm:" +
-                TurretUpgradeType.values()[itemStack.getItemDamage()].iconName;
+        return "item.icbm:"
+            + TurretUpgradeType.values()[itemStack.getItemDamage()].iconName;
     }
 
     @Override
@@ -41,13 +42,15 @@ public class ItPaoTaiUpgrades extends ItICBM implements ITurretUpgrade {
     public void registerIcons(final IIconRegister iconRegister) {
         for (int i = 0; i < TurretUpgradeType.values().length; ++i) {
             ItPaoTaiUpgrades.ICONS[i] = iconRegister.registerIcon(
-                    "icbm:" + TurretUpgradeType.values()[i].iconName);
+                "icbm:" + TurretUpgradeType.values()[i].iconName
+            );
         }
     }
 
     @Override
-    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs,
-            final List par3List) {
+    public void getSubItems(
+        final Item par1, final CreativeTabs par2CreativeTabs, final List par3List
+    ) {
         for (int i = 0; i < TurretUpgradeType.values().length; ++i) {
             par3List.add(new ItemStack((Item) this, 1, i));
         }
@@ -68,8 +71,9 @@ public class ItPaoTaiUpgrades extends ItICBM implements ITurretUpgrade {
 
         String iconName;
 
-        private TurretUpgradeType(final String name2, final int ordinal,
-                final String name) {
+        private TurretUpgradeType(
+            final String name2, final int ordinal, final String name
+        ) {
             this.iconName = name;
         }
     }

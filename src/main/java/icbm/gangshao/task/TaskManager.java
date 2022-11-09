@@ -1,9 +1,10 @@
 package icbm.gangshao.task;
 
-import icbm.core.MainBase;
-import icbm.gangshao.turret.sentries.TAutomaticTurret;
 import java.util.ArrayList;
 import java.util.List;
+
+import icbm.core.MainBase;
+import icbm.gangshao.turret.sentries.TAutomaticTurret;
 
 public class TaskManager {
     private final List<Task> tasks;
@@ -19,6 +20,7 @@ public class TaskManager {
             if (this.tasks.size() > 0) {
                 final int taskIndex = 0;
                 final Task currentTask = this.tasks.get(taskIndex);
+
                 if (currentTask != null && !currentTask.onUpdateTask()) {
                     currentTask.onTaskEnd();
                     this.tasks.remove(taskIndex);

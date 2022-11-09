@@ -31,17 +31,24 @@ public class TMachineGunTurret extends TAutomaticTurret {
 
     @Override
     public void playFiringSound() {
-        this.worldObj.playSoundEffect((double) this.xCoord, (double) this.yCoord,
-                (double) this.zCoord, "icbm.machinegun", 5.0f,
-                1.0f);
+        this.worldObj.playSoundEffect(
+            (double) this.xCoord,
+            (double) this.yCoord,
+            (double) this.zCoord,
+            "icbm.machinegun",
+            5.0f,
+            1.0f
+        );
     }
 
     @Override
     public Vector3 getMuzzle() {
         return this.getCenter().add(Vector3.multiply(
-                CalculationHelper.getDeltaPositionFromRotation(
-                        super.currentRotationYaw, super.currentRotationPitch),
-                1.0));
+            CalculationHelper.getDeltaPositionFromRotation(
+                super.currentRotationYaw, super.currentRotationPitch
+            ),
+            1.0
+        ));
     }
 
     @Override

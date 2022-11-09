@@ -21,9 +21,11 @@ public class MissileSound implements IUpdatePlayerListBox {
     private float minecartRideSoundVolume;
     private double minecartSpeed;
 
-    public MissileSound(final SoundManager par1SoundManager,
-            final EMissile entity,
-            final EntityPlayerSP par3EntityPlayerSP) {
+    public MissileSound(
+        final SoundManager par1SoundManager,
+        final EMissile entity,
+        final EntityPlayerSP par3EntityPlayerSP
+    ) {
         this.playerSPRidingMinecart = false;
         this.minecartIsDead = false;
         this.minecartIsMoving = false;
@@ -46,18 +48,20 @@ public class MissileSound implements IUpdatePlayerListBox {
         final float var5 = this.minecartMoveSoundVolume;
         final float var6 = this.minecartSoundPitch;
         final float var7 = this.minecartRideSoundVolume;
-        this.playerSPRidingMinecart = (this.thePlayer != null &&
-                this.entity.riddenByEntity == this.thePlayer);
+        this.playerSPRidingMinecart
+            = (this.thePlayer != null && this.entity.riddenByEntity == this.thePlayer);
         this.minecartIsDead = this.entity.isDead;
         this.minecartSpeed = 20.0;
         this.minecartIsMoving = (this.minecartSpeed >= 0.01);
+
         if (var2 && !this.playerSPRidingMinecart) {
             // TODO: WTF
             // this.theSoundManager.stopEntitySound((Entity)this.thePlayer);
         }
-        if (this.minecartIsDead ||
-                (!this.silent && this.minecartMoveSoundVolume == 0.0f &&
-                        this.minecartRideSoundVolume == 0.0f)) {
+
+        if (this.minecartIsDead
+            || (!this.silent && this.minecartMoveSoundVolume == 0.0f
+                && this.minecartRideSoundVolume == 0.0f)) {
             // TODO: WTF
             // if (!var3) {
             // this.theSoundManager.stopEntitySound((Entity)this.entity);
@@ -66,12 +70,14 @@ public class MissileSound implements IUpdatePlayerListBox {
             // }
             // }
             this.silent = true;
+
             if (this.minecartIsDead) {
                 return;
             }
         }
-        if (this.theSoundManager != null && this.entity != null &&
-                this.minecartMoveSoundVolume > 0.0f) {
+
+        if (this.theSoundManager != null && this.entity != null
+            && this.minecartMoveSoundVolume > 0.0f) {
             //TODO: WTF
             //this.theSoundManager.playEntitySound("icbm.missileinair",
             //        (Entity) this.entity, 7.0f,
@@ -79,17 +85,22 @@ public class MissileSound implements IUpdatePlayerListBox {
             this.silent = false;
             var1 = true;
         }
+
         if (this.entity.getTicksInAir() > 0) {
             if (this.minecartSoundPitch < 1.0f) {
                 this.minecartSoundPitch += 0.0025f;
             }
+
             if (this.minecartSoundPitch > 1.0f) {
                 this.minecartSoundPitch = 1.0f;
             }
-            float var8 = MathHelper.clamp_float((float) this.minecartSpeed, 0.0f, 4.0f) / 4.0f;
+
+            float var8
+                = MathHelper.clamp_float((float) this.minecartSpeed, 0.0f, 4.0f) / 4.0f;
             this.minecartRideSoundVolume = 0.0f + var8 * 0.75f;
             var8 = MathHelper.clamp_float(var8 * 2.0f, 0.0f, 1.0f);
             this.minecartMoveSoundVolume = 0.0f + var8 * 6.7f;
+
             if (this.entity.posY > 1000.0) {
                 this.minecartMoveSoundVolume = 0.0f;
                 this.minecartRideSoundVolume = 0.0f;
@@ -99,20 +110,24 @@ public class MissileSound implements IUpdatePlayerListBox {
             this.minecartSoundPitch = 0.0f;
             this.minecartRideSoundVolume = 0.0f;
         }
+
         if (!this.silent) {
             if (this.minecartSoundPitch != var6) {
                 //this.theSoundManager.setEntitySoundPitch((Entity) this.entity,
                 //        this.minecartSoundPitch);
             }
+
             if (this.minecartMoveSoundVolume != var5) {
                 //this.theSoundManager.setEntitySoundVolume((Entity) this.entity,
                 //        this.minecartMoveSoundVolume);
             }
+
             if (this.minecartRideSoundVolume != var7) {
                 //this.theSoundManager.setEntitySoundVolume((Entity) this.thePlayer,
                 //        this.minecartRideSoundVolume);
             }
         }
+
         if (!var1) {
             //this.theSoundManager.updateSoundLocation((Entity) this.entity);
             if (this.playerSPRidingMinecart) {

@@ -19,14 +19,20 @@ public abstract class TPaoTaiQi extends TTurretBase implements IMultiBlock {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (this.entityFake != null && this.entityFake.riddenByEntity instanceof EntityPlayer) {
-            final EntityPlayer mountedPlayer = (EntityPlayer) this.entityFake.riddenByEntity;
+
+        if (this.entityFake != null
+            && this.entityFake.riddenByEntity instanceof EntityPlayer) {
+            final EntityPlayer mountedPlayer
+                = (EntityPlayer) this.entityFake.riddenByEntity;
+
             if (((Entity) mountedPlayer).rotationPitch > super.maxPitch) {
                 ((Entity) mountedPlayer).rotationPitch = super.maxPitch;
             }
+
             if (((Entity) mountedPlayer).rotationPitch < super.minPitch) {
                 ((Entity) mountedPlayer).rotationPitch = super.minPitch;
             }
+
             final float rotationPitch = ((Entity) mountedPlayer).rotationPitch;
             super.wantedRotationPitch = rotationPitch;
             super.currentRotationPitch = rotationPitch;
@@ -38,8 +44,13 @@ public abstract class TPaoTaiQi extends TTurretBase implements IMultiBlock {
 
     public MovingObjectPosition rayTrace(final double distance) {
         return CalculationHelper.doCustomRayTrace(
-                this.worldObj, this.getMuzzle(), super.wantedRotationYaw,
-                super.wantedRotationPitch, true, distance);
+            this.worldObj,
+            this.getMuzzle(),
+            super.wantedRotationYaw,
+            super.wantedRotationPitch,
+            true,
+            distance
+        );
     }
 
     @Override
@@ -49,12 +60,15 @@ public abstract class TPaoTaiQi extends TTurretBase implements IMultiBlock {
         } else {
             if (this.entityFake != null) {
                 if (this.entityFake.riddenByEntity instanceof EntityPlayer) {
-                    final EntityPlayer mountedPlayer = (EntityPlayer) this.entityFake.riddenByEntity;
+                    final EntityPlayer mountedPlayer
+                        = (EntityPlayer) this.entityFake.riddenByEntity;
+
                     if (entityPlayer == mountedPlayer) {
                         if (!this.worldObj.isRemote) {
                             // TODO: WTF
                             // PacketManager.sendPacketToClients(this.getRotationPacket());
                         }
+
                         // TODO: WTF
                         // entityPlayer.unmountEntity((Entity) this.entityFake);
                         this.entityFake.setDead();
@@ -62,22 +76,28 @@ public abstract class TPaoTaiQi extends TTurretBase implements IMultiBlock {
                         return true;
                     }
                 }
+
                 return false;
             }
+
             this.mount(entityPlayer);
         }
+
         return true;
     }
 
     public void mount(final EntityPlayer entityPlayer) {
         if (!this.worldObj.isRemote) {
             if (this.entityFake == null) {
-                this.entityFake = new ESeat(this.worldObj,
-                        new Vector3(this.xCoord + 0.5, this.yCoord + 1.2,
-                                this.zCoord + 0.5),
-                        this, true);
+                this.entityFake = new ESeat(
+                    this.worldObj,
+                    new Vector3(this.xCoord + 0.5, this.yCoord + 1.2, this.zCoord + 0.5),
+                    this,
+                    true
+                );
                 this.worldObj.spawnEntityInWorld((Entity) this.entityFake);
             }
+
             ((Entity) entityPlayer).rotationYaw = super.currentRotationYaw;
             ((Entity) entityPlayer).rotationPitch = super.currentRotationPitch;
             entityPlayer.mountEntity((Entity) this.entityFake);

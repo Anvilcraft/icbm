@@ -18,11 +18,9 @@ public abstract class Task {
         return false;
     }
 
-    public void onTaskStart() {
-    }
+    public void onTaskStart() {}
 
-    public void onTaskEnd() {
-    }
+    public void onTaskEnd() {}
 
     public int getTickInterval() {
         return 1;

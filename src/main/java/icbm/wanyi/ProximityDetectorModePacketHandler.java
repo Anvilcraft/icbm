@@ -9,18 +9,16 @@ import net.minecraft.world.World;
 
 public class ProximityDetectorModePacketHandler
     implements IMessageHandler<ProximityDetectorModePacket, IMessage> {
+    @Override
+    public IMessage onMessage(ProximityDetectorModePacket message, MessageContext ctx) {
+        World world = ctx.getServerHandler().playerEntity.worldObj;
 
-  @Override
-  public IMessage onMessage(ProximityDetectorModePacket message,
-                            MessageContext ctx) {
-    World world = ctx.getServerHandler().playerEntity.worldObj;
+        TileEntity te = message.pos.getTileEntity(world);
 
-    TileEntity te = message.pos.getTileEntity(world);
+        if (te instanceof TProximityDetector) {
+            ((TProximityDetector) te).onModePacket(message);
+        }
 
-    if (te instanceof TProximityDetector) {
-      ((TProximityDetector)te).onModePacket(message);
+        return null;
     }
-
-    return null;
-  }
 }

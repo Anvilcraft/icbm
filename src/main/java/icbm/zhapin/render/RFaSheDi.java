@@ -26,21 +26,30 @@ public class RFaSheDi extends TileEntitySpecialRenderer {
     public static final MFaSheDiRail2 modelRail2;
 
     @Override
-    public void renderTileEntityAt(final TileEntity tileentity, final double x,
-            final double y, final double z,
-            final float f) {
+    public void renderTileEntityAt(
+        final TileEntity tileentity,
+        final double x,
+        final double y,
+        final double z,
+        final float f
+    ) {
         final TLauncherPlatform tileEntity = (TLauncherPlatform) tileentity;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5f, (float) y + 1.5f, (float) z + 0.5f);
         this.bindTexture(new ResourceLocation(
-                "icbm", "textures/models/launcher_" + tileEntity.getTier() + ".png"));
+            "icbm", "textures/models/launcher_" + tileEntity.getTier() + ".png"
+        ));
         GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-        if (tileEntity.getDirection((IBlockAccess) tileEntity.getWorldObj(), (int) x,
-                (int) y, (int) z) != ForgeDirection.NORTH &&
-                tileEntity.getDirection((IBlockAccess) tileEntity.getWorldObj(), (int) x,
-                        (int) y, (int) z) != ForgeDirection.SOUTH) {
+
+        if (tileEntity.getDirection(
+                (IBlockAccess) tileEntity.getWorldObj(), (int) x, (int) y, (int) z
+            ) != ForgeDirection.NORTH
+            && tileEntity.getDirection(
+                   (IBlockAccess) tileEntity.getWorldObj(), (int) x, (int) y, (int) z
+               ) != ForgeDirection.SOUTH) {
             GL11.glRotatef(90.0f, 0.0f, 180.0f, 1.0f);
         }
+
         if (tileEntity.getTier() == 0) {
             RFaSheDi.modelBase0.render(0.0625f);
             RFaSheDi.modelRail0.render(0.0625f);
@@ -55,6 +64,7 @@ public class RFaSheDi extends TileEntitySpecialRenderer {
             GL11.glRotatef(180.0f, 0.0f, 180.0f, 1.0f);
             RFaSheDi.modelRail2.render(0.0625f);
         }
+
         GL11.glPopMatrix();
     }
 

@@ -19,7 +19,8 @@ public class TCamouflage extends TileEntity {
         this.camoBlock = Blocks.air;
         this.camoMetadata = 0;
         this.isSolid = true;
-        this.transparentSides = new boolean[] { false, false, false, false, false, false };
+        this.transparentSides
+            = new boolean[] { false, false, false, false, false, false };
     }
 
     public boolean canUpdate() {
@@ -30,8 +31,9 @@ public class TCamouflage extends TileEntity {
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         NBTTagCompound nbt = pkt.func_148857_g();
 
-        this.setCamoBlock(Block.getBlockById(nbt.getInteger("camoId")),
-                nbt.getInteger("camoMeta"));
+        this.setCamoBlock(
+            Block.getBlockById(nbt.getInteger("camoId")), nbt.getInteger("camoMeta")
+        );
         this.isSolid = nbt.getBoolean("isSolid");
 
         for (int i = 0; i < this.transparentSides.length; i++) {
@@ -51,8 +53,9 @@ public class TCamouflage extends TileEntity {
             nbt.setBoolean("transparent" + i, this.transparentSides[i]);
         }
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     public boolean getSolid() {
@@ -61,6 +64,7 @@ public class TCamouflage extends TileEntity {
 
     public void setSolid(final boolean isSolid) {
         this.isSolid = isSolid;
+
         if (!this.worldObj.isRemote) {
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
@@ -82,6 +86,7 @@ public class TCamouflage extends TileEntity {
         if (this.camoBlock != block || this.camoMetadata != metadata) {
             this.camoBlock = block;
             this.camoMetadata = Math.max(metadata, 0);
+
             if (!this.worldObj.isRemote) {
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
@@ -89,14 +94,15 @@ public class TCamouflage extends TileEntity {
     }
 
     public boolean getTransparent(final ForgeDirection direction) {
-        return direction.ordinal() < this.transparentSides.length &&
-                this.transparentSides[direction.ordinal()];
+        return direction.ordinal() < this.transparentSides.length
+            && this.transparentSides[direction.ordinal()];
     }
 
-    public void setTransparent(final ForgeDirection direction,
-            final boolean isTransparent) {
+    public void
+    setTransparent(final ForgeDirection direction, final boolean isTransparent) {
         if (direction.ordinal() < this.transparentSides.length) {
             this.transparentSides[direction.ordinal()] = isTransparent;
+
             if (!this.worldObj.isRemote) {
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
@@ -118,22 +124,24 @@ public class TCamouflage extends TileEntity {
         super.readFromNBT(par1NBTTagCompound);
         this.camoBlock = Block.getBlockById(par1NBTTagCompound.getInteger("camoBlock"));
         this.camoMetadata = par1NBTTagCompound.getInteger("camoMetadata");
+
         for (int i = 0; i < this.transparentSides.length; ++i) {
             this.transparentSides[i] = par1NBTTagCompound.getBoolean("transparent" + i);
         }
+
         this.isSolid = par1NBTTagCompound.getBoolean("isSolid");
     }
 
     @Override
     public void writeToNBT(final NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("camoBlock",
-                Block.getIdFromBlock(this.camoBlock));
+        par1NBTTagCompound.setInteger("camoBlock", Block.getIdFromBlock(this.camoBlock));
         par1NBTTagCompound.setInteger("camoMetadata", this.camoMetadata);
+
         for (int i = 0; i < this.transparentSides.length; ++i) {
-            par1NBTTagCompound.setBoolean("transparent" + i,
-                    this.transparentSides[i]);
+            par1NBTTagCompound.setBoolean("transparent" + i, this.transparentSides[i]);
         }
+
         par1NBTTagCompound.setBoolean("isSolid", this.isSolid);
     }
 }

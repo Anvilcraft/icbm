@@ -7,19 +7,18 @@ import universalelectricity.prefab.implement.IRotatable;
 import universalelectricity.prefab.tile.TileEntityElectrical;
 
 public class TileEntityUniversalProducer extends TileEntityElectrical {
-  public ElectricityPack produce(double watts) {
-    ElectricityPack pack =
-        new ElectricityPack(watts / this.getVoltage(), this.getVoltage());
-    ElectricityPack remaining =
-        ElectricityNetworkHelper.produceFromMultipleSides(this, pack);
+    public ElectricityPack produce(double watts) {
+        ElectricityPack pack
+            = new ElectricityPack(watts / this.getVoltage(), this.getVoltage());
+        ElectricityPack remaining
+            = ElectricityNetworkHelper.produceFromMultipleSides(this, pack);
 
-    return remaining;
-  }
+        return remaining;
+    }
 
-  @Override
-  public boolean canConnect(ForgeDirection direction) {
-    return this instanceof IRotatable
-        ? direction.ordinal() == this.getBlockMetadata()
-        : true;
-  }
+    @Override
+    public boolean canConnect(ForgeDirection direction) {
+        return this instanceof IRotatable ? direction.ordinal() == this.getBlockMetadata()
+                                          : true;
+    }
 }

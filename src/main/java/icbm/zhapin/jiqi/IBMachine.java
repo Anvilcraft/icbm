@@ -32,11 +32,21 @@ public class IBMachine extends ItemBlock {
     }
 
     @Override
-    public boolean placeBlockAt(final ItemStack itemStack, final EntityPlayer entityPlayer,
-            final World world, final int x, final int y, final int z,
-            final int side, final float hitX, final float hitY,
-            final float hitZ, final int metadata) {
+    public boolean placeBlockAt(
+        final ItemStack itemStack,
+        final EntityPlayer entityPlayer,
+        final World world,
+        final int x,
+        final int y,
+        final int z,
+        final int side,
+        final float hitX,
+        final float hitY,
+        final float hitZ,
+        final int metadata
+    ) {
         int jiQiMetadata;
+
         if (itemStack.getItemDamage() < 3) {
             jiQiMetadata = 0;
         } else if (itemStack.getItemDamage() < 6) {
@@ -46,14 +56,19 @@ public class IBMachine extends ItemBlock {
         } else {
             jiQiMetadata = itemStack.getItemDamage() - 6;
         }
-        final int direction = MathHelper.floor_double(
-                ((Entity) entityPlayer).rotationYaw * 4.0f / 360.0f + 0.5) &
-                0x3;
+
+        final int direction
+            = MathHelper.floor_double(
+                  ((Entity) entityPlayer).rotationYaw * 4.0f / 360.0f + 0.5
+              )
+            & 0x3;
+
         if (BMachine.canBePlacedAt(world, x, y, z, jiQiMetadata, direction)) {
             if (world.setBlock(x, y, z, this.field_150939_a, jiQiMetadata, 3)) {
                 if (world.getBlock(x, y, z) == this.field_150939_a) {
                     if (itemStack.getItemDamage() < 9) {
                         final ITier tileEntity = (ITier) world.getTileEntity(x, y, z);
+
                         if (tileEntity != null) {
                             if (itemStack.getItemDamage() < 3) {
                                 tileEntity.setTier(itemStack.getItemDamage());
@@ -64,12 +79,16 @@ public class IBMachine extends ItemBlock {
                             }
                         }
                     }
-                    this.field_150939_a.onBlockPlacedBy(world, x, y, z, entityPlayer,
-                            itemStack);
+
+                    this.field_150939_a.onBlockPlacedBy(
+                        world, x, y, z, entityPlayer, itemStack
+                    );
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 }

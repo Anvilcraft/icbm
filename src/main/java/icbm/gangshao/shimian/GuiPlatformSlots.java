@@ -11,8 +11,9 @@ import universalelectricity.core.electricity.ElectricityDisplay;
 
 @SideOnly(Side.CLIENT)
 public class GuiPlatformSlots extends GuiPlatformContainer {
-    public GuiPlatformSlots(final InventoryPlayer inventoryPlayer,
-            final TPlatform tileEntity) {
+    public GuiPlatformSlots(
+        final InventoryPlayer inventoryPlayer, final TPlatform tileEntity
+    ) {
         super(inventoryPlayer, tileEntity);
     }
 
@@ -20,39 +21,55 @@ public class GuiPlatformSlots extends GuiPlatformContainer {
     protected void drawGuiContainerForegroundLayer(final int x, final int y) {
         this.fontRendererObj.drawString("Ammunition", 8, 30, 4210752);
         final TTurretBase turret = super.tileEntity.getTurret(false);
+
         if (turret != null && turret.getFiringRequest() > 0.0) {
             String color = "§4";
+
             if (super.tileEntity.isRunning()) {
                 color = "§a";
             }
+
             this.fontRendererObj.drawString("Energy Per Shot", 85, 33, 4210752);
             this.fontRendererObj.drawString(
-                    color + ElectricityDisplay.getDisplayShort(
-                            Math.min(super.tileEntity.wattsReceived,
-                                    turret.getFiringRequest()),
-                            ElectricityDisplay.ElectricUnit.JOULES),
-                    87, 43, 4210752);
+                color
+                    + ElectricityDisplay.getDisplayShort(
+                        Math.min(
+                            super.tileEntity.wattsReceived, turret.getFiringRequest()
+                        ),
+                        ElectricityDisplay.ElectricUnit.JOULES
+                    ),
+                87,
+                43,
+                4210752
+            );
             this.fontRendererObj.drawString(
-                    color + "of " +
-                            ElectricityDisplay.getDisplayShort(
-                                    super.tileEntity.getTurret(false).getFiringRequest(),
-                                    ElectricityDisplay.ElectricUnit.JOULES),
-                    87, 53, 4210752);
+                color + "of "
+                    + ElectricityDisplay.getDisplayShort(
+                        super.tileEntity.getTurret(false).getFiringRequest(),
+                        ElectricityDisplay.ElectricUnit.JOULES
+                    ),
+                87,
+                53,
+                4210752
+            );
         }
+
         this.fontRendererObj.drawString("Upgrades", 87, 66, 4210752);
         super.drawGuiContainerForegroundLayer(x, y);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float par1, final int x,
-            final int y) {
+    protected void
+    drawGuiContainerBackgroundLayer(final float par1, final int x, final int y) {
         // super.drawGuiContainerBackgroundLayer(par1, x, y);
         this.mc.renderEngine.bindTexture(
-                new ResourceLocation("icbm", "textures/gui/gui_platform_slot.png"));
+            new ResourceLocation("icbm", "textures/gui/gui_platform_slot.png")
+        );
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         final int containerWidth = (this.width - this.xSize) / 2;
         final int containerHeight = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(containerWidth, containerHeight, 0, 0,
-                this.xSize, this.ySize);
+        this.drawTexturedModalRect(
+            containerWidth, containerHeight, 0, 0, this.xSize, this.ySize
+        );
     }
 }

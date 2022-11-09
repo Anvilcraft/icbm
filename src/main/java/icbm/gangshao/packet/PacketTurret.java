@@ -1,12 +1,13 @@
 package icbm.gangshao.packet;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import universalelectricity.core.vector.Vector3;
@@ -26,8 +27,7 @@ public class PacketTurret implements IMessage {
         this.turretPos = turretPos;
     }
 
-    public static PacketTurret rotation(Vector3 turretPos, float yaw,
-            float pitch) {
+    public static PacketTurret rotation(Vector3 turretPos, float yaw, float pitch) {
         NBTTagCompound data = new NBTTagCompound();
 
         data.setFloat("yaw", yaw);
@@ -36,8 +36,8 @@ public class PacketTurret implements IMessage {
         return new PacketTurret(turretPos, Type.ROTATION, data);
     }
 
-    public static PacketTurret shot(Vector3 turretPos, Vector3 target, float yaw,
-            float pitch) {
+    public static PacketTurret
+    shot(Vector3 turretPos, Vector3 target, float yaw, float pitch) {
         NBTTagCompound data = new NBTTagCompound();
 
         data.setTag("target", target.writeToNBT(new NBTTagCompound()));
@@ -59,12 +59,14 @@ public class PacketTurret implements IMessage {
     public void fromBytes(ByteBuf buf) {
         try {
             this.data = CompressedStreamTools.readCompressed(
-                    new DataInputStream(new ByteBufInputStream(buf)));
+                new DataInputStream(new ByteBufInputStream(buf))
+            );
 
             this.turretPos = Vector3.readFromNBT(this.data);
 
             if (this.data.getInteger("type") >= Type.values().length)
                 throw new IllegalArgumentException("Type out of bounds");
+
             this.type = Type.values()[this.data.getInteger("type")];
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,7 +80,8 @@ public class PacketTurret implements IMessage {
 
         try {
             CompressedStreamTools.writeCompressed(
-                    this.data, new DataOutputStream(new ByteBufOutputStream(buf)));
+                this.data, new DataOutputStream(new ByteBufOutputStream(buf))
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }

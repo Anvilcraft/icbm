@@ -24,59 +24,94 @@ public class ExRejuvenation extends ZhaPin {
     }
 
     @Override
-    public boolean doBaoZha(final World worldObj, final Vector3 position,
-            final Entity explosionSource,
-            final int explosionMetadata, final int callCount) {
+    public boolean doBaoZha(
+        final World worldObj,
+        final Vector3 position,
+        final Entity explosionSource,
+        final int explosionMetadata,
+        final int callCount
+    ) {
         if (!worldObj.isRemote) {
             try {
-                final Chunk oldChunk = worldObj.getChunkFromBlockCoords(position.intX(), position.intZ());
+                final Chunk oldChunk
+                    = worldObj.getChunkFromBlockCoords(position.intX(), position.intZ());
+
                 if (worldObj instanceof WorldServer) {
                     final WorldServer worldServer = (WorldServer) worldObj;
-                    final ChunkProviderServer chunkProviderServer = worldServer.theChunkProviderServer;
+                    final ChunkProviderServer chunkProviderServer
+                        = worldServer.theChunkProviderServer;
                     // TODO: WTF!!
-                    final IChunkProvider chunkProviderGenerate = (IChunkProvider) ObfuscationReflectionHelper
-                            .getPrivateValue(
-                                    (Class) ChunkProviderServer.class, (Object) chunkProviderServer,
-                                    new String[] { "currentChunkProvider", "d", "field_73246_d" });
+                    final IChunkProvider chunkProviderGenerate
+                        = (IChunkProvider) ObfuscationReflectionHelper.getPrivateValue(
+                            (Class) ChunkProviderServer.class,
+                            (Object) chunkProviderServer,
+                            new String[] { "currentChunkProvider", "d", "field_73246_d" }
+                        );
                     final Chunk newChunk = chunkProviderGenerate.provideChunk(
-                            oldChunk.xPosition, oldChunk.zPosition);
+                        oldChunk.xPosition, oldChunk.zPosition
+                    );
+
                     for (int x = 0; x < 16; ++x) {
                         for (int z = 0; z < 16; ++z) {
                             for (int y = 0; y < worldObj.getHeight(); ++y) {
                                 final Block block = newChunk.getBlock(x, y, z);
                                 final int metadata = newChunk.getBlockMetadata(x, y, z);
-                                worldServer.setBlock(x + oldChunk.xPosition * 16, y,
-                                        z + oldChunk.zPosition * 16, block,
-                                        metadata, 2);
-                                final TileEntity tileEntity = newChunk.getTileEntityUnsafe(x, y, z);
+                                worldServer.setBlock(
+                                    x + oldChunk.xPosition * 16,
+                                    y,
+                                    z + oldChunk.zPosition * 16,
+                                    block,
+                                    metadata,
+                                    2
+                                );
+                                final TileEntity tileEntity
+                                    = newChunk.getTileEntityUnsafe(x, y, z);
+
                                 if (tileEntity != null) {
-                                    worldServer.setTileEntity(x + oldChunk.xPosition * 16, y,
-                                            z + oldChunk.zPosition * 16,
-                                            tileEntity);
+                                    worldServer.setTileEntity(
+                                        x + oldChunk.xPosition * 16,
+                                        y,
+                                        z + oldChunk.zPosition * 16,
+                                        tileEntity
+                                    );
                                 }
                             }
                         }
                     }
+
                     oldChunk.isTerrainPopulated = false;
                     chunkProviderGenerate.populate(
-                            chunkProviderGenerate, oldChunk.xPosition, oldChunk.zPosition);
+                        chunkProviderGenerate, oldChunk.xPosition, oldChunk.zPosition
+                    );
                 }
             } catch (final Exception e) {
                 System.out.println("ICBM Rejuvenation Failed!");
                 e.printStackTrace();
             }
         }
+
         return false;
     }
 
     @Override
     public void init() {
         RecipeHelper.addRecipe(
-                (IRecipe) new ShapedOreRecipe(
-                        this.getItemStack(),
-                        new Object[] { "ICI", "CDC", "ICI", 'D', Blocks.diamond_block, 'C',
-                                Items.clock, 'I', Blocks.iron_block }),
-                this.getUnlocalizedName(), MainBase.CONFIGURATION, true);
+            (IRecipe) new ShapedOreRecipe(
+                this.getItemStack(),
+                new Object[] { "ICI",
+                               "CDC",
+                               "ICI",
+                               'D',
+                               Blocks.diamond_block,
+                               'C',
+                               Items.clock,
+                               'I',
+                               Blocks.iron_block }
+            ),
+            this.getUnlocalizedName(),
+            MainBase.CONFIGURATION,
+            true
+        );
     }
 
     @Override

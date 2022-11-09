@@ -1,11 +1,12 @@
 package icbm.gangshao.turret;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.core.di.ItICBM;
 import icbm.gangshao.IAmmunition;
 import icbm.gangshao.ProjectileType;
-import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -41,7 +42,8 @@ public class ItemAmmo extends ItICBM implements IAmmunition {
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister iconRegister) {
         for (int i = 0; i < AmmoType.values().length; ++i) {
-            ItemAmmo.ICONS[i] = iconRegister.registerIcon("icbm:" + AmmoType.values()[i].iconName);
+            ItemAmmo.ICONS[i]
+                = iconRegister.registerIcon("icbm:" + AmmoType.values()[i].iconName);
         }
     }
 
@@ -50,6 +52,7 @@ public class ItemAmmo extends ItICBM implements IAmmunition {
         if (itemStack.getItemDamage() < AmmoType.values().length) {
             return AmmoType.values()[itemStack.getItemDamage()].type;
         }
+
         return null;
     }
 
@@ -65,16 +68,18 @@ public class ItemAmmo extends ItICBM implements IAmmunition {
 
     @Override
     public int getEntityLifespan(final ItemStack itemStack, final World world) {
-        if (itemStack != null &&
-                itemStack.getItemDamage() == AmmoType.BULLETINF.ordinal()) {
+        if (itemStack != null
+            && itemStack.getItemDamage() == AmmoType.BULLETINF.ordinal()) {
             return 40;
         }
+
         return super.getEntityLifespan(itemStack, world);
     }
 
     @Override
-    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs,
-            final List par3List) {
+    public void getSubItems(
+        final Item par1, final CreativeTabs par2CreativeTabs, final List par3List
+    ) {
         for (int i = 0; i < AmmoType.values().length; ++i) {
             par3List.add(new ItemStack((Item) this, 1, i));
         }
@@ -93,18 +98,20 @@ public class ItemAmmo extends ItICBM implements IAmmunition {
         SHELL("SHELL", 0, "bulletShell", ProjectileType.UNKNOWN, true),
         BULLET("BULLET", 1, "bullet", ProjectileType.CONVENTIONAL, true),
         BULLETRAIL("BULLETRAIL", 2, "bulletRailgun", ProjectileType.RAILGUN, true),
-        BULLETANTI("BULLETANTI", 3, "bulletAntimatter", ProjectileType.RAILGUN,
-                true),
-        BULLETINF("BULLETINF", 4, "bulletInfinite", ProjectileType.CONVENTIONAL,
-                false);
+        BULLETANTI("BULLETANTI", 3, "bulletAntimatter", ProjectileType.RAILGUN, true),
+        BULLETINF("BULLETINF", 4, "bulletInfinite", ProjectileType.CONVENTIONAL, false);
 
         public String iconName;
         public ProjectileType type;
         public boolean consume;
 
-        private AmmoType(final String name, final int ordinal,
-                final String iconName, final ProjectileType type,
-                final boolean consume) {
+        private AmmoType(
+            final String name,
+            final int ordinal,
+            final String iconName,
+            final ProjectileType type,
+            final boolean consume
+        ) {
             this.iconName = iconName;
             this.type = type;
             this.consume = consume;

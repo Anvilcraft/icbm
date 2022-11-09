@@ -9,19 +9,23 @@ public class PotionRadiation extends CustomPotion {
     public static final PotionRadiation INSTANCE;
 
     public PotionRadiation(int id, boolean isBadEffect, int color, String name) {
-        super(AtomicScience.CONFIGURATION.get("Potion", name + " potion ID", id)
-                .getInt(id),
-                isBadEffect, color, name);
+        super(
+            AtomicScience.CONFIGURATION.get("Potion", name + " potion ID", id).getInt(id),
+            isBadEffect,
+            color,
+            name
+        );
         this.setIconIndex(6, 0);
     }
 
     @Override
     public void performEffect(EntityLivingBase entity, int amplifier) {
-        if ((double) entity.worldObj.rand.nextFloat() > 0.9D - (double) amplifier * 0.08D) {
+        if ((double) entity.worldObj.rand.nextFloat()
+            > 0.9D - (double) amplifier * 0.08D) {
             entity.attackEntityFrom(PoisonRadiation.damageSource, 1);
+
             if (entity instanceof EntityPlayer) {
-                ((EntityPlayer) entity)
-                        .addExhaustion(0.01F * (float) (amplifier + 1));
+                ((EntityPlayer) entity).addExhaustion(0.01F * (float) (amplifier + 1));
             }
         }
     }

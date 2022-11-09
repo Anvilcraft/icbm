@@ -14,10 +14,16 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RShouLiuDan extends Render {
     @Override
-    public void doRender(final Entity entity, final double x, final double y,
-            final double z, final float par8, final float par9) {
-        final IIcon icon = ICBMExplosion.itShouLiuDan.getIconFromDamage(
-                ((EGrenade) entity).haoMa);
+    public void doRender(
+        final Entity entity,
+        final double x,
+        final double y,
+        final double z,
+        final float par8,
+        final float par9
+    ) {
+        final IIcon icon
+            = ICBMExplosion.itShouLiuDan.getIconFromDamage(((EGrenade) entity).haoMa);
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y + 0.4f, (float) z);
         GL11.glEnable(32826);
@@ -42,14 +48,18 @@ public class RShouLiuDan extends Render {
         GL11.glRotatef(-super.renderManager.playerViewX, 1.0f, 0.0f, 0.0f);
         par1Tessellator.startDrawingQuads();
         par1Tessellator.setNormal(0.0f, 1.0f, 0.0f);
-        par1Tessellator.addVertexWithUV((double) (0.0f - f6), (double) (0.0f - f7),
-                0.0, (double) f, (double) f4);
-        par1Tessellator.addVertexWithUV((double) (f5 - f6), (double) (0.0f - f7), 0.0,
-                (double) f2, (double) f4);
-        par1Tessellator.addVertexWithUV((double) (f5 - f6), (double) (f5 - f7), 0.0,
-                (double) f2, (double) f3);
-        par1Tessellator.addVertexWithUV((double) (0.0f - f6), (double) (f5 - f7), 0.0,
-                (double) f, (double) f3);
+        par1Tessellator.addVertexWithUV(
+            (double) (0.0f - f6), (double) (0.0f - f7), 0.0, (double) f, (double) f4
+        );
+        par1Tessellator.addVertexWithUV(
+            (double) (f5 - f6), (double) (0.0f - f7), 0.0, (double) f2, (double) f4
+        );
+        par1Tessellator.addVertexWithUV(
+            (double) (f5 - f6), (double) (f5 - f7), 0.0, (double) f2, (double) f3
+        );
+        par1Tessellator.addVertexWithUV(
+            (double) (0.0f - f6), (double) (f5 - f7), 0.0, (double) f, (double) f3
+        );
         par1Tessellator.draw();
     }
 

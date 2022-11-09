@@ -1,5 +1,7 @@
 package icbm.gangshao.turret;
 
+import java.util.HashMap;
+
 import calclavia.lib.CalculationHelper;
 import calclavia.lib.render.ITagRender;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
@@ -10,7 +12,6 @@ import icbm.gangshao.damage.IHealthTile;
 import icbm.gangshao.packet.PacketTurret;
 import icbm.gangshao.platform.TPlatform;
 import icbm.gangshao.task.LookHelper;
-import java.util.HashMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,8 +28,8 @@ import universalelectricity.core.block.IVoltage;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.tile.TileEntityAdvanced;
 
-public abstract class TTurretBase extends TileEntityAdvanced
-        implements ITagRender, IVoltage, ISentry, IHealthTile {
+public abstract class TTurretBase
+    extends TileEntityAdvanced implements ITagRender, IVoltage, ISentry, IHealthTile {
     public float maxPitch;
     public float minPitch;
     protected boolean allowFreePitch;
@@ -65,14 +66,17 @@ public abstract class TTurretBase extends TileEntityAdvanced
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (this.tickSinceFired > 0) {
             --this.tickSinceFired;
         }
-        if (!this.worldObj.isRemote && !this.isInvul() &&
-                this.getDamageEntity() == null && this.getHealth() > 0) {
+
+        if (!this.worldObj.isRemote && !this.isInvul() && this.getDamageEntity() == null
+            && this.getHealth() > 0) {
             this.setDamageEntity(new EntityTileDamagable(this));
             this.worldObj.spawnEntityInWorld((Entity) this.getDamageEntity());
         }
+
         this.updateRotation();
     }
 
@@ -96,8 +100,9 @@ public abstract class TTurretBase extends TileEntityAdvanced
     }
 
     public PacketTurret getRotationPacket() {
-        return PacketTurret.rotation(new Vector3(this), this.wantedRotationYaw,
-                this.wantedRotationPitch);
+        return PacketTurret.rotation(
+            new Vector3(this), this.wantedRotationYaw, this.wantedRotationPitch
+        );
     }
 
     @Override
@@ -105,8 +110,9 @@ public abstract class TTurretBase extends TileEntityAdvanced
         final NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
 
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
-                this.getBlockMetadata(), nbt);
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
     }
 
     @Override
@@ -128,6 +134,7 @@ public abstract class TTurretBase extends TileEntityAdvanced
         this.currentRotationYaw = nbt.getFloat("cYaw");
         this.currentRotationPitch = nbt.getFloat("cPitch");
         this.platformDirection = ForgeDirection.getOrientation(nbt.getInteger("dir"));
+
         if (nbt.hasKey("health")) {
             this.health = nbt.getInteger("health");
         }
@@ -136,18 +143,21 @@ public abstract class TTurretBase extends TileEntityAdvanced
     public abstract double getFiringRequest();
 
     public boolean isRunning() {
-        return this.getPlatform() != null && this.getPlatform().isRunning() &&
-                this.isAlive();
+        return this.getPlatform() != null && this.getPlatform().isRunning()
+            && this.isAlive();
     }
 
     public TPlatform getPlatform() {
         final TileEntity tileEntity = this.worldObj.getTileEntity(
-                this.xCoord + this.platformDirection.offsetX,
-                this.yCoord + this.platformDirection.offsetY,
-                this.zCoord + this.platformDirection.offsetZ);
+            this.xCoord + this.platformDirection.offsetX,
+            this.yCoord + this.platformDirection.offsetY,
+            this.zCoord + this.platformDirection.offsetZ
+        );
+
         if (tileEntity instanceof TPlatform) {
             return (TPlatform) tileEntity;
         }
+
         return null;
     }
 
@@ -155,16 +165,26 @@ public abstract class TTurretBase extends TileEntityAdvanced
         if (doExplosion) {
             if (!this.isInvalid()) {
                 this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
-                this.worldObj.createExplosion((Entity) this.getDamageEntity(),
-                        (double) this.xCoord, (double) this.yCoord,
-                        (double) this.zCoord, 2.0f, true);
+                this.worldObj.createExplosion(
+                    (Entity) this.getDamageEntity(),
+                    (double) this.xCoord,
+                    (double) this.yCoord,
+                    (double) this.zCoord,
+                    2.0f,
+                    true
+                );
             } else {
                 this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
             }
         } else if (!this.worldObj.isRemote) {
-            this.getBlockType().dropBlockAsItem(this.worldObj, this.xCoord,
-                    this.yCoord, this.zCoord,
-                    this.getBlockMetadata(), 0);
+            this.getBlockType().dropBlockAsItem(
+                this.worldObj,
+                this.xCoord,
+                this.yCoord,
+                this.zCoord,
+                this.getBlockMetadata(),
+                0
+            );
             this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
         }
     }
@@ -186,16 +206,18 @@ public abstract class TTurretBase extends TileEntityAdvanced
     @Override
     public String getName() {
         return new ItemStack(this.getBlockType(), 1, this.getBlockMetadata())
-                .getDisplayName() +
-                " " + this.getHealth() + "/" + this.getMaxHealth();
+                   .getDisplayName()
+            + " " + this.getHealth() + "/" + this.getMaxHealth();
     }
 
     @Override
     public Vector3 getMuzzle() {
         return this.getCenter().add(Vector3.multiply(
-                CalculationHelper.getDeltaPositionFromRotation(
-                        this.currentRotationYaw, this.currentRotationPitch),
-                1.0));
+            CalculationHelper.getDeltaPositionFromRotation(
+                this.currentRotationYaw, this.currentRotationPitch
+            ),
+            1.0
+        ));
     }
 
     @Override
@@ -218,6 +240,7 @@ public abstract class TTurretBase extends TileEntityAdvanced
         if (this.health == -1) {
             this.health = this.getMaxHealth();
         }
+
         return this.health;
     }
 
@@ -226,12 +249,20 @@ public abstract class TTurretBase extends TileEntityAdvanced
         if (increase) {
             i += this.health;
         }
+
         this.health = Math.min(Math.max(i, 0), this.getMaxHealth());
+
         if (!this.worldObj.isRemote) {
             ICBMSentry.channel.sendToAllAround(
-                    this.getStatsPacket(),
-                    new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord,
-                            this.yCoord, this.zCoord, 100.0));
+                this.getStatsPacket(),
+                new TargetPoint(
+                    this.worldObj.provider.dimensionId,
+                    this.xCoord,
+                    this.yCoord,
+                    this.zCoord,
+                    100.0
+                )
+            );
         }
     }
 
@@ -245,18 +276,28 @@ public abstract class TTurretBase extends TileEntityAdvanced
         if (this.isInvul()) {
             return false;
         }
+
         if (source != null && source.equals(DamageSource.onFire)) {
             return true;
         }
+
         this.health -= amount;
+
         if (this.health <= 0) {
             this.destroy(true);
         } else {
             ICBMSentry.channel.sendToAllAround(
-                    this.getStatsPacket(),
-                    new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord,
-                            this.yCoord, this.zCoord, 100.0));
+                this.getStatsPacket(),
+                new TargetPoint(
+                    this.worldObj.provider.dimensionId,
+                    this.xCoord,
+                    this.yCoord,
+                    this.zCoord,
+                    100.0
+                )
+            );
         }
+
         return true;
     }
 
@@ -269,39 +310,54 @@ public abstract class TTurretBase extends TileEntityAdvanced
     }
 
     public void updateRotation() {
-        final float yawDifference = Math.abs(LookHelper.getAngleDif(
-                this.currentRotationYaw, this.wantedRotationYaw));
+        final float yawDifference = Math.abs(
+            LookHelper.getAngleDif(this.currentRotationYaw, this.wantedRotationYaw)
+        );
+
         if (yawDifference > 0.001f) {
             final float speedYaw = Math.min(this.getRotationSpeed(), yawDifference);
+
             if (this.currentRotationYaw > this.wantedRotationYaw) {
                 this.currentRotationYaw -= speedYaw;
             } else {
                 this.currentRotationYaw += speedYaw;
             }
-            if (Math.abs(this.currentRotationYaw - this.wantedRotationYaw) <= speedYaw + 0.1) {
+
+            if (Math.abs(this.currentRotationYaw - this.wantedRotationYaw)
+                <= speedYaw + 0.1) {
                 this.currentRotationYaw = this.wantedRotationYaw;
             }
         }
-        final float pitchDifference = Math.abs(LookHelper.getAngleDif(
-                this.currentRotationPitch, this.wantedRotationPitch));
+
+        final float pitchDifference = Math.abs(
+            LookHelper.getAngleDif(this.currentRotationPitch, this.wantedRotationPitch)
+        );
+
         if (pitchDifference > 0.001f) {
             final float speedPitch = Math.min(this.getRotationSpeed(), pitchDifference);
+
             if (this.currentRotationPitch > this.wantedRotationPitch) {
                 this.currentRotationPitch -= speedPitch;
             } else {
                 this.currentRotationPitch += speedPitch;
             }
-            if (Math.abs(this.currentRotationPitch - this.wantedRotationPitch) <= speedPitch + 0.1) {
+
+            if (Math.abs(this.currentRotationPitch - this.wantedRotationPitch)
+                <= speedPitch + 0.1) {
                 this.currentRotationPitch = this.wantedRotationPitch;
             }
         }
-        if (Math.abs(this.currentRotationPitch - this.wantedRotationPitch) <= 0.001f &&
-                Math.abs(this.currentRotationYaw - this.wantedRotationYaw) <= 0.001f) {
+
+        if (Math.abs(this.currentRotationPitch - this.wantedRotationPitch) <= 0.001f
+            && Math.abs(this.currentRotationYaw - this.wantedRotationYaw) <= 0.001f) {
             ++this.lastRotateTick;
         }
-        this.currentRotationPitch = MathHelper.wrapAngleTo180_float(this.currentRotationPitch);
+
+        this.currentRotationPitch
+            = MathHelper.wrapAngleTo180_float(this.currentRotationPitch);
         this.wantedRotationYaw = MathHelper.wrapAngleTo180_float(this.wantedRotationYaw);
-        this.wantedRotationPitch = MathHelper.wrapAngleTo180_float(this.wantedRotationPitch);
+        this.wantedRotationPitch
+            = MathHelper.wrapAngleTo180_float(this.wantedRotationPitch);
     }
 
     public float getRotationSpeed() {
@@ -311,27 +367,35 @@ public abstract class TTurretBase extends TileEntityAdvanced
     @Override
     public void setRotation(final float yaw, final float pitch) {
         this.wantedRotationYaw = MathHelper.wrapAngleTo180_float(yaw);
+
         if (!this.allowFreePitch) {
             this.wantedRotationPitch = Math.max(
-                    Math.min(MathHelper.wrapAngleTo180_float(pitch), this.maxPitch),
-                    this.minPitch);
+                Math.min(MathHelper.wrapAngleTo180_float(pitch), this.maxPitch),
+                this.minPitch
+            );
         } else {
             this.wantedRotationPitch = MathHelper.wrapAngleTo180_float(pitch);
         }
     }
 
-    public void rotateTo(final float wantedRotationYaw,
-            final float wantedRotationPitch) {
-        if (!this.worldObj.isRemote && this.lastRotateTick > 0 &&
-                (this.wantedRotationYaw != wantedRotationYaw ||
-                        this.wantedRotationPitch != wantedRotationPitch)) {
+    public void rotateTo(final float wantedRotationYaw, final float wantedRotationPitch) {
+        if (!this.worldObj.isRemote && this.lastRotateTick > 0
+            && (this.wantedRotationYaw != wantedRotationYaw
+                || this.wantedRotationPitch != wantedRotationPitch)) {
             this.setRotation(wantedRotationYaw, wantedRotationPitch);
             this.lastRotateTick = 0;
+
             if (!this.worldObj.isRemote) {
                 ICBMSentry.channel.sendToAllAround(
-                        this.getRotationPacket(),
-                        new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord,
-                                this.yCoord, this.zCoord, 50.0));
+                    this.getRotationPacket(),
+                    new TargetPoint(
+                        this.worldObj.provider.dimensionId,
+                        this.xCoord,
+                        this.yCoord,
+                        this.zCoord,
+                        50.0
+                    )
+                );
             }
         }
     }
@@ -344,23 +408,27 @@ public abstract class TTurretBase extends TileEntityAdvanced
         if (this.worldObj.isRemote) {
             final Vector3 startPosition = this.getMuzzle();
             final Vector3 direction = CalculationHelper.getDeltaPositionFromRotation(
-                    this.currentRotationYaw, this.currentRotationPitch);
+                this.currentRotationYaw, this.currentRotationPitch
+            );
             final double xoffset = 0.0;
             final double yoffset = 0.0;
             final double zoffset = 0.0;
             Vector3 horzdir = direction.normalize();
             horzdir.y = 0.0;
             horzdir = horzdir.normalize();
-            for (double cx = startPosition.x + direction.x * xoffset -
-                    direction.y * horzdir.x * yoffset - horzdir.z * zoffset,
-                    cy = startPosition.y + direction.y * xoffset +
-                            (1.0 - Math.abs(direction.y)) * yoffset,
-                    cz = startPosition.z + direction.x * xoffset -
-                            direction.y * horzdir.x * yoffset + horzdir.x * zoffset,
-                    dx = endPosition.x - cx, dy = endPosition.y - cy,
-                    dz = endPosition.z - cz,
-                    ratio = Math.sqrt(dx * dx + dy * dy + dz * dz); Math.abs(cx - endPosition.x) > Math
-                            .abs(dx / ratio); cx += dx * 0.1 / ratio, cy += dy * 0.1 / ratio, cz += dz * 0.1 / ratio) {
+
+            for (double cx = startPosition.x + direction.x * xoffset
+                     - direction.y * horzdir.x * yoffset - horzdir.z * zoffset,
+                        cy = startPosition.y + direction.y * xoffset
+                     + (1.0 - Math.abs(direction.y)) * yoffset,
+                        cz = startPosition.z + direction.x * xoffset
+                     - direction.y * horzdir.x * yoffset + horzdir.x * zoffset,
+                        dx = endPosition.x - cx,
+                        dy = endPosition.y - cy,
+                        dz = endPosition.z - cz,
+                        ratio = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                 Math.abs(cx - endPosition.x) > Math.abs(dx / ratio);
+                 cx += dx * 0.1 / ratio, cy += dy * 0.1 / ratio, cz += dz * 0.1 / ratio) {
                 this.worldObj.spawnParticle("townaura", cx, cy, cz, 0.0, 0.0, 0.0);
             }
         }

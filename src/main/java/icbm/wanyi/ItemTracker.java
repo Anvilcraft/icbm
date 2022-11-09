@@ -1,6 +1,3 @@
 package icbm.wanyi;
 
-public class ItemTracker {
-
-}
-
+public class ItemTracker {}

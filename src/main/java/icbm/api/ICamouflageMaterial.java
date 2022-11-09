@@ -1,5 +1,3 @@
 package icbm.api;
 
-
-public interface ICamouflageMaterial {
-}
+public interface ICamouflageMaterial {}

@@ -8,21 +8,21 @@ import universalelectricity.core.block.IElectricityStorage;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.implement.IRedstoneReceptor;
 
-public interface ILauncherController extends IElectricityStorage, IRedstoneReceptor, IBlockFrequency {
+public interface ILauncherController
+    extends IElectricityStorage, IRedstoneReceptor, IBlockFrequency {
+    LauncherType getLauncherType();
 
-   LauncherType getLauncherType();
+    void launch();
 
-   void launch();
+    boolean canLaunch();
 
-   boolean canLaunch();
+    String getStatus();
 
-   String getStatus();
+    Vector3 getTarget();
 
-   Vector3 getTarget();
+    void setTarget(Vector3 var1);
 
-   void setTarget(Vector3 var1);
+    void placeMissile(ItemStack var1);
 
-   void placeMissile(ItemStack var1);
-
-   IMissile getMissile();
+    IMissile getMissile();
 }

@@ -1,8 +1,9 @@
 package icbm.gangshao.terminal;
 
+import java.util.List;
+
 import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.shimian.IScroll;
-import java.util.List;
 
 public interface ITerminal extends ISpecialAccess, IScroll {
     List<String> getTerminalOuput();
