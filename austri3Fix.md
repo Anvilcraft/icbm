@@ -1,0 +1,16 @@
+- glass button doesn't render in inventory
+- tons of missing packets (mostly gui stuff)
+- can't apply camouflage texture
+- turret UI textures completely fürn oasch
+- sounds completely fürn oasch
+- unable to mount turret afte dismounting
+- turret gui kekt
+- no electricity in guis
+- EMP tower drops nonsense
+- no proper update on multiblock destroy
+- condensed explosives doesn't break blocks and explodes instantly
+- can push explosive entities
+- flying blocks dont properly render
+- black hole doesn't suck in blocks
+- no missiles??
+- remote detonator doesnt work

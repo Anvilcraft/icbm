@@ -11,23 +11,43 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.0.+') {
+            changing = true
+        }
     }
 }
 
 apply plugin: 'forge'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+sourceSets {
+    api {}
+}
+
 version = "1.0"
-group= "modgroup"
-archivesBaseName = "modid"
+group = "universalelectricity"
+archivesBaseName = "icbm"
+
+jar {
+    manifest {
+        attributes "FMLAT": "icbm_at.cfg"
+    }
+}
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "run"
 }
 
-dependencies {
+repositories {
+    maven { url = "https://maven.tilera.xyz" }
+}
 
+dependencies {
+    implementation "universalelectricity:basiccomponents:1.0.2-dirty:deobf"
+    implementation "universalelectricity:atomicscience:1.0.1:deobf"
 }
 
 processResources
