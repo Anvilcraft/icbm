@@ -1,14 +1,10 @@
-//
-// Decompiled by Procyon v0.6.0
-//
-
 package icbm.gangshao;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.render.BlockRenderingHandler;
 import icbm.gangshao.render.FXBeam;
 import icbm.gangshao.render.RAATurret;
@@ -74,15 +70,15 @@ public class ClientProxy extends CommonProxy {
         if (tileEntity != null) {
             switch (ID) {
                 case 0: {
-                    return new GuiPlatformSlots(player.inventory, (TPlatform) tileEntity);
+                    return new GuiPlatformSlots(player.inventory, (TTurretPlatform) tileEntity);
                 }
 
                 case 1: {
-                    return new GuiPlatformTerminal(player, (TPlatform) tileEntity);
+                    return new GuiPlatformTerminal(player, (TTurretPlatform) tileEntity);
                 }
 
                 case 2: {
-                    return new GuiPlatformAccess(player, (TPlatform) tileEntity);
+                    return new GuiPlatformAccess(player, (TTurretPlatform) tileEntity);
                 }
             }
         }

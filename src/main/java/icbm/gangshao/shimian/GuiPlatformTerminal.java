@@ -2,7 +2,7 @@ package icbm.gangshao.shimian;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.terminal.TileEntityTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -18,7 +18,7 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
     private GuiTextField commandLine;
 
     public GuiPlatformTerminal(
-        final EntityPlayer entityPlayer, final TPlatform tileEntity
+        final EntityPlayer entityPlayer, final TTurretPlatform tileEntity
     ) {
         super(entityPlayer, tileEntity);
         this.tileEntity = tileEntity;

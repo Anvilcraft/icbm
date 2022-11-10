@@ -109,7 +109,7 @@ public class ExAntiGravitational extends ZhaPin {
             position.x,
             position.y,
             position.z,
-            "icbm.antigravity",
+            "icbm:antigravity",
             6.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f
         );

@@ -10,7 +10,7 @@ import icbm.gangshao.ISentry;
 import icbm.gangshao.damage.EntityTileDamagable;
 import icbm.gangshao.damage.IHealthTile;
 import icbm.gangshao.packet.PacketTurret;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.task.LookHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -147,15 +147,15 @@ public abstract class TTurretBase
             && this.isAlive();
     }
 
-    public TPlatform getPlatform() {
+    public TTurretPlatform getPlatform() {
         final TileEntity tileEntity = this.worldObj.getTileEntity(
             this.xCoord + this.platformDirection.offsetX,
             this.yCoord + this.platformDirection.offsetY,
             this.zCoord + this.platformDirection.offsetZ
         );
 
-        if (tileEntity instanceof TPlatform) {
-            return (TPlatform) tileEntity;
+        if (tileEntity instanceof TTurretPlatform) {
+            return (TTurretPlatform) tileEntity;
         }
 
         return null;

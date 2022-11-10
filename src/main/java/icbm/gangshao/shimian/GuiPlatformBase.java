@@ -3,7 +3,7 @@ package icbm.gangshao.shimian;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.gangshao.ICBMSentry;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,10 +14,10 @@ import universalelectricity.prefab.GuiBase;
 @SideOnly(Side.CLIENT)
 public abstract class GuiPlatformBase extends GuiBase {
     protected static final int MAX_BUTTON_ID = 3;
-    protected TPlatform tileEntity;
+    protected TTurretPlatform tileEntity;
     protected EntityPlayer entityPlayer;
 
-    public GuiPlatformBase(final EntityPlayer player, final TPlatform tileEntity) {
+    public GuiPlatformBase(final EntityPlayer player, final TTurretPlatform tileEntity) {
         this.tileEntity = tileEntity;
         this.entityPlayer = player;
         super.ySize = 190;

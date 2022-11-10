@@ -4,7 +4,7 @@ import icbm.gangshao.IAmmunition;
 import icbm.gangshao.ITurretUpgrade;
 import icbm.gangshao.SlotTurret;
 import icbm.gangshao.access.AccessLevel;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.turret.ItemAmmo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,10 +14,10 @@ import net.minecraft.item.ItemStack;
 import universalelectricity.core.item.IItemElectric;
 
 public class ContainerTurretPlatform extends ContainerTerminal {
-    private TPlatform tileEntity;
+    private TTurretPlatform tileEntity;
 
     public ContainerTurretPlatform(
-        final InventoryPlayer inventoryPlayer, final TPlatform tileEntity
+        final InventoryPlayer inventoryPlayer, final TTurretPlatform tileEntity
     ) {
         super(inventoryPlayer, tileEntity);
         this.tileEntity = tileEntity;

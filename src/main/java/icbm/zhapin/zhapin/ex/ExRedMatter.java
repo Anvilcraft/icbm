@@ -242,7 +242,7 @@ public class ExRedMatter extends ZhaPin {
                     position.x,
                     position.y,
                     position.z,
-                    "icbm.explosion",
+                    "icbm:explosion",
                     7.0f,
                     (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f
                     ) * 0.7f
@@ -266,7 +266,7 @@ public class ExRedMatter extends ZhaPin {
                 position.x + (Math.random() - 0.5) * radius,
                 position.y + (Math.random() - 0.5) * radius,
                 position.z + (Math.random() - 0.5) * radius,
-                "icbm.collapse",
+                "icbm:collapse",
                 6.0f - worldObj.rand.nextFloat(),
                 1.0f - worldObj.rand.nextFloat() * 0.4f
             );
@@ -276,7 +276,7 @@ public class ExRedMatter extends ZhaPin {
             position.x,
             position.y,
             position.z,
-            "icbm.redmatter",
+            "icbm:redmatter",
             3.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 1.0f
         );

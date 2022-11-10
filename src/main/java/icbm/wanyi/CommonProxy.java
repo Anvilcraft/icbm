@@ -15,8 +15,8 @@ public class CommonProxy implements IGuiHandler {
     public void preInit() {}
 
     public void init() {
-        GameRegistry.registerTileEntity((Class) TCamouflage.class, "ICBMYinXin");
-        GameRegistry.registerTileEntity((Class) TProximityDetector.class, "ICBMYinGanQi");
+        GameRegistry.registerTileEntity((Class) TCamouflage.class, "ICBMCamouflage");
+        GameRegistry.registerTileEntity((Class) TProximityDetector.class, "ICBMProximityDetector");
     }
 
     public Object getClientGuiElement(

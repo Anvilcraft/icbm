@@ -170,7 +170,7 @@ public class ExEndothermic extends ZhaPin {
             }
 
             worldObj.playSoundEffect(
-                position.x, position.y, position.z, "icbm.redmatter", 4.0f, 0.8f
+                position.x, position.y, position.z, "icbm:redmatter", 4.0f, 0.8f
             );
             return callCount <= 35;
         }

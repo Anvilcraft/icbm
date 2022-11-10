@@ -16,8 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.UniversalElectricity;
@@ -26,14 +28,13 @@ import universalelectricity.core.item.ElectricItemHelper;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.CustomDamageSource;
 
-public class TPlatform extends TileEntityTerminal implements IInventory {
+public class TTurretPlatform extends TileEntityTerminal implements IInventory {
     private TTurretBase turret;
     public ForgeDirection deployDirection;
     public static final int UPGRADE_START_INDEX = 12;
-    private static final int TURRET_UPGADE_SLOTS = 3;
     public ItemStack[] containingItems;
 
-    public TPlatform() {
+    public TTurretPlatform() {
         this.turret = null;
         this.deployDirection = ForgeDirection.UP;
         this.containingItems = new ItemStack[16];
@@ -401,5 +402,22 @@ public class TPlatform extends TileEntityTerminal implements IInventory {
         }
 
         return false;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setDouble("wattsReceived", super.wattsReceived);
+
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
+            this.getBlockMetadata(), nbt);
+    }
+    
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+
+        super.wattsReceived = nbt.getDouble("wattsReceived");
     }
 }

@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.gangshao.ICBMSentry;
 import icbm.gangshao.container.ContainerTurretPlatform;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -17,11 +17,11 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public abstract class GuiPlatformContainer extends GuiContainer {
     protected static final int MAX_BUTTON_ID = 3;
-    protected TPlatform tileEntity;
+    protected TTurretPlatform tileEntity;
     protected EntityPlayer entityPlayer;
 
     public GuiPlatformContainer(
-        final InventoryPlayer inventoryPlayer, final TPlatform tileEntity
+        final InventoryPlayer inventoryPlayer, final TTurretPlatform tileEntity
     ) {
         super((Container) new ContainerTurretPlatform(inventoryPlayer, tileEntity));
         this.tileEntity = tileEntity;
@@ -29,6 +29,7 @@ public abstract class GuiPlatformContainer extends GuiContainer {
         this.ySize = 190;
     }
 
+    @Override
     public void initGui() {
         super.initGui();
         this.buttonList.clear();
@@ -43,6 +44,7 @@ public abstract class GuiPlatformContainer extends GuiContainer {
         ));
     }
 
+    @Override
     public void updateScreen() {
         super.updateScreen();
 
@@ -51,7 +53,8 @@ public abstract class GuiPlatformContainer extends GuiContainer {
         }
     }
 
-    protected void func_73875_a(final GuiButton button) {
+    @Override
+    protected void actionPerformed(final GuiButton button) {
         if (this.tileEntity.getTurret(false) != null) {
             switch (button.id) {
                 case 0: {
@@ -93,7 +96,8 @@ public abstract class GuiPlatformContainer extends GuiContainer {
         }
     }
 
-    protected void func_74189_g(final int x, final int y) {
+    @Override
+    protected void drawGuiContainerForegroundLayer(final int x, final int y) {
         if (this.tileEntity.getTurret(false) != null) {
             final String title = this.tileEntity.getTurret(false).getName();
             this.fontRendererObj.drawString(
@@ -110,7 +114,8 @@ public abstract class GuiPlatformContainer extends GuiContainer {
         }
     }
 
-    protected void func_74185_a(final float par1, final int x, final int y) {
+    @Override
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int x, final int y) {
         this.mc.renderEngine.bindTexture(
             new ResourceLocation("icbm", "textures/gui/gui_base.png")
         );

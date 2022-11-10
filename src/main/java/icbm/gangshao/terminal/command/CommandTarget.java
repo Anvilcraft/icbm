@@ -5,7 +5,7 @@ import java.util.List;
 
 import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.access.AccessLevel;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.terminal.ITerminal;
 import icbm.gangshao.terminal.TerminalCommand;
 import icbm.gangshao.turret.sentries.TAutomaticTurret;
@@ -21,8 +21,8 @@ public class CommandTarget extends TerminalCommand {
     public boolean processCommand(
         final EntityPlayer player, final ITerminal terminal, final String[] args
     ) {
-        if (terminal instanceof TPlatform) {
-            final TPlatform turret = (TPlatform) terminal;
+        if (terminal instanceof TTurretPlatform) {
+            final TTurretPlatform turret = (TTurretPlatform) terminal;
 
             if (turret.getTurret(false) instanceof TAutomaticTurret) {
                 final TAutomaticTurret sentry
@@ -108,7 +108,7 @@ public class CommandTarget extends TerminalCommand {
 
     @Override
     public boolean canMachineUse(final ISpecialAccess mm) {
-        return mm instanceof TPlatform
-            && ((TPlatform) mm).getTurret(false) instanceof TAutomaticTurret;
+        return mm instanceof TTurretPlatform
+            && ((TTurretPlatform) mm).getTurret(false) instanceof TAutomaticTurret;
     }
 }

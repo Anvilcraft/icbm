@@ -14,10 +14,10 @@ import icbm.zhapin.fx.FXPortal;
 import icbm.zhapin.fx.FXShockwave;
 import icbm.zhapin.fx.FXSmoke;
 import icbm.zhapin.gui.GEmpTower;
-import icbm.zhapin.gui.GFaSheDi;
+import icbm.zhapin.gui.GLauncherPlatform;
+import icbm.zhapin.gui.GCruiseLauncher;
 import icbm.zhapin.gui.GMissileLauncher;
 import icbm.zhapin.gui.GRadarTower;
-import icbm.zhapin.gui.GXiaoFaSheQi;
 import icbm.zhapin.jiqi.TCruiseLauncher;
 import icbm.zhapin.jiqi.TEmpTower;
 import icbm.zhapin.jiqi.TLauncher;
@@ -152,7 +152,7 @@ public class ClientProxy extends CommonProxy {
         if (tileEntity != null || ID == 5) {
             switch (ID) {
                 case 1: {
-                    return new GXiaoFaSheQi(
+                    return new GCruiseLauncher(
                         entityPlayer.inventory, (TCruiseLauncher) tileEntity
                     );
                 }
@@ -170,7 +170,7 @@ public class ClientProxy extends CommonProxy {
                 }
 
                 case 7: {
-                    return new GFaSheDi(
+                    return new GLauncherPlatform(
                         entityPlayer.inventory, (TLauncherPlatform) tileEntity
                     );
                 }

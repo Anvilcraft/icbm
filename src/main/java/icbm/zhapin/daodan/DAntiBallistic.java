@@ -34,7 +34,7 @@ public class DAntiBallistic extends MissileBase {
                     missileObj.lockedTarget = nearestEntity;
                     missileObj.didTargetLockBefore = true;
                     missileObj.worldObj.playSoundAtEntity(
-                        (Entity) missileObj, "icbm.targetlocked", 5.0f, 0.9f
+                        (Entity) missileObj, "icbm:targetlocked", 5.0f, 0.9f
                     );
                 }
             } else {

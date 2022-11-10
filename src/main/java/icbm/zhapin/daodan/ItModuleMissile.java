@@ -37,7 +37,7 @@ public class ItModuleMissile extends ItMissile {
 
     @Override
     public void getSubItems(
-        final int par1, final CreativeTabs par2CreativeTabs, final List par3List
+        final Item par1, final CreativeTabs par2CreativeTabs, final List par3List
     ) {
         for (int i = 0; i < 5; ++i) {
             par3List.add(new ItemStack((Item) this, 1, i));

@@ -9,12 +9,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-public class GFaSheDi extends GuiContainer {
+public class GLauncherPlatform extends GuiContainer {
     private TLauncherPlatform tileEntity;
     private int containerWidth;
     private int containerHeight;
 
-    public GFaSheDi(
+    public GLauncherPlatform(
         final InventoryPlayer par1InventoryPlayer, final TLauncherPlatform tileEntity
     ) {
         super((Container) new CFaShiDi(par1InventoryPlayer, tileEntity));

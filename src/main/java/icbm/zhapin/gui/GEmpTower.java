@@ -1,11 +1,14 @@
 package icbm.zhapin.gui;
 
+import icbm.zhapin.ICBMExplosion;
+import icbm.zhapin.jiqi.EmpTowerGuiPacket;
 import icbm.zhapin.jiqi.TEmpTower;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import universalelectricity.core.electricity.ElectricityDisplay;
+import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.GuiBase;
 
 public class GEmpTower extends GuiBase {
@@ -34,17 +37,6 @@ public class GEmpTower extends GuiBase {
         (this.textFieldBanJing = new GuiTextField(this.fontRendererObj, 72, 28, 30, 12))
             .setMaxStringLength(3);
         this.textFieldBanJing.setText(this.tileEntity.radius + "");
-        // TODO: WTF
-        // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
-        // this.tileEntity, -1, true));
-    }
-
-    @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-        // TODO: WTF
-        // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
-        // this.tileEntity, -1, false));
     }
 
     @Override
@@ -66,9 +58,9 @@ public class GEmpTower extends GuiBase {
             }
         }
 
-        // TODO: WTF
-        // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
-        // this.tileEntity, 3, this.tileEntity.muoShi));
+        ICBMExplosion.channel.sendToServer(new EmpTowerGuiPacket(
+            new Vector3(this.tileEntity), this.tileEntity.radius, this.tileEntity.holzOhJa
+        ));
     }
 
     @Override
@@ -81,9 +73,11 @@ public class GEmpTower extends GuiBase {
                 Math.max(Integer.parseInt(this.textFieldBanJing.getText()), 10), 150
             );
             this.tileEntity.radius = radius;
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket("ICBM|E",
-            // this.tileEntity, 2, this.tileEntity.banJing));
+            ICBMExplosion.channel.sendToServer(new EmpTowerGuiPacket(
+                new Vector3(this.tileEntity),
+                this.tileEntity.radius,
+                this.tileEntity.holzOhJa
+            ));
         } catch (final NumberFormatException ex) {}
     }
 

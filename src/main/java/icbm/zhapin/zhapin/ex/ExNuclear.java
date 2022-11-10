@@ -81,7 +81,7 @@ public class ExNuclear extends ExThr {
             position.x,
             position.y,
             position.z,
-            "icbm.explosion",
+            "icbm:explosion",
             7.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f
         );
@@ -128,7 +128,7 @@ public class ExNuclear extends ExThr {
             position.x,
             position.y,
             position.z,
-            "icbm.explosion",
+            "icbm:explosion",
             10.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f
         );
@@ -152,7 +152,7 @@ public class ExNuclear extends ExThr {
                 (double) (int) position.x,
                 (double) (int) position.y,
                 (double) (int) position.z,
-                "icbm.alarm",
+                "icbm:alarm",
                 4.0f,
                 1.0f
             );

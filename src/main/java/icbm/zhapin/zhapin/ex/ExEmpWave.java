@@ -106,7 +106,7 @@ public class ExEmpWave extends ZhaPin {
             position.x,
             position.y,
             position.z,
-            "icbm.emp",
+            "icbm:emp",
             4.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f
         );

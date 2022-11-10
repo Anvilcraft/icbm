@@ -192,7 +192,7 @@ public class GProximityDetector extends GuiBase {
 
         if (this.tileEntity.isDisabled()) {
             status = "Disabled";
-        } else if (this.tileEntity.prevWatts < this.tileEntity.getRequest().getWatts()) {
+        } else if (this.tileEntity.wattsForDisplay < this.tileEntity.getRequest().getWatts()) {
             status = "Insufficient electricity!";
         } else {
             color = "§2";

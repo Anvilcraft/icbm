@@ -19,9 +19,10 @@ public class GuiButtonImage extends GuiButton {
         this.type = type;
     }
 
+    @Override
     public void
-    func_73737_a(final Minecraft par1Minecraft, final int width, final int hight) {
-        // TODO: WTf
+    drawButton(final Minecraft par1Minecraft, final int width, final int hight) {
+        // TODO: WTF
         // if (this.drawButton) {
         par1Minecraft.renderEngine.bindTexture(
             new ResourceLocation("icbm", "textures/gui/gui@.png")

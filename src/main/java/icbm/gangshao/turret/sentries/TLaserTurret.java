@@ -5,7 +5,7 @@ import icbm.api.sentry.IAATarget;
 import icbm.gangshao.ICBMSentry;
 import icbm.gangshao.ProjectileType;
 import icbm.gangshao.damage.TileDamageSource;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -60,7 +60,7 @@ public class TLaserTurret extends TAutomaticTurret {
             (double) this.xCoord,
             (double) this.yCoord,
             (double) this.zCoord,
-            "icbm.lasershot",
+            "icbm:lasershot",
             5.0f,
             1.0f - this.worldObj.rand.nextFloat() * 0.2f
         );
@@ -108,7 +108,7 @@ public class TLaserTurret extends TAutomaticTurret {
     protected boolean onFire() {
         if (!this.worldObj.isRemote && this.getPlatform() != null) {
             if (super.target instanceof EntityLiving) {
-                final TPlatform platform = this.getPlatform();
+                final TTurretPlatform platform = this.getPlatform();
                 platform.wattsReceived -= this.getFiringRequest();
                 super.target.attackEntityFrom(
                     (DamageSource) TileDamageSource.doLaserDamage(this), 2

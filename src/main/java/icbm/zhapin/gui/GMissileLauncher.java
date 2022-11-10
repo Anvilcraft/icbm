@@ -1,5 +1,7 @@
 package icbm.zhapin.gui;
 
+import icbm.zhapin.ICBMExplosion;
+import icbm.zhapin.jiqi.LauncherControlPanelGuiPacket;
 import icbm.zhapin.jiqi.TLauncherControlPanel;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
@@ -72,28 +74,27 @@ public class GMissileLauncher extends GuiBase {
                 Integer.parseInt(this.tFZ.getText())
             );
             this.tileEntity.setTarget(newTarget);
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 2, this.tileEntity.getTarget().x,
-            // this.tileEntity.getTarget().y, this.tileEntity.getTarget().z));
+            ICBMExplosion.channel.sendToServer(
+                new LauncherControlPanelGuiPacket(this.tileEntity)
+            );
         } catch (final NumberFormatException ex) {}
 
         try {
             final short newFrequency
                 = (short) Math.max(Short.parseShort(this.tFFreq.getText()), 0);
             this.tileEntity.setFrequency(newFrequency);
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 1, this.tileEntity.getFrequency()));
+            ICBMExplosion.channel.sendToServer(
+                new LauncherControlPanelGuiPacket(this.tileEntity)
+            );
         } catch (final NumberFormatException ex2) {}
 
         try {
             final short newGaoDu = (short
             ) Math.max(Math.min(Short.parseShort(this.tFGaoDu.getText()), 99), 3);
             this.tileEntity.height = newGaoDu;
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 3, this.tileEntity.gaoDu));
+            ICBMExplosion.channel.sendToServer(
+                new LauncherControlPanelGuiPacket(this.tileEntity)
+            );
         } catch (final NumberFormatException ex3) {}
     }
 

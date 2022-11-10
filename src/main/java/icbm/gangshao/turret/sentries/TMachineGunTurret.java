@@ -35,7 +35,7 @@ public class TMachineGunTurret extends TAutomaticTurret {
             (double) this.xCoord,
             (double) this.yCoord,
             (double) this.zCoord,
-            "icbm.machinegun",
+            "icbm:machinegun",
             5.0f,
             1.0f
         );

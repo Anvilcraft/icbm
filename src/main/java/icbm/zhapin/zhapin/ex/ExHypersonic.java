@@ -155,7 +155,7 @@ public class ExHypersonic extends ZhaPin {
             position.x,
             position.y,
             position.z,
-            "icbm.hypersonic",
+            "icbm:hypersonic",
             6.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1f) * 0.9f
         );

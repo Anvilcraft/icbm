@@ -5,7 +5,7 @@ import java.util.List;
 
 import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.access.AccessLevel;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.terminal.ITerminal;
 import icbm.gangshao.terminal.TerminalCommand;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,8 +21,8 @@ public class CommandAccess extends TerminalCommand {
         final EntityPlayer player, final ITerminal terminal, final String[] args
     ) {
         if (args[0].equalsIgnoreCase("access") && args.length > 1 && args[1] != null
-            && terminal instanceof TPlatform) {
-            final TPlatform platform = (TPlatform) terminal;
+            && terminal instanceof TTurretPlatform) {
+            final TTurretPlatform platform = (TTurretPlatform) terminal;
             final AccessLevel userAccess
                 = terminal.getUserAccess(player.getDisplayName());
 
@@ -93,6 +93,6 @@ public class CommandAccess extends TerminalCommand {
 
     @Override
     public boolean canMachineUse(final ISpecialAccess mm) {
-        return mm instanceof TPlatform;
+        return mm instanceof TTurretPlatform;
     }
 }

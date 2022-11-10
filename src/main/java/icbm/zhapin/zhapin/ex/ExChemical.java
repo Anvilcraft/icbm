@@ -100,7 +100,7 @@ public class ExChemical extends ZhaPin {
             position.x + 0.5,
             position.y + 0.5,
             position.z + 0.5,
-            "icbm.gasleak",
+            "icbm:gasleak",
             4.0f,
             (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 1.0f
         );

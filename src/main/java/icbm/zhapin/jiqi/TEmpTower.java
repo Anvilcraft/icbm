@@ -20,13 +20,13 @@ import universalelectricity.prefab.multiblock.IMultiBlock;
 public class TEmpTower
     extends TileEntityUniversalStorable implements IMultiBlock, IRedstoneReceptor {
     public static final int MAX_RADIUS = 150;
-    public float xuanZhuan;
+    public float rotation;
     private float xuanZhuanLu;
     public byte holzOhJa;
     public int radius;
 
     public TEmpTower() {
-        this.xuanZhuan = 0.0f;
+        this.rotation = 0.0f;
         this.holzOhJa = 0;
         this.radius = 60;
         RadarRegistry.register(this);
@@ -48,7 +48,7 @@ public class TEmpTower
                     (double) this.xCoord,
                     (double) this.yCoord,
                     (double) this.zCoord,
-                    "icbm.machinehum",
+                    "icbm:machinehum",
                     0.5f,
                     (float) (0.8500000238418579 * this.getJoules() / this.getMaxJoules())
                 );
@@ -56,10 +56,10 @@ public class TEmpTower
 
             this.xuanZhuanLu
                 = (float) (Math.pow(this.getJoules() / this.getMaxJoules(), 2.0) * 0.5);
-            this.xuanZhuan += this.xuanZhuanLu;
+            this.rotation += this.xuanZhuanLu;
 
-            if (this.xuanZhuan > 360.0f) {
-                this.xuanZhuan = 0.0f;
+            if (this.rotation > 360.0f) {
+                this.rotation = 0.0f;
             }
         }
 

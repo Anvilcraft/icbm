@@ -175,7 +175,7 @@ public class EMissile extends Entity
         this.jiSuan();
         super.worldObj.playSoundAtEntity(
             (Entity) this,
-            "icbm.missilelaunch",
+            "icbm:missilelaunch",
             4.0f,
             (1.0f
              + (super.worldObj.rand.nextFloat() - super.worldObj.rand.nextFloat()) * 0.2f)

@@ -23,7 +23,7 @@ import universalelectricity.prefab.implement.IRedstoneReceptor;
 import universalelectricity.prefab.multiblock.IMultiBlock;
 import universalelectricity.prefab.multiblock.TileEntityMulti;
 
-public class TRailgunTurret extends TPaoTaiQi implements IRedstoneReceptor {
+public class TRailgunTurret extends TTurretSeat implements IRedstoneReceptor {
     private int gunChargingTicks;
     private boolean redstonePowerOn;
     private boolean isAntimatter;
@@ -158,7 +158,7 @@ public class TRailgunTurret extends TPaoTaiQi implements IRedstoneReceptor {
             (double) this.xCoord,
             (double) this.yCoord,
             (double) this.zCoord,
-            "icbm.railgun",
+            "icbm:railgun",
             5.0f,
             1.0f
         );
@@ -247,7 +247,7 @@ public class TRailgunTurret extends TPaoTaiQi implements IRedstoneReceptor {
             (double) this.xCoord,
             (double) this.yCoord,
             (double) this.zCoord,
-            "icbm.railgun",
+            "icbm:railgun",
             5.0f,
             1.0f
         );

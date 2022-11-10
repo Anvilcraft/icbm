@@ -25,7 +25,7 @@ public class REmpTower extends TileEntitySpecialRenderer {
         GL11.glTranslatef((float) x + 0.5f, (float) y + 1.5f, (float) z + 0.5f);
         this.bindTexture(new ResourceLocation("icbm", "textures/models/emp_tower.png"));
         GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-        REmpTower.MODEL.render(tileEntity.xuanZhuan, 0.0625f);
+        REmpTower.MODEL.render(tileEntity.rotation, 0.0625f);
         GL11.glPopMatrix();
     }
 

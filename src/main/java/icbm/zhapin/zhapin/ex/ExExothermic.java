@@ -167,7 +167,7 @@ public class ExExothermic extends ZhaPin {
             }
 
             worldObj.playSoundEffect(
-                position.x, position.y, position.z, "icbm.beamcharging", 4.0f, 0.8f
+                position.x, position.y, position.z, "icbm:beamcharging", 4.0f, 0.8f
             );
             return callCount <= 35;
         }
@@ -184,7 +184,7 @@ public class ExExothermic extends ZhaPin {
         if (!worldObj.isRemote) {
             ((EExplosion) explosionSource).entityList.get(0).setDead();
             worldObj.playSoundEffect(
-                position.x, position.y, position.z, "icbm.powerdown", 4.0f, 0.8f
+                position.x, position.y, position.z, "icbm:powerdown", 4.0f, 0.8f
             );
 
             if (this.canFocusBeam(worldObj, position)) {

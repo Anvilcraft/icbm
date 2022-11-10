@@ -26,6 +26,7 @@ public class TProximityDetector
     public Vector3 maxCoord;
     public byte mode;
     public boolean isInverted;
+    public double wattsForDisplay;
 
     public TProximityDetector() {
         this.frequency = 0;
@@ -34,6 +35,7 @@ public class TProximityDetector
         this.maxCoord = new Vector3(9.0, 9.0, 9.0);
         this.mode = 0;
         this.isInverted = false;
+        this.wattsForDisplay = 0;
     }
 
     @Override
@@ -49,6 +51,7 @@ public class TProximityDetector
         super.updateEntity();
 
         if (!this.worldObj.isRemote && super.ticks % 20L == 0L) {
+            this.wattsForDisplay = super.wattsReceived;
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 
             if (!this.isDisabled()) {
@@ -136,6 +139,7 @@ public class TProximityDetector
     public Packet getDescriptionPacket() {
         NBTTagCompound nbt = new NBTTagCompound();
 
+        nbt.setDouble("wattsForDisplay", this.wattsForDisplay);
         nbt.setDouble("wattsReceived", super.wattsReceived);
         nbt.setShort("frequency", this.frequency);
         nbt.setByte("mode", this.mode);
@@ -152,6 +156,7 @@ public class TProximityDetector
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         NBTTagCompound nbt = pkt.func_148857_g();
 
+        this.wattsForDisplay = nbt.getDouble("wattsForDisplay");
         super.wattsReceived = nbt.getDouble("wattsReceived");
         this.frequency = nbt.getShort("frequency");
         this.mode = nbt.getByte("mode");

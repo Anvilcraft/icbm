@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import universalelectricity.core.item.IItemElectric;
 import universalelectricity.prefab.SlotSpecific;
 
-public class CXiaoFaSheQi extends Container {
+public class CCruiseLauncher extends Container {
     private TCruiseLauncher tileEntity;
 
-    public CXiaoFaSheQi(
+    public CCruiseLauncher(
         final InventoryPlayer par1InventoryPlayer, final TCruiseLauncher tileEntity
     ) {
         this.tileEntity = tileEntity;

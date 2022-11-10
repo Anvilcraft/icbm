@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import icbm.gangshao.access.AccessLevel;
 import icbm.gangshao.access.UserAccess;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +25,7 @@ public class GuiPlatformAccess extends GuiPlatformBase implements IScroll {
     private final HashMap<UserAccess, Vector2> outputMap;
 
     public GuiPlatformAccess(
-        final EntityPlayer entityPlayer, final TPlatform tileEntity
+        final EntityPlayer entityPlayer, final TTurretPlatform tileEntity
     ) {
         super(entityPlayer, tileEntity);
         this.scroll = 0;

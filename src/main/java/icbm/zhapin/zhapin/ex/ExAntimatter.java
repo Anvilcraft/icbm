@@ -37,7 +37,7 @@ public class ExAntimatter extends ZhaPin {
             position.x,
             position.y,
             position.z,
-            "icbm.antimatter",
+            "icbm:antimatter",
             7.0f,
             (float) (worldObj.rand.nextFloat() * 0.1 + 0.8999999761581421)
         );
@@ -109,7 +109,7 @@ public class ExAntimatter extends ZhaPin {
 
         if (fuseTicks % 25 == 0) {
             worldObj.playSoundEffect(
-                position.x, position.y, position.z, "icbm.alarm", 4.0f, 1.0f
+                position.x, position.y, position.z, "icbm:alarm", 4.0f, 1.0f
             );
         }
     }

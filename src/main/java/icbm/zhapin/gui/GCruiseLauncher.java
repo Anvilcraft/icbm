@@ -1,7 +1,9 @@
 package icbm.zhapin.gui;
 
+import icbm.zhapin.ICBMExplosion;
+import icbm.zhapin.jiqi.CruiseLauncherGuiPacket;
 import icbm.zhapin.jiqi.TCruiseLauncher;
-import icbm.zhapin.rongqi.CXiaoFaSheQi;
+import icbm.zhapin.rongqi.CCruiseLauncher;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import universalelectricity.core.electricity.ElectricityDisplay;
 import universalelectricity.core.vector.Vector3;
 
-public class GXiaoFaSheQi extends GuiContainer {
+public class GCruiseLauncher extends GuiContainer {
     private TCruiseLauncher tileEntity;
     private GuiTextField textFieldX;
     private GuiTextField textFieldZ;
@@ -21,10 +23,10 @@ public class GXiaoFaSheQi extends GuiContainer {
     private int containerWidth;
     private int containerHeight;
 
-    public GXiaoFaSheQi(
+    public GCruiseLauncher(
         final InventoryPlayer par1InventoryPlayer, final TCruiseLauncher tileEntity
     ) {
-        super((Container) new CXiaoFaSheQi(par1InventoryPlayer, tileEntity));
+        super((Container) new CCruiseLauncher(par1InventoryPlayer, tileEntity));
         this.tileEntity = tileEntity;
     }
 
@@ -67,19 +69,16 @@ public class GXiaoFaSheQi extends GuiContainer {
                 Integer.parseInt(this.textFieldZ.getText())
             );
             this.tileEntity.setTarget(newTarget);
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 2, this.tileEntity.getTarget().x,
-            // this.tileEntity.getTarget().y, this.tileEntity.getTarget().z));
+            ICBMExplosion.channel.sendToServer(new CruiseLauncherGuiPacket(this.tileEntity
+            ));
         } catch (final NumberFormatException ex) {}
 
         try {
             final short newFrequency
                 = (short) Math.max(Short.parseShort(this.textFieldFreq.getText()), 0);
             this.tileEntity.setFrequency(newFrequency);
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 1, this.tileEntity.getFrequency()));
+            ICBMExplosion.channel.sendToServer(new CruiseLauncherGuiPacket(this.tileEntity
+            ));
         } catch (final NumberFormatException ex2) {}
     }
 

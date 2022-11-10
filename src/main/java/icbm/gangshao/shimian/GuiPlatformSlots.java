@@ -2,7 +2,7 @@ package icbm.gangshao.shimian;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.turret.TTurretBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import universalelectricity.core.electricity.ElectricityDisplay;
 @SideOnly(Side.CLIENT)
 public class GuiPlatformSlots extends GuiPlatformContainer {
     public GuiPlatformSlots(
-        final InventoryPlayer inventoryPlayer, final TPlatform tileEntity
+        final InventoryPlayer inventoryPlayer, final TTurretPlatform tileEntity
     ) {
         super(inventoryPlayer, tileEntity);
     }
@@ -61,7 +61,7 @@ public class GuiPlatformSlots extends GuiPlatformContainer {
     @Override
     protected void
     drawGuiContainerBackgroundLayer(final float par1, final int x, final int y) {
-        // super.drawGuiContainerBackgroundLayer(par1, x, y);
+        super.drawGuiContainerBackgroundLayer(par1, x, y);
         this.mc.renderEngine.bindTexture(
             new ResourceLocation("icbm", "textures/gui/gui_platform_slot.png")
         );

@@ -3,7 +3,7 @@ package icbm.gangshao;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import icbm.gangshao.container.ContainerTurretPlatform;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.turret.mount.TRailgunTurret;
 import icbm.gangshao.turret.sentries.TAATurret;
 import icbm.gangshao.turret.sentries.TLaserTurret;
@@ -24,7 +24,7 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TAATurret.class, "ICBMAATurret");
         GameRegistry.registerTileEntity(TRailgunTurret.class, "ICBMRailgun");
         GameRegistry.registerTileEntity(TLaserTurret.class, "ICBMLeiSheF");
-        GameRegistry.registerTileEntity(TPlatform.class, "ICBMPlatform");
+        GameRegistry.registerTileEntity(TTurretPlatform.class, "ICBMPlatform");
         GameRegistry.registerTileEntity(TileEntityMulti.class, "ICBMMultiblock");
     }
 
@@ -44,7 +44,7 @@ public class CommonProxy implements IGuiHandler {
             switch (ID) {
                 case 0: {
                     return new ContainerTurretPlatform(
-                        player.inventory, (TPlatform) tileEntity
+                        player.inventory, (TTurretPlatform) tileEntity
                     );
                 }
             }

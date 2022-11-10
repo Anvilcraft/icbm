@@ -1,9 +1,6 @@
 - glass button doesn't render in inventory
 - tons of missing packets (mostly gui stuff)
-- can't apply camouflage texture
-- turret UI textures completely fürn oasch
-- sounds completely fürn oasch
-- unable to mount turret afte dismounting
+- unable to mount turret after dismounting
 - turret gui kekt
 - no electricity in guis
 - EMP tower drops nonsense
@@ -14,3 +11,5 @@
 - black hole doesn't suck in blocks
 - no missiles??
 - remote detonator doesnt work
+- radar is completely borked
+- emp tower only deletes missiles on client

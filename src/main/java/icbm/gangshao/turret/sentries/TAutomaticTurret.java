@@ -9,7 +9,7 @@ import icbm.gangshao.ProjectileType;
 import icbm.gangshao.damage.TileDamageSource;
 import icbm.gangshao.packet.PacketTurret;
 import icbm.gangshao.packet.PacketTurret.Type;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.task.TaskManager;
 import icbm.gangshao.task.TaskSearchTarget;
 import icbm.gangshao.turret.TTurretBase;
@@ -225,7 +225,7 @@ public abstract class TAutomaticTurret extends TTurretBase implements IAutoSentr
                 final IAmmunition bullet = (IAmmunition) ammoStack.getItem();
 
                 if (this.target instanceof EntityLiving) {
-                    final TPlatform platform = this.getPlatform();
+                    final TTurretPlatform platform = this.getPlatform();
                     platform.wattsReceived -= this.getFiringRequest();
 
                     if (bullet.getType(ammoStack) == ProjectileType.CONVENTIONAL) {

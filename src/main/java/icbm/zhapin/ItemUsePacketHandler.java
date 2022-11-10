@@ -45,7 +45,7 @@ public class ItemUsePacketHandler implements IMessageHandler<ItemUsePacket, IMes
                     position.intX(),
                     player.worldObj.getHeightValue(position.intX(), position.intZ()),
                     position.intZ(),
-                    "icbm.airstrike",
+                    "icbm:airstrike",
                     5.0f,
                     (1.0f
                      + (player.worldObj.rand.nextFloat()

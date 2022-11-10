@@ -5,7 +5,7 @@ import java.util.List;
 
 import icbm.gangshao.ISpecialAccess;
 import icbm.gangshao.access.AccessLevel;
-import icbm.gangshao.platform.TPlatform;
+import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.terminal.ITerminal;
 import icbm.gangshao.terminal.TerminalCommand;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,11 +20,11 @@ public class CommandDestroy extends TerminalCommand {
     public boolean processCommand(
         final EntityPlayer player, final ITerminal terminal, final String[] args
     ) {
-        if (!(terminal instanceof TPlatform)) {
+        if (!(terminal instanceof TTurretPlatform)) {
             return false;
         }
 
-        final TPlatform turret = (TPlatform) terminal;
+        final TTurretPlatform turret = (TTurretPlatform) terminal;
 
         if (args.length > 1) {
             turret.destroyTurret();
@@ -57,6 +57,6 @@ public class CommandDestroy extends TerminalCommand {
 
     @Override
     public boolean canMachineUse(final ISpecialAccess mm) {
-        return mm instanceof TPlatform;
+        return mm instanceof TTurretPlatform;
     }
 }

@@ -52,7 +52,7 @@ public class TAATurret extends TAutomaticTurret {
             (double) this.xCoord,
             (double) this.yCoord,
             (double) this.zCoord,
-            "icbm.aagun",
+            "icbm:aagun",
             5.0f,
             1.0f
         );

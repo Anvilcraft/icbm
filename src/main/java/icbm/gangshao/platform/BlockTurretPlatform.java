@@ -73,18 +73,18 @@ public class BlockTurretPlatform extends BICBM {
     ) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (!(tileEntity instanceof TPlatform)) {
+        if (!(tileEntity instanceof TTurretPlatform)) {
             return false;
         }
 
         if (player.getCurrentEquippedItem() != null
-            && side == ((TPlatform) tileEntity).deployDirection.ordinal()
+            && side == ((TTurretPlatform) tileEntity).deployDirection.ordinal()
             && player.getCurrentEquippedItem().getItem()
                 == Item.getItemFromBlock(ICBMSentry.blockTurret)) {
             return false;
         }
 
-        if (((TPlatform) tileEntity).getTurret(false) != null && !world.isRemote) {
+        if (((TTurretPlatform) tileEntity).getTurret(false) != null && !world.isRemote) {
             player.openGui((Object) ICBMSentry.instance, 0, world, x, y, z);
         }
 
@@ -93,7 +93,7 @@ public class BlockTurretPlatform extends BICBM {
 
     @Override
     public TileEntity createNewTileEntity(final World var1, int meta) {
-        return new TPlatform();
+        return new TTurretPlatform();
     }
 
     @Override

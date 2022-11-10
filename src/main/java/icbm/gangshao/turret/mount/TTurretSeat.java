@@ -9,10 +9,10 @@ import net.minecraft.util.MovingObjectPosition;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.multiblock.IMultiBlock;
 
-public abstract class TPaoTaiQi extends TTurretBase implements IMultiBlock {
+public abstract class TTurretSeat extends TTurretBase implements IMultiBlock {
     protected ESeat entityFake;
 
-    public TPaoTaiQi() {
+    public TTurretSeat() {
         this.entityFake = null;
     }
 

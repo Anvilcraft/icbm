@@ -33,7 +33,13 @@ import icbm.zhapin.dianqi.ItRadarGun;
 import icbm.zhapin.dianqi.ItRemoteDetonator;
 import icbm.zhapin.dianqi.ItRocketLauncher;
 import icbm.zhapin.jiqi.BMachine;
+import icbm.zhapin.jiqi.CruiseLauncherGuiPacket;
+import icbm.zhapin.jiqi.CruiseLauncherGuiPacketHandler;
+import icbm.zhapin.jiqi.EmpTowerGuiPacket;
+import icbm.zhapin.jiqi.EmpTowerGuiPacketHandler;
 import icbm.zhapin.jiqi.IBMachine;
+import icbm.zhapin.jiqi.LauncherControlPanelGuiPacket;
+import icbm.zhapin.jiqi.LauncherControlPanelGuiPacketHandler;
 import icbm.zhapin.po.PChuanRanDu;
 import icbm.zhapin.po.PDaDu;
 import icbm.zhapin.po.PDongShang;
@@ -257,6 +263,21 @@ public class ICBMExplosion extends MainBase {
         int pktId = 0;
         channel.registerMessage(
             ItemUsePacketHandler.class, ItemUsePacket.class, pktId++, Side.SERVER
+        );
+        channel.registerMessage(
+            EmpTowerGuiPacketHandler.class, EmpTowerGuiPacket.class, pktId++, Side.SERVER
+        );
+        channel.registerMessage(
+            LauncherControlPanelGuiPacketHandler.class,
+            LauncherControlPanelGuiPacket.class,
+            pktId++,
+            Side.SERVER
+        );
+        channel.registerMessage(
+            CruiseLauncherGuiPacketHandler.class,
+            CruiseLauncherGuiPacket.class,
+            pktId++,
+            Side.SERVER
         );
     }
 

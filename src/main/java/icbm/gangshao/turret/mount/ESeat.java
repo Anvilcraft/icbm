@@ -76,8 +76,8 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
             return;
         }
 
-        if (this.controller instanceof TPaoTaiQi) {
-            ((TPaoTaiQi) this.controller).entityFake = this;
+        if (this.controller instanceof TTurretSeat) {
+            ((TTurretSeat) this.controller).entityFake = this;
         }
 
         if (super.worldObj.isRemote && super.riddenByEntity != null) {
