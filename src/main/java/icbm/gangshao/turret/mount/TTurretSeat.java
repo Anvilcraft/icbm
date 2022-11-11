@@ -65,19 +65,12 @@ public abstract class TTurretSeat extends TTurretBase implements IMultiBlock {
 
                     if (entityPlayer == mountedPlayer) {
                         if (!this.worldObj.isRemote) {
-                            // TODO: WTF
-                            // PacketManager.sendPacketToClients(this.getRotationPacket());
+                            this.tryActivateWeapon();
                         }
-
-                        // TODO: WTF
-                        // entityPlayer.unmountEntity((Entity) this.entityFake);
-                        this.entityFake.setDead();
-                        this.entityFake = null;
                         return true;
                     }
                 }
 
-                return false;
             }
 
             this.mount(entityPlayer);

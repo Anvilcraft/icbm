@@ -86,9 +86,8 @@ public class GuiPlatformTerminal extends GuiPlatformBase {
         } else if (keycode == 208) {
             this.tileEntity.scroll(1);
         } else if (keycode == 28) {
-            //TODO: WTF
-            //this.tileEntity.sendCommandToServer(super.entityPlayer,
-            //        this.commandLine.getText());
+            this.tileEntity.sendCommandToServer(super.entityPlayer,
+                    this.commandLine.getText());
             this.commandLine.setText("");
         } else {
             this.commandLine.textboxKeyTyped(character, keycode);

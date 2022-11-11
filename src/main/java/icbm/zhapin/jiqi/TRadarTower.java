@@ -38,22 +38,23 @@ import universalelectricity.prefab.multiblock.IMultiBlock;
 public class TRadarTower extends TileEntityUniversalRunnable
     implements IRedstoneProvider, IMultiBlock, IPeripheral {
     public static final int MAX_BIAN_JING = 500;
-    public float xuanZhuan;
+    public float rotation;
     public int alarmRadius;
     public int safetyRadius;
     private List<EMissile> missilesInRange;
-    public List<Entity> xunZhaoEntity;
-    public List<TileEntity> xunZhaoJiQi;
+    public List<Entity> entitiesInRange;
+    public List<TileEntity> tileEntitiesInRange;
     public boolean emitAll;
     private ForgeChunkManager.Ticket ticket;
+    public double wattsForDisplay;
 
     public TRadarTower() {
-        this.xuanZhuan = 0.0f;
+        this.rotation = 0.0f;
         this.alarmRadius = 100;
         this.safetyRadius = 50;
         this.missilesInRange = new ArrayList<>();
-        this.xunZhaoEntity = new ArrayList<>();
-        this.xunZhaoJiQi = new ArrayList<>();
+        this.entitiesInRange = new ArrayList<>();
+        this.tileEntitiesInRange = new ArrayList<>();
         this.emitAll = true;
         RadarRegistry.register(this);
     }
@@ -92,6 +93,7 @@ public class TRadarTower extends TileEntityUniversalRunnable
 
         try {
             if (!this.worldObj.isRemote) {
+                this.wattsForDisplay = super.wattsReceived;
                 if (super.ticks % 40L == 0L) {
                     this.worldObj.markBlockForUpdate(
                         this.xCoord, this.yCoord, this.zCoord
@@ -100,11 +102,11 @@ public class TRadarTower extends TileEntityUniversalRunnable
             }
 
             if (!this.isDisabled()) {
-                if (super.wattsReceived >= this.getRequest().getWatts()) {
-                    this.xuanZhuan += 0.05f;
+                if (this.canRun()) {
+                    this.rotation += 0.05f;
 
-                    if (this.xuanZhuan > 360.0f) {
-                        this.xuanZhuan = 0.0f;
+                    if (this.rotation > 360.0f) {
+                        this.rotation = 0.0f;
                     }
 
                     if (!this.worldObj.isRemote) {
@@ -113,23 +115,23 @@ public class TRadarTower extends TileEntityUniversalRunnable
                         );
                     }
 
-                    final int prevShuMu = this.xunZhaoEntity.size();
+                    final int prevShuMu = this.entitiesInRange.size();
                     this.doScan();
 
-                    if (prevShuMu != this.xunZhaoEntity.size()) {
+                    if (prevShuMu != this.entitiesInRange.size()) {
                         this.worldObj.notifyBlocksOfNeighborChange(
                             this.xCoord, this.yCoord, this.zCoord, this.getBlockType()
                         );
                     }
                 } else {
-                    if (this.xunZhaoEntity.size() > 0) {
+                    if (this.entitiesInRange.size() > 0) {
                         this.worldObj.notifyBlocksOfNeighborChange(
                             this.xCoord, this.yCoord, this.zCoord, this.getBlockType()
                         );
                     }
 
-                    this.xunZhaoEntity.clear();
-                    this.xunZhaoJiQi.clear();
+                    this.entitiesInRange.clear();
+                    this.tileEntitiesInRange.clear();
                 }
             }
 
@@ -145,8 +147,8 @@ public class TRadarTower extends TileEntityUniversalRunnable
 
     private void doScan() {
         this.missilesInRange.clear();
-        this.xunZhaoEntity.clear();
-        this.xunZhaoJiQi.clear();
+        this.entitiesInRange.clear();
+        this.tileEntitiesInRange.clear();
         final List<Entity> entities
             = RadarRegistry.getEntitiesWithinRadius(new Vector3(this).toVector2(), 500);
 
@@ -156,8 +158,8 @@ public class TRadarTower extends TileEntityUniversalRunnable
                     continue;
                 }
 
-                if (!this.xunZhaoEntity.contains(entity)) {
-                    this.xunZhaoEntity.add(entity);
+                if (!this.entitiesInRange.contains(entity)) {
+                    this.entitiesInRange.add(entity);
                 }
 
                 if (!this.isWeiXianDaoDan((EMissile) entity)) {
@@ -166,7 +168,7 @@ public class TRadarTower extends TileEntityUniversalRunnable
 
                 this.missilesInRange.add((EMissile) entity);
             } else {
-                this.xunZhaoEntity.add(entity);
+                this.entitiesInRange.add(entity);
             }
         }
 
@@ -200,7 +202,7 @@ public class TRadarTower extends TileEntityUniversalRunnable
                     continue;
                 }
 
-                this.xunZhaoEntity.add(player);
+                this.entitiesInRange.add(player);
             }
         }
 
@@ -214,9 +216,9 @@ public class TRadarTower extends TileEntityUniversalRunnable
                     continue;
                 }
 
-                this.xunZhaoJiQi.add(jiQi);
+                this.tileEntitiesInRange.add(jiQi);
             } else {
-                this.xunZhaoJiQi.add(jiQi);
+                this.tileEntitiesInRange.add(jiQi);
             }
         }
     }
@@ -233,17 +235,12 @@ public class TRadarTower extends TileEntityUniversalRunnable
             < this.safetyRadius;
     }
 
-    // TODO: WTF
-    // private Packet getDescriptionPacket2() {
-    // return PacketManager.getPacket("ICBM|E", this, 1, this.alarmRadius,
-    // this.safetyBanJing);
-    // }
-
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbt = new NBTTagCompound();
 
         nbt.setDouble("wattsReceived", super.wattsReceived);
+        nbt.setDouble("wattsForDisplay", this.wattsForDisplay);
         nbt.setInteger("disabledTicks", this.disabledTicks);
         nbt.setInteger("safetyRadius", this.safetyRadius);
         nbt.setInteger("alarmRadius", this.alarmRadius);
@@ -258,6 +255,7 @@ public class TRadarTower extends TileEntityUniversalRunnable
         NBTTagCompound nbt = pkt.func_148857_g();
 
         super.wattsReceived = nbt.getDouble("wattsReceived");
+        this.wattsForDisplay = nbt.getDouble("wattsForDisplay");
         this.disabledTicks = nbt.getInteger("disabledTicks");
         this.safetyRadius = nbt.getInteger("safetyRadius");
         this.alarmRadius = nbt.getInteger("alarmRadius");
@@ -434,6 +432,14 @@ public class TRadarTower extends TileEntityUniversalRunnable
             Vector3.add(new Vector3(-1.0, 1.0, -1.0), position),
             new Vector3(this)
         );
+    }
+
+    public boolean canRun() {
+        if (this.worldObj.isRemote) {
+            return this.wattsForDisplay >= this.getRequest().getWatts();
+        } else {
+            return super.wattsReceived >= this.getRequest().getWatts();
+        }
     }
 
     @Override

@@ -62,6 +62,7 @@ public class ContainerTurretPlatform extends ContainerTerminal {
         }
     }
 
+    @Override
     public ItemStack
     transferStackInSlot(final EntityPlayer entityPlayer, final int slotID) {
         ItemStack var2 = null;

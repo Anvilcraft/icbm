@@ -42,11 +42,6 @@ public abstract class GuiPlatformBase extends GuiBase {
             (this.height - super.ySize) / 2 + 44,
             2
         ));
-        // TODO: WTF
-        // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-        // "ICBM", this.tileEntity,
-        // TileEntityTerminal.TerminalPacketType.GUI_EVENT.ordinal(),
-        // true));
     }
 
     @Override
@@ -99,16 +94,6 @@ public abstract class GuiPlatformBase extends GuiBase {
                 }
             }
         }
-    }
-
-    @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-        // TODO: WTF
-        // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-        // "ICBM", this.tileEntity,
-        // TileEntityTerminal.TerminalPacketType.GUI_EVENT.ordinal(),
-        // false));
     }
 
     @Override

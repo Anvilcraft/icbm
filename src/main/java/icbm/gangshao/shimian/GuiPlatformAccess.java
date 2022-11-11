@@ -105,9 +105,9 @@ public class GuiPlatformAccess extends GuiPlatformBase implements IScroll {
                 }
             }
 
-            // TODO: WTF
-            // super.tileEntity.sendCommandToServer(super.entityPlayer,
-            // command + " " + username);
+            super.tileEntity.sendCommandToServer(
+                super.entityPlayer, command + " " + username
+            );
             this.commandLine.setText("");
         } else {
             this.commandLine.textboxKeyTyped(character, keycode);
@@ -144,10 +144,10 @@ public class GuiPlatformAccess extends GuiPlatformBase implements IScroll {
                     }
 
                     final AccessLevel newLevel = AccessLevel.get(newLevelOrdinal);
-                    // TODO: WTF
-                    // super.tileEntity.sendCommandToServer(super.entityPlayer,
-                    // "access set " + access.username +
-                    // " " + newLevel.displayName);
+                    super.tileEntity.sendCommandToServer(
+                        super.entityPlayer,
+                        "access set " + access.username + " " + newLevel.displayName
+                    );
                     break;
                 }
             }
@@ -178,7 +178,7 @@ public class GuiPlatformAccess extends GuiPlatformBase implements IScroll {
                 final String line
                     = accesInfo.username + " (" + accesInfo.level.displayName + ")";
 
-                if (line != null && line != "") {
+                if (line != null && !line.isEmpty()) {
                     final Vector2 drawPosition = new Vector2(x, 10 * i + y);
                     this.outputMap.put(accesInfo, drawPosition);
                     this.fontRendererObj.drawString(

@@ -23,6 +23,10 @@ import icbm.gangshao.damage.EntityTileDamagable;
 import icbm.gangshao.packet.PacketHandlerTurret;
 import icbm.gangshao.packet.PacketTurret;
 import icbm.gangshao.platform.BlockTurretPlatform;
+import icbm.gangshao.terminal.TerminalCommandPacket;
+import icbm.gangshao.terminal.TerminalCommandPacketHandler;
+import icbm.gangshao.terminal.TerminalOutputPacket;
+import icbm.gangshao.terminal.TerminalOutputPacketHandler;
 import icbm.gangshao.terminal.command.CommandAccess;
 import icbm.gangshao.terminal.command.CommandDestroy;
 import icbm.gangshao.terminal.command.CommandGet;
@@ -129,6 +133,18 @@ public class ICBMSentry extends MainBase {
 
         channel.registerMessage(
             PacketHandlerTurret.class, PacketTurret.class, pktId++, Side.CLIENT
+        );
+        channel.registerMessage(
+            TerminalOutputPacketHandler.class,
+            TerminalOutputPacket.class,
+            pktId++,
+            Side.CLIENT
+        );
+        channel.registerMessage(
+            TerminalCommandPacketHandler.class,
+            TerminalCommandPacket.class,
+            pktId++,
+            Side.SERVER
         );
     }
 

@@ -1,6 +1,5 @@
 package icbm.api;
 
-import icbm.api.ILauncherContainer;
 import icbm.api.explosion.IExplosiveContainer;
 import universalelectricity.core.vector.Vector3;
 

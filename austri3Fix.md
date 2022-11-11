@@ -1,15 +1,12 @@
 - glass button doesn't render in inventory
-- tons of missing packets (mostly gui stuff)
-- unable to mount turret after dismounting
-- turret gui kekt
-- no electricity in guis
+- missing packets (mostly gui stuff)
 - EMP tower drops nonsense
 - no proper update on multiblock destroy
 - condensed explosives doesn't break blocks and explodes instantly
 - can push explosive entities
 - flying blocks dont properly render
 - black hole doesn't suck in blocks
-- no missiles??
 - remote detonator doesnt work
-- radar is completely borked
 - emp tower only deletes missiles on client
+
+- see `// TODO: WTF`

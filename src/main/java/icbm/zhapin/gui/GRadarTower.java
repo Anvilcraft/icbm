@@ -141,7 +141,7 @@ public class GRadarTower extends GuiBase {
 
         if (this.tileEntity.isDisabled()) {
             status = "Disabled!";
-        } else if (this.tileEntity.prevWatts >= this.tileEntity.getRequest().getWatts()) {
+        } else if (this.tileEntity.canRun()) {
             color = "§2";
             status = "Radar On!";
         } else {
@@ -170,10 +170,11 @@ public class GRadarTower extends GuiBase {
         this.info = "";
         this.info2 = "";
 
-        if (this.tileEntity.prevWatts >= this.tileEntity.getRequest().getWatts()) {
+        if (this.tileEntity.canRun()) {
             int range = 4;
 
-            for (final Entity entity : this.tileEntity.xunZhaoEntity) {
+            for (final Entity entity : this.tileEntity.entitiesInRange) {
+                System.out.println("AAAAAAAAAALEC: " + entity.getCommandSenderName());
                 final Vector2 position = new Vector2(
                     this.radarCenter.x
                         + (entity.posX - this.tileEntity.xCoord) / this.radarMapRadius,
@@ -222,7 +223,7 @@ public class GRadarTower extends GuiBase {
 
             range = 2;
 
-            for (final TileEntity jiQi : this.tileEntity.xunZhaoJiQi) {
+            for (final TileEntity jiQi : this.tileEntity.tileEntitiesInRange) {
                 final Vector2 position = new Vector2(
                     this.radarCenter.x
                         + (jiQi.xCoord - this.tileEntity.xCoord) / this.radarMapRadius,

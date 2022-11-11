@@ -373,8 +373,6 @@ public class TTurretPlatform extends TileEntityTerminal implements IInventory {
         return "ICBM";
     }
 
-    //TODO: WTF
-    //@Override
     public boolean addStackToInventory(final ItemStack itemStack) {
         for (int i = 0; i < 12; ++i) {
             final ItemStack checkStack = this.getStackInSlot(i);
@@ -409,6 +407,7 @@ public class TTurretPlatform extends TileEntityTerminal implements IInventory {
         NBTTagCompound nbt = new NBTTagCompound();
 
         nbt.setDouble("wattsReceived", super.wattsReceived);
+        super.writeToNBT(nbt);
 
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord,
             this.getBlockMetadata(), nbt);
@@ -419,5 +418,6 @@ public class TTurretPlatform extends TileEntityTerminal implements IInventory {
         NBTTagCompound nbt = pkt.func_148857_g();
 
         super.wattsReceived = nbt.getDouble("wattsReceived");
+        super.readFromNBT(nbt);
     }
 }
