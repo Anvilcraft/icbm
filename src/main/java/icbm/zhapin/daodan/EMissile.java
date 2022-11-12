@@ -576,7 +576,7 @@ public class EMissile extends Entity
 
     public void explode() {
         try {
-            if (!this.exploded) {
+            if (!this.exploded && !this.isDead) {
                 if (this.missileId == 0) {
                     if (!super.worldObj.isRemote) {
                         super.worldObj.createExplosion(

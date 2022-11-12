@@ -82,7 +82,8 @@ public class TLauncherControlPanel
         nbt.setInteger("frequency", this.getFrequency());
         nbt.setShort("height", this.height);
         nbt.setInteger("disabledTicks", this.disabledTicks);
-        nbt.setTag("target", super.target.writeToNBT(new NBTTagCompound()));
+        if (super.target != null)
+            nbt.setTag("target", super.target.writeToNBT(new NBTTagCompound()));
 
         return new S35PacketUpdateTileEntity(
             this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
@@ -106,7 +107,8 @@ public class TLauncherControlPanel
         this.setFrequency(nbt.getInteger("frequency"));
         this.height = nbt.getShort("height");
         this.disabledTicks = nbt.getInteger("disabledTicks");
-        super.target = Vector3.readFromNBT(nbt.getCompoundTag("target"));
+        if (nbt.hasKey("target"))
+            super.target = Vector3.readFromNBT(nbt.getCompoundTag("target"));
     }
 
     // TODO: WTF

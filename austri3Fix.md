@@ -7,6 +7,5 @@
 - flying blocks dont properly render
 - black hole doesn't suck in blocks
 - remote detonator doesnt work
-- emp tower only deletes missiles on client
 
 - see `// TODO: WTF`
