@@ -61,7 +61,9 @@ public class ExCondensed extends ZhaPin {
                                 final Block block
                                     = worldObj.getBlock(var19, var20, var21);
 
-                                if (block == Blocks.air) {
+                                System.out.println("AAAAAAAAAAAALEC: " + var19 + " " + var20 + " " + var21);
+
+                                if (block != Blocks.air) {
                                     var14 -= (block.getExplosionResistance(
                                                   explosionSource,
                                                   worldObj,
@@ -136,7 +138,7 @@ public class ExCondensed extends ZhaPin {
                 );
                 worldObj.spawnParticle("smoke", var28, var29, var30, var31, var32, var33);
 
-                if (block == Blocks.air) {
+                if (block != Blocks.air) {
                     try {
                         if (block.canDropFromExplosion((Explosion) null)) {
                             block.dropBlockAsItemWithChance(

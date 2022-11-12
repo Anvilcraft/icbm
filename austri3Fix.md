@@ -2,9 +2,7 @@
 - missing packets (mostly gui stuff)
 - EMP tower drops nonsense
 - no proper update on multiblock destroy
-- condensed explosives doesn't break blocks and explodes instantly
 - can push explosive entities
 - flying blocks dont properly render
-- black hole doesn't suck in blocks
 
 - see `// TODO: WTF`

@@ -72,7 +72,7 @@ public class ExRedMatter extends ZhaPin {
                                         currentPos.intZ()
                                     );
 
-                                    if (block != null) {
+                                    if (block != Blocks.air) {
                                         if (block instanceof IForceFieldBlock) {
                                             ((IForceFieldBlock) block)
                                                 .weakenForceField(
