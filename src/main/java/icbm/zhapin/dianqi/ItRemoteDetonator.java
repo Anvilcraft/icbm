@@ -125,10 +125,9 @@ public class ItRemoteDetonator extends ItElectricICBM {
 
                         if (this.nengZha(tileEntity)) {
                             if (this.getJoules(itemStack) > 1500.0) {
-                                // TODO: WTF
-                                //PacketDispatcher.sendPacketToServer(
-                                //        PacketManager.getPacket("ICBM|E", tileEntity,
-                                //        2));
+                                ICBMExplosion.channel.sendToServer(new ItemUsePacket(
+                                    ItemUsePacket.Type.REMOTE, new Vector3(tileEntity)
+                                ));
                                 return itemStack;
                             }
 
@@ -143,12 +142,9 @@ public class ItRemoteDetonator extends ItElectricICBM {
                     = this.getSavedCoord(itemStack).getTileEntity((IBlockAccess) world);
 
                 if (this.nengZha(tileEntity2)) {
-                    // TODO: WTF
-                    //PacketDispatcher.sendPacketToServer(
-                    //        PacketManager.getPacket("ICBM|E", tileEntity2, 2));
-                    ICBMExplosion.channel.sendToServer(
-                        new ItemUsePacket(ItemUsePacket.Type.REMOTE, new Vector3())
-                    );
+                    ICBMExplosion.channel.sendToServer(new ItemUsePacket(
+                        ItemUsePacket.Type.REMOTE, new Vector3(tileEntity2)
+                    ));
                 }
             } else {
                 entityPlayer.addChatMessage(

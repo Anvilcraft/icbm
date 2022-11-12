@@ -5,9 +5,12 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import icbm.zhapin.dianqi.ItLaserDesignator;
 import icbm.zhapin.dianqi.ItRadarGun;
+import icbm.zhapin.zhapin.BExplosives;
+import icbm.zhapin.zhapin.TExplosive;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import universalelectricity.core.electricity.ElectricityPack;
 import universalelectricity.core.vector.Vector3;
 
@@ -65,12 +68,23 @@ public class ItemUsePacketHandler implements IMessageHandler<ItemUsePacket, IMes
             }
         } else if (message.type == ItemUsePacket.Type.REMOTE) {
             final ItemStack itemStack = player.inventory.getCurrentItem();
-            ICBMExplosion.itYaoKong.onProvide(
-                ElectricityPack.getFromWatts(
-                    1500.0, ICBMExplosion.itYaoKong.getVoltage(itemStack)
-                ),
-                itemStack
-            );
+            TileEntity te = message.pos.getTileEntity(player.worldObj);
+            if (te instanceof TExplosive) {
+                BExplosives.yinZha(
+                    player.worldObj,
+                    message.pos.intX(),
+                    message.pos.intY(),
+                    message.pos.intZ(),
+                    ((TExplosive) te).explosiveId,
+                    0
+                );
+                ICBMExplosion.itYaoKong.onProvide(
+                    ElectricityPack.getFromWatts(
+                        1500.0, ICBMExplosion.itYaoKong.getVoltage(itemStack)
+                    ),
+                    itemStack
+                );
+            }
         }
 
         return null;

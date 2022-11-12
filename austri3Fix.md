@@ -6,6 +6,5 @@
 - can push explosive entities
 - flying blocks dont properly render
 - black hole doesn't suck in blocks
-- remote detonator doesnt work
 
 - see `// TODO: WTF`

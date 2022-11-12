@@ -32,11 +32,9 @@ public class ExEmpSignal extends ZhaPin {
         final List<Entity> entitiesNearby
             = RadarRegistry.getEntitiesWithinRadius(position.toVector2(), radius);
 
-        System.out.println("AAAAAAALEC: " + entitiesNearby.size());
         for (final Entity entity : entitiesNearby) {
             if (entity instanceof IMissile && !entity.isEntityEqual(explosionSource)
                 && ((IMissile) entity).getTicksInAir() > -1) {
-                System.out.println("AAAAAAALEC: dropMissileAsItem");
                 ((IMissile) entity).dropMissileAsItem();
             }
         }

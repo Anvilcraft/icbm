@@ -174,7 +174,6 @@ public class GRadarTower extends GuiBase {
             int range = 4;
 
             for (final Entity entity : this.tileEntity.entitiesInRange) {
-                System.out.println("AAAAAAAAAALEC: " + entity.getCommandSenderName());
                 final Vector2 position = new Vector2(
                     this.radarCenter.x
                         + (entity.posX - this.tileEntity.xCoord) / this.radarMapRadius,
