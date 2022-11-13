@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -31,8 +32,7 @@ public class RFeiBlock extends Render {
     ) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
-        // TODO: wrong resourceloc
-        this.bindTexture(new ResourceLocation("minecraft", "textures/terrain.png"));
+        this.bindTexture(TextureMap.locationBlocksTexture);
         final Block block = entity.block;
         final World world = entity.worldObj;
         GL11.glDisable(2896);
@@ -146,7 +146,6 @@ public class RFeiBlock extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-        // TODO: WTF
         return null;
     }
 }

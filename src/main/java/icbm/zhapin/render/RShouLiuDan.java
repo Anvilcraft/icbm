@@ -6,6 +6,7 @@ import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.zhapin.EGrenade;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
@@ -28,8 +29,7 @@ public class RShouLiuDan extends Render {
         GL11.glTranslatef((float) x, (float) y + 0.4f, (float) z);
         GL11.glEnable(32826);
         GL11.glScalef(0.6f, 0.6f, 0.6f);
-        // TODO: wrong resourceloc
-        this.bindTexture(new ResourceLocation("gui/items.png"));
+        this.bindTexture(TextureMap.locationItemsTexture);
         final Tessellator tessellator = Tessellator.instance;
         this.renderIcon(tessellator, icon);
         GL11.glDisable(32826);
@@ -65,7 +65,6 @@ public class RShouLiuDan extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-        // TODO: WTF
         return null;
     }
 }

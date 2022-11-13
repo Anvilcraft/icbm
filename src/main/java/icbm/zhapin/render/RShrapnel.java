@@ -6,6 +6,7 @@ import icbm.zhapin.ESuiPian;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RSuiPian extends Render {
+public class RShrapnel extends Render {
     public void renderArrow(
         final ESuiPian suiPian,
         final double par2,
@@ -27,8 +28,7 @@ public class RSuiPian extends Render {
         if (suiPian.isAnvil) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float) par2, (float) par4, (float) par6);
-            // TODO: wrong resourceloc
-            this.bindTexture(new ResourceLocation("minecraft", "textures/terrain.png"));
+            this.bindTexture(TextureMap.locationBlocksTexture);
             // yay anvilcraft
             final Block block = Blocks.anvil;
             final World world = suiPian.worldObj;
@@ -136,7 +136,6 @@ public class RSuiPian extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-        // TODO: WTF
         return null;
     }
 }

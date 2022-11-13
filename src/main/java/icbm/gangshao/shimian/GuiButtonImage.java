@@ -22,8 +22,6 @@ public class GuiButtonImage extends GuiButton {
     @Override
     public void
     drawButton(final Minecraft par1Minecraft, final int width, final int hight) {
-        // TODO: WTF
-        // if (this.drawButton) {
         par1Minecraft.renderEngine.bindTexture(
             new ResourceLocation("icbm", "textures/gui/gui@.png")
         );
@@ -60,7 +58,6 @@ public class GuiButtonImage extends GuiButton {
         this.drawTexturedModalRect(
             this.xPosition, this.yPosition, var6, var5, this.width, this.height
         );
-        // }
     }
 
     public boolean isIntersect(final int x, final int y) {

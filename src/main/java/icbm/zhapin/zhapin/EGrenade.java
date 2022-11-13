@@ -225,7 +225,6 @@ public class EGrenade
             super.motionY *= 0.5;
         } else {
             super.motionY -= gravity;
-            // TODO: is this pushOutOfBlocks?
             this.func_145771_j(
                 super.posX,
                 (super.boundingBox.minY + super.boundingBox.maxY) / 2.0,

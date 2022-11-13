@@ -61,8 +61,6 @@ public class ExCondensed extends ZhaPin {
                                 final Block block
                                     = worldObj.getBlock(var19, var20, var21);
 
-                                System.out.println("AAAAAAAAAAAALEC: " + var19 + " " + var20 + " " + var21);
-
                                 if (block != Blocks.air) {
                                     var14 -= (block.getExplosionResistance(
                                                   explosionSource,

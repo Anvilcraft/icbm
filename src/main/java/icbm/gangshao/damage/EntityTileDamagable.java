@@ -45,22 +45,24 @@ public class EntityTileDamagable
             && this.host.canApplyPotion(par1PotionEffect);
     }
 
-    // public void addPotionEffect(final PotionEffect par1PotionEffect) {
-    // if (this.isPotionApplicable(par1PotionEffect)) {
-    // if (this.isPotionActive(par1PotionEffect.getPotionID())) {
-    // //((PotionEffect)this.activePotionsMap.get(
-    // // par1PotionEffect.getPotionID()))
-    // // .combine(par1PotionEffect);
-    // //this.func_70695_b((PotionEffect)this.activePotionsMap.get(
-    // // par1PotionEffect.getPotionID()));
-    // } else {
-    // ((EntityLivingBase)this)
-    // .activePotionsMap.put(par1PotionEffect.getPotionID(),
-    // par1PotionEffect);
-    // this.onNewPotionEffect(par1PotionEffect);
-    // }
-    // }
-    // }
+    public void addPotionEffect(final PotionEffect par1PotionEffect) {
+        if (this.isPotionApplicable(par1PotionEffect)) {
+            if (this.isPotionActive(par1PotionEffect.getPotionID())) {
+                ((PotionEffect) this.activePotionsMap.get(par1PotionEffect.getPotionID()))
+                    .combine(par1PotionEffect);
+                this.onChangedPotionEffect(
+                    (PotionEffect
+                    ) this.activePotionsMap.get(par1PotionEffect.getPotionID()),
+                    true
+                );
+            } else {
+                this.activePotionsMap.put(
+                    par1PotionEffect.getPotionID(), par1PotionEffect
+                );
+                this.onNewPotionEffect(par1PotionEffect);
+            }
+        }
+    }
 
     @Override
     public String getCustomNameTag() {
@@ -198,11 +200,10 @@ public class EntityTileDamagable
         return false;
     }
 
-    // TODO: WTF
-    // @Override
-    // public float getMaxHealth() {
-    // return (this.host != null && this.host instanceof IHealthTile)
-    // ? this.host.getMaxHealth()
-    // : 100;
-    // }
+    @Override
+    public float getMaxHealth() {
+        return (this.host != null && this.host instanceof IHealthTile)
+            ? this.host.getMaxHealth()
+            : 100;
+    }
 }

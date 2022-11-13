@@ -38,16 +38,6 @@ public class TExplosive extends TileEntity implements IExplosiveContainer, IRota
         par1NBTTagCompound.setInteger("explosiveID", this.explosiveId);
     }
 
-    // TODO: WTF
-    // else if (ID == 2 && !this.worldObj.isRemote &&
-    // player.inventory.getCurrentItem().getItem() instanceof ItRemoteDetonator) {
-    // final ItemStack itemStack = player.inventory.getCurrentItem();
-    // BExplosives.yinZha(this.worldObj, this.xCoord, this.yCoord,
-    // this.zCoord, this.haoMa, 0);
-    // ICBMExplosion.itYaoKong.onProvide(ElectricityPack.getFromWatts(1500.0,
-    // ICBMExplosion.itYaoKong.getVoltage(itemStack)), itemStack);
-    // }
-
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         NBTTagCompound nbt = pkt.func_148857_g();

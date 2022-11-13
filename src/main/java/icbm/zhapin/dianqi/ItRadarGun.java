@@ -102,7 +102,7 @@ public class ItRadarGun extends ItElectricICBM {
     ) {
         final Block blockId = par3World.getBlock(x, y, z);
 
-        if (blockId == ICBMExplosion.bJiQi) {
+        if (blockId == ICBMExplosion.bMachine) {
             final TileEntity tileEntity = par3World.getTileEntity(x, y, z);
 
             if (tileEntity != null) {
@@ -120,10 +120,6 @@ public class ItRadarGun extends ItElectricICBM {
                         missileLauncher.getTarget().z = (int) savedCords.z;
 
                         if (par3World.isRemote) {
-                            // TODO: WTF
-                            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-                            // "ICBM|E", missileLauncher, 2, savedCords.x,
-                            // missileLauncher.getTarget().y, savedCords.z));
                             par2EntityPlayer.addChatMessage(new ChatComponentText(
                                 "Coordinate information transfered!"
                             ));
@@ -147,10 +143,6 @@ public class ItRadarGun extends ItElectricICBM {
                         );
 
                         if (par3World.isRemote) {
-                            // TODO: WTF
-                            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-                            // "ICBM|E", missileLauncher2, 2, savedCords.x,
-                            // savedCords.y, savedCords.z));
                             par2EntityPlayer.addChatMessage(new ChatComponentText(
                                 "Coordinate information transfered!"
                             ));

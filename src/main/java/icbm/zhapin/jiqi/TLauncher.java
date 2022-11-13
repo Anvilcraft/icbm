@@ -94,12 +94,12 @@ public class TLauncher
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
-        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 2);
+        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 3);
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 2, this.zCoord, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 2, this.zCoord, Blocks.air, 0, 3
         );
     }
 

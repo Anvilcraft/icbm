@@ -8,16 +8,17 @@ import icbm.zhapin.zhapin.EExplosive;
 import icbm.zhapin.zhapin.ZhaPin;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class REZhaDan extends Render {
+public class REExplosives extends Render {
     private RenderBlocks blockRenderer;
 
-    public REZhaDan() {
+    public REExplosives() {
         this.blockRenderer = new RenderBlocks();
         super.shadowSize = 0.5f;
     }
@@ -72,8 +73,7 @@ public class REZhaDan extends Render {
             }
 
             float f2 = (1.0f - (entityExplosive.fuse - par9 + 1.0f) / 100.0f) * 0.8f;
-            // TODO: this is the wrong ResourceLocation name
-            this.bindTexture(new ResourceLocation("textures/terrain.png"));
+            this.bindTexture(TextureMap.locationBlocksTexture);
             this.blockRenderer.renderBlockAsItem(
                 ICBMExplosion.bExplosives,
                 entityExplosive.haoMa,
@@ -99,7 +99,6 @@ public class REZhaDan extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-        // TODO: WTF
         return null;
     }
 }

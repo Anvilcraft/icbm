@@ -80,7 +80,6 @@ public class RMissile extends Render {
         }
 
         if (entityMissile.missileId >= 100) {
-            // TODO: WTF loadTexture -> bindTexture
             this.bindTexture(new ResourceLocation(
                 "icbm",
                 "textures/models/missile_"
@@ -106,7 +105,6 @@ public class RMissile extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-        // TODO: WTF
         return null;
     }
 

@@ -40,6 +40,8 @@ import icbm.zhapin.jiqi.EmpTowerGuiPacketHandler;
 import icbm.zhapin.jiqi.IBMachine;
 import icbm.zhapin.jiqi.LauncherControlPanelGuiPacket;
 import icbm.zhapin.jiqi.LauncherControlPanelGuiPacketHandler;
+import icbm.zhapin.jiqi.RadarTowerGuiPacket;
+import icbm.zhapin.jiqi.RadarTowerGuiPacketHandler;
 import icbm.zhapin.po.PChuanRanDu;
 import icbm.zhapin.po.PDaDu;
 import icbm.zhapin.po.PDongShang;
@@ -98,7 +100,7 @@ public class ICBMExplosion extends MainBase {
     public static Item Du;
     public static final int ENTITY_ID_PREFIX = 50;
     public static Block bExplosives;
-    public static Block bJiQi;
+    public static Block bMachine;
     public static Item itDaoDan;
     public static Item itTeBieDaoDan;
     public static ItemElectric itJieJa;
@@ -125,7 +127,7 @@ public class ICBMExplosion extends MainBase {
             = MainBase.CONFIGURATION.get("general", "Use Fuel", ICBMExplosion.USE_FUEL)
                   .getBoolean(ICBMExplosion.USE_FUEL);
         ICBMExplosion.bExplosives = (Block) new BExplosives();
-        ICBMExplosion.bJiQi = (Block) new BMachine();
+        ICBMExplosion.bMachine = (Block) new BMachine();
         ICBMExplosion.itDaoDan = new ItMissile("missile");
         ICBMExplosion.itTeBieDaoDan = new ItModuleMissile();
         ICBMExplosion.itJieJa = new ItDefuser();
@@ -230,7 +232,7 @@ public class ICBMExplosion extends MainBase {
         GameRegistry.registerBlock(
             ICBMExplosion.bExplosives, IBExplosive.class, "bExplosives"
         );
-        GameRegistry.registerBlock(ICBMExplosion.bJiQi, IBMachine.class, "bJiQi");
+        GameRegistry.registerBlock(ICBMExplosion.bMachine, IBMachine.class, "bMachine");
         ForgeChunkManager.setForcedChunkLoadingCallback(
             (Object) this,
             (ForgeChunkManager.LoadingCallback) new ForgeChunkManager.LoadingCallback() {
@@ -279,6 +281,12 @@ public class ICBMExplosion extends MainBase {
             pktId++,
             Side.SERVER
         );
+        channel.registerMessage(
+            RadarTowerGuiPacketHandler.class,
+            RadarTowerGuiPacket.class,
+            pktId++,
+            Side.SERVER
+        );
     }
 
     @Mod.EventHandler
@@ -306,7 +314,7 @@ public class ICBMExplosion extends MainBase {
                 ICBMExplosion.itLeiDaQiang,
                 'C',
                 new ItemStack(
-                    ICBMExplosion.bJiQi, 1, BMachine.JiQi.XiaoFaSheQi.ordinal() + 6
+                    ICBMExplosion.bMachine, 1, BMachine.JiQi.XiaoFaSheQi.ordinal() + 6
                 ),
                 'B',
                 Blocks.stone_button,
@@ -366,36 +374,36 @@ public class ICBMExplosion extends MainBase {
                            "calclavia:WIRE" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 0),
+            new ItemStack(ICBMExplosion.bMachine, 1, 0),
             new Object[] {
                 "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "calclavia:CIRCUIT_T1" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 1),
+            new ItemStack(ICBMExplosion.bMachine, 1, 1),
             new Object[] { "! !",
                            "!C!",
                            "!@!",
                            '@',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 0),
+                           new ItemStack(ICBMExplosion.bMachine, 1, 0),
                            '!',
                            "ingotSteel",
                            'C',
                            "calclavia:CIRCUIT_T2" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 2),
+            new ItemStack(ICBMExplosion.bMachine, 1, 2),
             new Object[] { "! !",
                            "!C!",
                            "!@!",
                            '@',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 1),
+                           new ItemStack(ICBMExplosion.bMachine, 1, 1),
                            '!',
                            "plateSteel",
                            'C',
                            "calclavia:CIRCUIT_T3" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 3),
+            new ItemStack(ICBMExplosion.bMachine, 1, 3),
             new Object[] { "!!!",
                            "!#!",
                            "!?!",
@@ -407,7 +415,7 @@ public class ICBMExplosion extends MainBase {
                            "calclavia:WIRE" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 4),
+            new ItemStack(ICBMExplosion.bMachine, 1, 4),
             new Object[] { "!$!",
                            "!#!",
                            "!?!",
@@ -418,10 +426,10 @@ public class ICBMExplosion extends MainBase {
                            '?',
                            "calclavia:WIRE",
                            '$',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 3) }
+                           new ItemStack(ICBMExplosion.bMachine, 1, 3) }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 5),
+            new ItemStack(ICBMExplosion.bMachine, 1, 5),
             new Object[] { "!$!",
                            "!#!",
                            "!?!",
@@ -432,34 +440,34 @@ public class ICBMExplosion extends MainBase {
                            '?',
                            "calclavia:WIRE",
                            '$',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 4) }
+                           new ItemStack(ICBMExplosion.bMachine, 1, 4) }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 6),
+            new ItemStack(ICBMExplosion.bMachine, 1, 6),
             new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 7),
+            new ItemStack(ICBMExplosion.bMachine, 1, 7),
             new Object[] { "! !",
                            "!@!",
                            "! !",
                            '!',
                            "ingotSteel",
                            '@',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 6) }
+                           new ItemStack(ICBMExplosion.bMachine, 1, 6) }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 8),
+            new ItemStack(ICBMExplosion.bMachine, 1, 8),
             new Object[] { "! !",
                            "!@!",
                            "! !",
                            '!',
                            "plateSteel",
                            '@',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 7) }
+                           new ItemStack(ICBMExplosion.bMachine, 1, 7) }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 9),
+            new ItemStack(ICBMExplosion.bMachine, 1, 9),
             new Object[] { "?@?",
                            " ! ",
                            "!#!",
@@ -474,7 +482,7 @@ public class ICBMExplosion extends MainBase {
         ));
         RecipeHelper.addRecipe(
             (IRecipe) new ShapedOreRecipe(
-                new ItemStack(ICBMExplosion.bJiQi, 1, 10),
+                new ItemStack(ICBMExplosion.bMachine, 1, 10),
                 new Object[] { "?W?",
                                "@!@",
                                "?#?",
@@ -494,54 +502,16 @@ public class ICBMExplosion extends MainBase {
             true
         );
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-            new ItemStack(ICBMExplosion.bJiQi, 1, 11),
+            new ItemStack(ICBMExplosion.bMachine, 1, 11),
             new Object[] { "?! ",
                            "@@@",
                            '@',
                            "plateSteel",
                            '!',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 2),
+                           new ItemStack(ICBMExplosion.bMachine, 1, 2),
                            '?',
-                           new ItemStack(ICBMExplosion.bJiQi, 1, 8) }
+                           new ItemStack(ICBMExplosion.bMachine, 1, 8) }
         ));
-        // TODO: WTF
-        // try {
-        // if (FluidRegistry.getFluid("fuel") != null &&
-        // ICBMExplosion.USE_FUEL) {
-        // for (final FluidContainerData data :
-        // FluidContainerRegistry.getRegisteredFluidContainerData()) {
-        // if (data.fluid != null &&
-        // data.fluid.isLiquidEqual(
-        // FluidRegistry.getFluid("Fuel"))) {
-        // GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-        // new ItemStack(ICBMExplosion.itTeBieDaoDan),
-        // new Object[] { " @ ", "@#@", "@?@", '@',
-        // "ingotSteel", '?',
-        // data.filled, '#', "calclavia:CIRCUIT_T1"
-        // }));
-        // }
-        // }
-        // } else if (LiquidDictionary.getLiquid("Oil", 1) != null &&
-        // ICBMExplosion.USE_FUEL) {
-        // for (final LiquidContainerData data :
-        // LiquidContainerRegistry.getRegisteredLiquidContainerData()) {
-        // if (data.stillLiquid != null &&
-        // data.stillLiquid.isLiquidEqual(
-        // LiquidDictionary.getLiquid("Oil", 1))) {
-        // GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
-        // new ItemStack(ICBMExplosion.itTeBieDaoDan),
-        // new Object[] { " @ ", "@#@", "@?@", '@',
-        // "ingotSteel", '?',
-        // data.filled, '#', "calclavia:CIRCUIT_T1"
-        // }));
-        // }
-        // }
-        // } else {
-        // }
-        // } catch (final Exception e) {
-        // FMLLog.severe("Failed to add missile module recipe!", new Object[0]);
-        // e.printStackTrace();
-        // }
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.itTeBieDaoDan),
             new Object[] { " @ ",

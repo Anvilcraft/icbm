@@ -205,8 +205,6 @@ public abstract class ZhaPin implements ITier, IExplosive {
         ));
     }
 
-    // TODO: WTF
-    // dynamic typing 2.0
     @SideOnly(Side.CLIENT)
     public Object[] getRenderData() {
         return null;

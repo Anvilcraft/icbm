@@ -427,12 +427,12 @@ public class TLauncherPlatform extends TileEntityAdvanced
     public void onDestroy(final TileEntity callingBlock) {
         final Vector3 position = new Vector3(this.xCoord, this.yCoord, this.zCoord);
 
-        if (this.orientation == 3 || this.orientation == 2) {
+        if (this.orientation == 3 || this.orientation == 3) {
             this.worldObj.setBlock(
-                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 2
+                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
-                (int) position.x + 1, (int) position.y, (int) position.z, Blocks.air, 0, 2
+                (int) position.x + 1, (int) position.y, (int) position.z, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
                 (int) position.x + 1,
@@ -440,7 +440,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
                 (int) position.x + 1,
@@ -448,10 +448,10 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
-                (int) position.x - 1, (int) position.y, (int) position.z, Blocks.air, 0, 2
+                (int) position.x - 1, (int) position.y, (int) position.z, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
                 (int) position.x - 1,
@@ -459,7 +459,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
                 (int) position.x - 1,
@@ -467,14 +467,14 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z,
                 Blocks.air,
                 0,
-                2
+                3
             );
         } else {
             this.worldObj.setBlock(
-                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 2
+                (int) position.x, (int) position.y, (int) position.z, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
-                (int) position.x, (int) position.y, (int) position.z + 1, Blocks.air, 0, 2
+                (int) position.x, (int) position.y, (int) position.z + 1, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
                 (int) position.x,
@@ -482,7 +482,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z + 1,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
                 (int) position.x,
@@ -490,10 +490,10 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z + 1,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
-                (int) position.x, (int) position.y, (int) position.z - 1, Blocks.air, 0, 2
+                (int) position.x, (int) position.y, (int) position.z - 1, Blocks.air, 0, 3
             );
             this.worldObj.setBlock(
                 (int) position.x,
@@ -501,7 +501,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z - 1,
                 Blocks.air,
                 0,
-                2
+                3
             );
             this.worldObj.setBlock(
                 (int) position.x,
@@ -509,7 +509,7 @@ public class TLauncherPlatform extends TileEntityAdvanced
                 (int) position.z - 1,
                 Blocks.air,
                 0,
-                2
+                3
             );
         }
 

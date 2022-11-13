@@ -92,10 +92,7 @@ public class GenSulfur extends OreGenReplace {
         for (int amount = 0; amount < super.amountPerBranch; ++amount) {
             final Block block = world.getBlock(x, y, z);
 
-            //TODO: WTF
-            if (block != null /*&&
-          block.isGenMineableReplaceable(world, x, y, z,
-                                         Blocks.stone)*/) {
+            if (block != Blocks.air) {
                 world.setBlock(x, y, z, super.oreID, super.oreMeta, 2);
             }
 

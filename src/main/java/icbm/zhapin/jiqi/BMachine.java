@@ -103,8 +103,6 @@ public class BMachine extends BICBM {
         }
     }
 
-    // TODO: WTF
-    // @Override
     public static boolean canBePlacedAt(
         final World world,
         final int x,
@@ -268,20 +266,15 @@ public class BMachine extends BICBM {
         final Block par5,
         final int par6
     ) {
-        final int metadata = par1World.getBlockMetadata(x, y, z);
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
 
         if (tileEntity != null) {
-            int itemMetadata = 0;
-
-            if (tileEntity instanceof ITier) {
-                itemMetadata = ((ITier) tileEntity).getTier() + metadata * 3;
-            } else {
-                itemMetadata = 9 + metadata - 3;
-            }
-
             this.dropBlockAsItem(
-                par1World, x, y, z, new ItemStack(ICBMExplosion.bJiQi, 1, itemMetadata)
+                par1World,
+                x,
+                y,
+                z,
+                new ItemStack(ICBMExplosion.bMachine, 1, getMachineId(tileEntity))
             );
 
             if (tileEntity instanceof IMultiBlock) {
@@ -341,7 +334,7 @@ public class BMachine extends BICBM {
         final int z
     ) {
         final TileEntity tileEntity = par1World.getTileEntity(x, y, z);
-        return new ItemStack(ICBMExplosion.bJiQi, 1, getMachineId(tileEntity));
+        return new ItemStack(ICBMExplosion.bMachine, 1, getMachineId(tileEntity));
     }
 
     @Override

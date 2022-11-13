@@ -1,7 +1,9 @@
 package icbm.zhapin.gui;
 
+import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.daodan.EMissile;
 import icbm.zhapin.jiqi.BMachine;
+import icbm.zhapin.jiqi.RadarTowerGuiPacket;
 import icbm.zhapin.jiqi.TRadarTower;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.Entity;
@@ -68,9 +70,7 @@ public class GRadarTower extends GuiBase {
                 500, Math.max(0, Integer.parseInt(this.textFieldSafetyZone.getText()))
             );
             this.tileEntity.safetyRadius = newSafetyRadius;
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 2, this.tileEntity.safetyBanJing));
+            ICBMExplosion.channel.sendToServer(new RadarTowerGuiPacket(this.tileEntity));
         } catch (final NumberFormatException ex) {}
 
         try {
@@ -78,9 +78,7 @@ public class GRadarTower extends GuiBase {
                 500, Math.max(0, Integer.parseInt(this.textFieldAlarmRange.getText()))
             );
             this.tileEntity.alarmRadius = newAlarmRadius;
-            // TODO: WTF
-            // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-            // "ICBM|E", this.tileEntity, 3, this.tileEntity.alarmBanJing));
+            ICBMExplosion.channel.sendToServer(new RadarTowerGuiPacket(this.tileEntity));
         } catch (final NumberFormatException ex2) {}
     }
 

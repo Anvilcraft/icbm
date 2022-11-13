@@ -258,7 +258,7 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                     return par1ItemStack;
                 }
 
-                if (block == ICBMExplosion.bJiQi) {
+                if (block == ICBMExplosion.bMachine) {
                     return par1ItemStack;
                 }
 
@@ -294,12 +294,6 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                                         objectMouseOver.blockY,
                                         objectMouseOver.blockZ
                                     ));
-                                    // TODO: WTF
-                                    // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-                                    // "ICBM", missileLauncher, 2,
-                                    // missileLauncher.getTarget().x,
-                                    // missileLauncher.getTarget().y,
-                                    // missileLauncher.getTarget().z));
                                 } else {
                                     double previousY = 0.0;
 
@@ -312,12 +306,6 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                                         previousY,
                                         objectMouseOver.blockZ
                                     ));
-                                    // TODO: WTF
-                                    // PacketDispatcher.sendPacketToServer(PacketManager.getPacket(
-                                    // "ICBM", missileLauncher, 2,
-                                    // missileLauncher.getTarget().x,
-                                    // missileLauncher.getTarget().y,
-                                    // missileLauncher.getTarget().z));
                                 }
 
                                 if (missileLauncher.canLaunch()) {

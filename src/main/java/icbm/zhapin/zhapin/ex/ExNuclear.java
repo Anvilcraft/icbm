@@ -106,7 +106,7 @@ public class ExNuclear extends ExThr {
                         targetPosition.intZ()
                     );
 
-                    if (block == Blocks.air) {
+                    if (block != Blocks.air) {
                         targetPosition.setBlock(worldObj, Blocks.air);
                         block.onBlockDestroyedByExplosion(
                             thread.world,

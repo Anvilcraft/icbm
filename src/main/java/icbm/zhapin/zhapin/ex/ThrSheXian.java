@@ -65,7 +65,7 @@ public class ThrSheXian extends Thread {
                         targetPosition.intZ()
                     );
 
-                    if (block == Blocks.air) {
+                    if (block != Blocks.air) {
                         float resistance = 0.0f;
 
                         if (block == Blocks.bedrock) {

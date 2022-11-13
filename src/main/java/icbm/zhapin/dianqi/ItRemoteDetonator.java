@@ -119,7 +119,7 @@ public class ItRemoteDetonator extends ItElectricICBM {
                     );
 
                     if (tile != null && tile instanceof TExplosive) {
-                        if (blockID == ICBMExplosion.bJiQi) {
+                        if (blockID == ICBMExplosion.bMachine) {
                             return itemStack;
                         }
 

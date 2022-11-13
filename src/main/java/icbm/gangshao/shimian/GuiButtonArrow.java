@@ -22,8 +22,6 @@ public class GuiButtonArrow extends GuiButton {
     @Override
     public void
     drawButton(final Minecraft par1Minecraft, final int width, final int hight) {
-        // TODO: WTF
-        // if (this.drawButton) {
         par1Minecraft.renderEngine.bindTexture(
             new ResourceLocation("icbm", "textures/gui/gui@.png")
         );
@@ -45,6 +43,5 @@ public class GuiButtonArrow extends GuiButton {
         this.drawTexturedModalRect(
             this.xPosition, this.yPosition, varWid, var5, this.width, this.height
         );
-        // }
     }
 }

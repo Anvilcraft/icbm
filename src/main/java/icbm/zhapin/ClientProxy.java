@@ -25,7 +25,7 @@ import icbm.zhapin.jiqi.TLauncherControlPanel;
 import icbm.zhapin.jiqi.TLauncherPlatform;
 import icbm.zhapin.jiqi.TMissileCoordinator;
 import icbm.zhapin.jiqi.TRadarTower;
-import icbm.zhapin.render.REZhaDan;
+import icbm.zhapin.render.REExplosives;
 import icbm.zhapin.render.REmpTower;
 import icbm.zhapin.render.RFaSheDi;
 import icbm.zhapin.render.RFaSheJia;
@@ -40,7 +40,7 @@ import icbm.zhapin.render.RMissile;
 import icbm.zhapin.render.RRadarTower;
 import icbm.zhapin.render.RSMine;
 import icbm.zhapin.render.RShouLiuDan;
-import icbm.zhapin.render.RSuiPian;
+import icbm.zhapin.render.RShrapnel;
 import icbm.zhapin.render.RXiaoFaSheQi;
 import icbm.zhapin.render.RYinDaoQi;
 import icbm.zhapin.render.RZhaPin;
@@ -88,7 +88,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler((ISimpleBlockRenderingHandler) new RHJiQi()
         );
         RenderingRegistry.registerEntityRenderingHandler(
-            EExplosive.class, (Render) new REZhaDan()
+            EExplosive.class, (Render) new REExplosives()
         );
         RenderingRegistry.registerEntityRenderingHandler(
             EMissile.class, (Render) new RMissile(0.5f)
@@ -103,7 +103,7 @@ public class ClientProxy extends CommonProxy {
             ELightBeam.class, (Render) new RGuangBang()
         );
         RenderingRegistry.registerEntityRenderingHandler(
-            ESuiPian.class, (Render) new RSuiPian()
+            ESuiPian.class, (Render) new RShrapnel()
         );
         RenderingRegistry.registerEntityRenderingHandler(
             EGrenade.class, (Render) new RShouLiuDan()

@@ -228,29 +228,6 @@ public class BExplosives extends BICBM implements ICamouflageMaterial {
         }
     }
 
-    // TODO: WTF
-    // public IIcon getIcon(final IIconRegister iconRegister, final int i,
-    // final String suffix) {
-    // final ITexturePack itexturepack =
-    // Minecraft.getMinecraft().texturePackList.getSelectedTexturePack(); final
-    // String iconName = "explosive_" + ZhaPin.list[i].getUnlocalizedName() +
-    // suffix; final String path = "/mods/"
-    // + "icbm:".replace(":", "") + "/textures/blocks/" +
-    // iconName + ".png";
-    // try {
-    // final BufferedImage bufferedimage =
-    // ImageIO.read(itexturepack.getResourceAsStream(path)); return
-    // iconRegister.registerIcon("icbm:" + iconName);
-    // } catch (final Exception e) {
-    // if (suffix.equals("_bottom")) {
-    // return iconRegister.registerIcon("icbm:explosive_bottom_" +
-    // ZhaPin.list[i].getTier());
-    // }
-    // return iconRegister.registerIcon("icbm:explosive_base_" +
-    // ZhaPin.list[i].getTier());
-    // }
-    // }
-
     @Override
     public void
     onBlockAdded(final World par1World, final int x, final int y, final int z) {

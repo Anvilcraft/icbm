@@ -33,9 +33,8 @@ public class ESeat extends Entity implements IEntityAdditionalSpawnData {
         this.shouldSit = sit;
     }
 
-    // TODO: WTF
-    // @Override
-    public String getEntityName() {
+    @Override
+    public String getCommandSenderName() {
         return "Seat";
     }
 

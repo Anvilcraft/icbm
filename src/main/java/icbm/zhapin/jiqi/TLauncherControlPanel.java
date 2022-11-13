@@ -111,29 +111,6 @@ public class TLauncherControlPanel
             super.target = Vector3.readFromNBT(nbt.getCompoundTag("target"));
     }
 
-    // TODO: WTF
-    // } else if (!this.worldObj.isRemote) {
-    // if (ID == 1) {
-    // this.setFrequency(dataStream.readInt());
-    // } else if (ID == 2) {
-    // super.target = new Vector3(dataStream.readDouble(),
-    // dataStream.readDouble(),
-    // dataStream.readDouble());
-    // if (this.getTier() < 2) {
-    // super.target.y = 0.0;
-    // }
-    // } else if (ID == 3) {
-    // this.height = (short) Math.max(Math.min(dataStream.readShort(), 99),
-    // 3);
-    // }
-    // } else if (ID == 3 && this.worldObj.isRemote) {
-    // this.setJoules(dataStream.readDouble());
-    // super.disabledTicks = dataStream.readInt();
-    // super.target = new Vector3(dataStream.readDouble(),
-    // dataStream.readDouble(),
-    // dataStream.readDouble());
-    // }
-
     @Override
     public boolean canLaunch() {
         return this.faSheDi != null && !this.isDisabled() && this.faSheDi.daoDan != null

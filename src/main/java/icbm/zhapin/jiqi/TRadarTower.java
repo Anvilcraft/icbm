@@ -323,33 +323,33 @@ public class TRadarTower extends TileEntityUniversalRunnable
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
-        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 2);
+        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 3);
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord + 1, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+            this.xCoord + 1, this.yCoord + 1, this.zCoord, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord - 1, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+            this.xCoord - 1, this.yCoord + 1, this.zCoord, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord + 1, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 2
+            this.xCoord + 1, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord - 1, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 2
+            this.xCoord - 1, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord + 1, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 2
+            this.xCoord + 1, this.yCoord + 1, this.zCoord - 1, Blocks.air, 0, 3
         );
         this.worldObj.setBlock(
-            this.xCoord - 1, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 2
+            this.xCoord - 1, this.yCoord + 1, this.zCoord + 1, Blocks.air, 0, 3
         );
     }
 

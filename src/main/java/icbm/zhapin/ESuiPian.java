@@ -253,7 +253,6 @@ public class ESuiPian extends EntityArrow implements IEntityAdditionalSpawnData 
                 super.posY + super.motionY,
                 super.posZ + super.motionZ
             );
-            // TODO: false? true?
             MovingObjectPosition movingObjPos
                 = super.worldObj.rayTraceBlocks(var10, var11, false);
             var10 = Vec3.createVectorHelper(super.posX, super.posY, super.posZ);

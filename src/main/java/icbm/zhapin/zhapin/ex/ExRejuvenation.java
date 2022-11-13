@@ -1,6 +1,5 @@
 package icbm.zhapin.zhapin.ex;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import icbm.core.MainBase;
 import icbm.zhapin.zhapin.ZhaPin;
 import net.minecraft.block.Block;
@@ -40,13 +39,8 @@ public class ExRejuvenation extends ZhaPin {
                     final WorldServer worldServer = (WorldServer) worldObj;
                     final ChunkProviderServer chunkProviderServer
                         = worldServer.theChunkProviderServer;
-                    // TODO: WTF!!
                     final IChunkProvider chunkProviderGenerate
-                        = (IChunkProvider) ObfuscationReflectionHelper.getPrivateValue(
-                            (Class) ChunkProviderServer.class,
-                            (Object) chunkProviderServer,
-                            new String[] { "currentChunkProvider", "d", "field_73246_d" }
-                        );
+                        = chunkProviderServer.currentChunkProvider;
                     final Chunk newChunk = chunkProviderGenerate.provideChunk(
                         oldChunk.xPosition, oldChunk.zPosition
                     );
@@ -62,7 +56,7 @@ public class ExRejuvenation extends ZhaPin {
                                     z + oldChunk.zPosition * 16,
                                     block,
                                     metadata,
-                                    2
+                                    3
                                 );
                                 final TileEntity tileEntity
                                     = newChunk.getTileEntityUnsafe(x, y, z);

@@ -15,8 +15,6 @@ public class TMissileCoordinator
         this.facingDirection = 3;
     }
 
-    // TODO: WTF: nix data packet?
-
     @Override
     public void readFromNBT(final NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);

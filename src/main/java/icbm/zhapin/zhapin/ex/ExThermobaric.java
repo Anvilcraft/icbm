@@ -98,7 +98,7 @@ public class ExThermobaric extends ExThr {
                     targetPosition.intX(), targetPosition.intY(), targetPosition.intZ()
                 );
 
-                if (block == Blocks.air) {
+                if (block != Blocks.air) {
                     try {
                         worldObj.setBlock(
                             targetPosition.intX(),

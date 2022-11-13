@@ -80,13 +80,6 @@ public class TEmpTower
         this.holzOhJa = nbt.getByte("holzOhJa");
     }
 
-    // TODO: WTF
-    // else if (ID == 2) {
-    // this.radius = dataStream.readInt();
-    // } else if (ID == 3) {
-    // this.holzOhJa = dataStream.readByte();
-    // }
-
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbt = new NBTTagCompound();
@@ -152,9 +145,9 @@ public class TEmpTower
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
-        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 2);
+        this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air, 0, 3);
         this.worldObj.setBlock(
-            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 2
+            this.xCoord, this.yCoord + 1, this.zCoord, Blocks.air, 0, 3
         );
     }
 

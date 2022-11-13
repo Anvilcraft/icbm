@@ -234,11 +234,6 @@ public class TCruiseLauncher extends TLauncherController
         super.target = Vector3.readFromNBT(nbt.getCompoundTag("target"));
     }
 
-    // TODO: WTF
-    // if (!this.worldObj.isRemote) {
-    // this.setFrequency(dataStream.readInt());
-    // }
-
     private float getPitchFromTarget() {
         final double distance = Math.sqrt(
             (super.target.x - this.xCoord) * (super.target.x - this.xCoord)
