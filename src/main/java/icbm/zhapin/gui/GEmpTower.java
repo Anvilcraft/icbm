@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import universalelectricity.core.electricity.ElectricityDisplay;
+import universalelectricity.api.energy.UnitDisplay;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.GuiBase;
 
@@ -121,11 +121,11 @@ public class GEmpTower extends GuiBase {
             "Voltage: " + this.tileEntity.getVoltage() + "v", 12, 135, 4210752
         );
         this.fontRendererObj.drawString(
-            ElectricityDisplay.getDisplayShort(
-                this.tileEntity.getJoules(), ElectricityDisplay.ElectricUnit.JOULES
+            UnitDisplay.getDisplayShort(
+                this.tileEntity.getJoules(), UnitDisplay.Unit.JOULES
             ) + "/"
-                + ElectricityDisplay.getDisplayShort(
-                    this.tileEntity.getMaxJoules(), ElectricityDisplay.ElectricUnit.JOULES
+                + UnitDisplay.getDisplayShort(
+                    this.tileEntity.getMaxJoules(), UnitDisplay.Unit.JOULES
                 ),
             12,
             150,

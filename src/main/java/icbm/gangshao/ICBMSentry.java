@@ -58,7 +58,7 @@ import universalelectricity.prefab.flag.FlagRegistry;
 import universalelectricity.prefab.flag.ModFlag;
 import universalelectricity.prefab.flag.NBTFileLoader;
 
-@Mod(modid = "ICBM|Sentry", name = "ICBM|Sentry", version = "1.2.1", useMetadata = true)
+@Mod(modid = "ICBM|Sentry", name = "ICBM|Sentry", version = MainBase.VERSION, useMetadata = true)
 public class ICBMSentry extends MainBase {
     public static final String NAME = "ICBM|Sentry";
     public static final String CHANNEL = "ICBM";

@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import universalelectricity.core.electricity.ElectricityDisplay;
+import universalelectricity.api.energy.UnitDisplay;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.GuiBase;
 
@@ -201,12 +201,12 @@ public class GProximityDetector extends GuiBase {
 
         this.fontRendererObj.drawString(color + "Status: " + status, 12, 138, 4210752);
         this.fontRendererObj.drawString(
-            ElectricityDisplay.getDisplay(
+            UnitDisplay.getDisplay(
                 this.tileEntity.getRequest().getWatts() * 20.0,
-                ElectricityDisplay.ElectricUnit.WATT
+                UnitDisplay.Unit.WATT
             ) + " "
-                + ElectricityDisplay.getDisplay(
-                    this.tileEntity.getVoltage(), ElectricityDisplay.ElectricUnit.VOLTAGE
+                + UnitDisplay.getDisplay(
+                    this.tileEntity.getVoltage(), UnitDisplay.Unit.VOLTAGE
                 ),
             12,
             150,

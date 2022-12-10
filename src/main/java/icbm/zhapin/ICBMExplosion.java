@@ -82,7 +82,7 @@ import universalelectricity.prefab.flag.FlagRegistry;
 @Mod(
     modid = "ICBM|Explosion",
     name = "ICBM|Explosion",
-    version = "1.2.1",
+    version = MainBase.VERSION,
     dependencies = "after:ICBM|Sentry;required-after:AtomicScience",
     useMetadata = true
 )

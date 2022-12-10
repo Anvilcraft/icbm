@@ -36,7 +36,7 @@ import universalelectricity.core.item.ItemElectric;
 @Mod(
     modid = "ICBM|Contraption",
     name = "ICBM|Contraption",
-    version = "1.2.1",
+    version = MainBase.VERSION,
     dependencies = "required-after:AtomicScience",
     useMetadata = true
 )

@@ -11,7 +11,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
-import universalelectricity.core.electricity.ElectricityDisplay;
+import universalelectricity.api.energy.UnitDisplay;
 import universalelectricity.core.vector.Vector3;
 
 public class GCruiseLauncher extends GuiContainer {
@@ -117,11 +117,11 @@ public class GCruiseLauncher extends GuiContainer {
             this.tileEntity.getVoltage() + "v", 70, 60, 4210752
         );
         this.fontRendererObj.drawString(
-            ElectricityDisplay.getDisplayShort(
-                this.tileEntity.getJoules(), ElectricityDisplay.ElectricUnit.JOULES
+            UnitDisplay.getDisplayShort(
+                this.tileEntity.getJoules(), UnitDisplay.Unit.JOULES
             ) + "/"
-                + ElectricityDisplay.getDisplayShort(
-                    this.tileEntity.getMaxJoules(), ElectricityDisplay.ElectricUnit.JOULES
+                + UnitDisplay.getDisplayShort(
+                    this.tileEntity.getMaxJoules(), UnitDisplay.Unit.JOULES
                 ),
             70,
             70,

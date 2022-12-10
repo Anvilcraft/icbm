@@ -7,7 +7,7 @@ import icbm.gangshao.turret.TTurretBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import universalelectricity.core.electricity.ElectricityDisplay;
+import universalelectricity.api.energy.UnitDisplay;
 
 @SideOnly(Side.CLIENT)
 public class GuiPlatformSlots extends GuiPlatformContainer {
@@ -32,11 +32,11 @@ public class GuiPlatformSlots extends GuiPlatformContainer {
             this.fontRendererObj.drawString("Energy Per Shot", 85, 33, 4210752);
             this.fontRendererObj.drawString(
                 color
-                    + ElectricityDisplay.getDisplayShort(
+                    + UnitDisplay.getDisplayShort(
                         Math.min(
                             super.tileEntity.wattsReceived, turret.getFiringRequest()
                         ),
-                        ElectricityDisplay.ElectricUnit.JOULES
+                        UnitDisplay.Unit.JOULES
                     ),
                 87,
                 43,
@@ -44,9 +44,9 @@ public class GuiPlatformSlots extends GuiPlatformContainer {
             );
             this.fontRendererObj.drawString(
                 color + "of "
-                    + ElectricityDisplay.getDisplayShort(
+                    + UnitDisplay.getDisplayShort(
                         super.tileEntity.getTurret(false).getFiringRequest(),
-                        ElectricityDisplay.ElectricUnit.JOULES
+                        UnitDisplay.Unit.JOULES
                     ),
                 87,
                 53,
