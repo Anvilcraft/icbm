@@ -152,14 +152,13 @@ public class ICBMContraption extends MainBase {
                            "GCG",
                            "WGW",
                            'C',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            'G',
                            Blocks.glass,
                            'W',
                            new ItemStack(Blocks.wool, 1, 32767) }
         ));
 
-        if (OreDictionary.getOres(UniversalRecipes.BATTERY).size() > 0) {
             GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
                 new ItemStack((Item) ICBMContraption.itTracker),
                 new Object[] { " Z ",
@@ -168,15 +167,12 @@ public class ICBMContraption extends MainBase {
                                'Z',
                                Items.compass,
                                'C',
-                               "calclavia:CIRCUIT_T1",
+                               "circuitBasic",
                                'B',
-                               ElectricItemHelper.getUncharged(
-                                   OreDictionary.getOres(UniversalRecipes.BATTERY).get(0)
-                               ),
+                               "battery",
                                'S',
                                "ingotSteel" }
             ));
-        }
 
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMContraption.bGlassPressurePlate, 1, 0),
@@ -204,9 +200,9 @@ public class ICBMContraption extends MainBase {
                            'S',
                            "ingotSteel",
                            'C',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            'W',
-                           "calclavia:WIRE" }
+                           "copperWire" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMContraption.itAntidote, 6),

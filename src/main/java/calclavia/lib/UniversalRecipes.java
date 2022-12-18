@@ -13,25 +13,25 @@ public class UniversalRecipes {
     public static final String PRIMARY_PLATE = "plateSteel";
     public static final String SECONDARY_METAL = "ingotBronze";
     public static final String SECONDARY_PLATE = "plateBronze";
-    public static final String CIRCUIT_T1 = "calclavia:CIRCUIT_T1";
-    public static final String CIRCUIT_T2 = "calclavia:CIRCUIT_T2";
-    public static final String CIRCUIT_T3 = "calclavia:CIRCUIT_T3";
+    public static final String CIRCUIT_T1 = "circuitBasic";
+    public static final String CIRCUIT_T2 = "circuitAdvanced";
+    public static final String CIRCUIT_T3 = "circuitElite";
     public static String ADVANCED_BATTERY = "calclavia:ADVANCED_BATTERY";
     public static String BATTERY = "calclavia:BATTERY";
     public static String BATTERY_BOX = "calclavia:BATTERY_BOX";
     public static final String WRENCH = "calclavia:WRENCH";
-    public static final String WIRE = "calclavia:WIRE";
-    public static final String MOTOR = "calclavia:MOTOR";
+    public static final String WIRE = "copperWire";
+    public static final String MOTOR = "motor";
     public static boolean isInit = false;
 
     public static void init() {
         if (!isInit) {
             // TODO: WTF
-            // register("calclavia:CIRCUIT_T1", new Object[]{"circuitBasic",
+            // register("circuitBasic", new Object[]{"circuitBasic",
             // Items.getItem("electronicCircuit"), new
-            // ItemStack(Blocks.redstone_torch)}); register("calclavia:CIRCUIT_T2",
+            // ItemStack(Blocks.redstone_torch)}); register("circuitAdvanced",
             // new Object[]{"circuitAdvanced", Items.getItem("advancedCircuit"), new
-            // ItemStack(Items.repeater)}); register("calclavia:CIRCUIT_T3", new
+            // ItemStack(Items.repeater)}); register("circuitElite", new
             // Object[]{"circuitElite", Items.getItem("iridiumPlate"), new
             // ItemStack(Block.field_94346_cn)}); register(ADVANCED_BATTERY, new
             // Object[]{"advancedBattery", Items.getItem("energyCrystal"), "battery",
@@ -42,9 +42,9 @@ public class UniversalRecipes {
             // Items.getItem("batBox"), new ItemStack(Block.field_72105_ah)});
             // register("calclavia:WRENCH", new Object[]{"wrench",
             // Items.getItem("wrench"), new ItemStack(Item.field_77708_h)});
-            // register("calclavia:WIRE", new Object[]{"copperWire",
+            // register("copperWire", new Object[]{"copperWire",
             // "copperCableBlock", new ItemStack(Item.field_77767_aC)});
-            // register("calclavia:MOTOR", new Object[]{"motor",
+            // register("motor", new Object[]{"motor",
             // Items.getItem("generator"), new ItemStack(Block.field_71963_Z)});
             isInit = true;
         }

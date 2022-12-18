@@ -2,6 +2,7 @@ package icbm.zhapin;
 
 import java.util.List;
 
+import basiccomponents.common.BasicComponents;
 import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -331,7 +332,7 @@ public class ICBMExplosion extends MainBase {
                            '!',
                            "ingotSteel",
                            '#',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            '$',
                            Blocks.stone_button }
         ));
@@ -345,7 +346,7 @@ public class ICBMExplosion extends MainBase {
                            '?',
                            Items.redstone,
                            '#',
-                           "calclavia:CIRCUIT_T2",
+                           "circuitAdvanced",
                            '$',
                            Blocks.stone_button }
         ));
@@ -357,7 +358,7 @@ public class ICBMExplosion extends MainBase {
                            '@',
                            ElectricItemHelper.getUncharged(ICBMExplosion.itYaoKong),
                            '?',
-                           "calclavia:CIRCUIT_T3",
+                           "circuitElite",
                            '!',
                            ElectricItemHelper.getUncharged(ICBMExplosion.itLeiDaQiang) }
         ));
@@ -367,16 +368,16 @@ public class ICBMExplosion extends MainBase {
                            " W ",
                            "  C",
                            'C',
-                           "calclavia:CIRCUIT_T2",
+                           "circuitAdvanced",
                            'W',
-                           "calclavia:WRENCH",
+                           BasicComponents.itemWrench,
                            'I',
-                           "calclavia:WIRE" }
+                           "copperWire" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.bMachine, 1, 0),
             new Object[] {
-                "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "calclavia:CIRCUIT_T1" }
+                "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.bMachine, 1, 1),
@@ -388,7 +389,7 @@ public class ICBMExplosion extends MainBase {
                            '!',
                            "ingotSteel",
                            'C',
-                           "calclavia:CIRCUIT_T2" }
+                           "circuitAdvanced" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.bMachine, 1, 2),
@@ -400,7 +401,7 @@ public class ICBMExplosion extends MainBase {
                            '!',
                            "plateSteel",
                            'C',
-                           "calclavia:CIRCUIT_T3" }
+                           "circuitElite" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.bMachine, 1, 3),
@@ -408,11 +409,11 @@ public class ICBMExplosion extends MainBase {
                            "!#!",
                            "!?!",
                            '#',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            '!',
                            Blocks.glass,
                            '?',
-                           "calclavia:WIRE" }
+                           "copperWire" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.bMachine, 1, 4),
@@ -420,11 +421,11 @@ public class ICBMExplosion extends MainBase {
                            "!#!",
                            "!?!",
                            '#',
-                           "calclavia:CIRCUIT_T2",
+                           "circuitAdvanced",
                            '!',
                            "ingotSteel",
                            '?',
-                           "calclavia:WIRE",
+                           "copperWire",
                            '$',
                            new ItemStack(ICBMExplosion.bMachine, 1, 3) }
         ));
@@ -434,11 +435,11 @@ public class ICBMExplosion extends MainBase {
                            "!#!",
                            "!?!",
                            '#',
-                           "calclavia:CIRCUIT_T3",
+                           "circuitElite",
                            '!',
                            Items.gold_ingot,
                            '?',
-                           "calclavia:WIRE",
+                           "copperWire",
                            '$',
                            new ItemStack(ICBMExplosion.bMachine, 1, 4) }
         ));
@@ -476,7 +477,7 @@ public class ICBMExplosion extends MainBase {
                            '!',
                            "plateSteel",
                            '#',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            '?',
                            Items.gold_ingot }
         ));
@@ -489,13 +490,13 @@ public class ICBMExplosion extends MainBase {
                                '?',
                                "plateSteel",
                                '!',
-                               "calclavia:CIRCUIT_T3",
+                               "circuitElite",
                                '@',
                                UniversalRecipes.BATTERY_BOX,
                                '#',
-                               "calclavia:MOTOR",
+                               "motor",
                                'W',
-                               "calclavia:WIRE" }
+                               "copperWire" }
             ),
             "EMP Tower",
             MainBase.CONFIGURATION,
@@ -522,7 +523,7 @@ public class ICBMExplosion extends MainBase {
                            '?',
                            Items.coal,
                            '#',
-                           "calclavia:CIRCUIT_T1" }
+                           "circuitBasic" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.itTeBieDaoDan, 1, 1),
@@ -532,7 +533,7 @@ public class ICBMExplosion extends MainBase {
                            'M',
                            new ItemStack(ICBMExplosion.itTeBieDaoDan, 1, 0),
                            'C',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            'B',
                            "ingotBronze" }
         ));
@@ -546,7 +547,7 @@ public class ICBMExplosion extends MainBase {
                            '?',
                            new ItemStack(ICBMExplosion.bExplosives, 1, 0),
                            '!',
-                           "calclavia:CIRCUIT_T1" }
+                           "circuitBasic" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMExplosion.itTeBieDaoDan, 1, 3),

@@ -197,11 +197,11 @@ public class ICBMSentry extends MainBase {
                            'C',
                            Blocks.chest,
                            'B',
-                           "calclavia:CIRCUIT_T1" }
+                           "circuitBasic" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMSentry.blockTurret, 1, 0),
-            new Object[] { "SSS", "CS ", 'C', "calclavia:CIRCUIT_T1", 'S', "ingotSteel" }
+            new Object[] { "SSS", "CS ", 'C', "circuitBasic", 'S', "ingotSteel" }
         ));
         GameRegistry.addRecipe((IRecipe) new ShapedOreRecipe(
             new ItemStack(ICBMSentry.blockTurret, 1, 1),
@@ -213,7 +213,7 @@ public class ICBMSentry extends MainBase {
                            'S',
                            "plateSteel",
                            'C',
-                           "calclavia:CIRCUIT_T3",
+                           "circuitElite",
                            'G',
                            new ItemStack(ICBMSentry.blockTurret, 1, 0) }
         ));
@@ -227,7 +227,7 @@ public class ICBMSentry extends MainBase {
                            'S',
                            "plateSteel",
                            'C',
-                           "calclavia:CIRCUIT_T2",
+                           "circuitAdvanced",
                            'G',
                            new ItemStack(ICBMSentry.blockTurret, 1, 0) }
         ));
@@ -241,7 +241,7 @@ public class ICBMSentry extends MainBase {
                            'S',
                            "plateSteel",
                            'C',
-                           "calclavia:CIRCUIT_T1",
+                           "circuitBasic",
                            'D',
                            Blocks.glass,
                            'G',
