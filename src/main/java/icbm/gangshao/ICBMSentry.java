@@ -124,26 +124,16 @@ public class ICBMSentry extends MainBase {
         GameRegistry.registerItem(itemAmmo, "icbm:itemAmmo");
         GameRegistry.registerItem(itemUpgrade, "icbm:itemUpgrade");
 
-        ICBMTab.itemStack = new ItemStack(ICBMSentry.blockTurret);
-
-        ICBMSentry.proxy.preInit();
+        ICBMTab.itemStack = new ItemStack(ICBMSentry.blockTurret);        
 
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("icbm_sentry");
-        int pktId = 0;
 
-        channel.registerMessage(
-            PacketHandlerTurret.class, PacketTurret.class, pktId++, Side.CLIENT
-        );
-        channel.registerMessage(
-            TerminalOutputPacketHandler.class,
-            TerminalOutputPacket.class,
-            pktId++,
-            Side.CLIENT
-        );
+        ICBMSentry.proxy.preInit();
+        
         channel.registerMessage(
             TerminalCommandPacketHandler.class,
             TerminalCommandPacket.class,
-            pktId++,
+            0,
             Side.SERVER
         );
     }
