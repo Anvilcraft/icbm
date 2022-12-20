@@ -1,5 +1,6 @@
 package icbm.gangshao.terminal;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 import universalelectricity.core.vector.Vector3;
@@ -18,10 +19,7 @@ public class TerminalCommandPacket implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         this.pos = new Vector3(buf.readInt(), buf.readInt(), buf.readInt());
-        int len = buf.readInt();
-        byte[] data = new byte[len];
-        buf.readBytes(data);
-        this.cmd = new String(data);
+        this.cmd = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
@@ -30,7 +28,6 @@ public class TerminalCommandPacket implements IMessage {
         buf.writeInt(this.pos.intY());
         buf.writeInt(this.pos.intZ());
 
-        buf.writeInt(this.cmd.getBytes().length);
-        buf.writeBytes(this.cmd.getBytes());
+        ByteBufUtils.writeUTF8String(buf, this.cmd);
     }
 }

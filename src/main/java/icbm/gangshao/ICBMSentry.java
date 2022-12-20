@@ -126,15 +126,25 @@ public class ICBMSentry extends MainBase {
 
         ICBMTab.itemStack = new ItemStack(ICBMSentry.blockTurret);        
 
+        ICBMSentry.proxy.preInit();
+
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("icbm_sentry");
 
-        ICBMSentry.proxy.preInit();
-        
+        int pktId = 0;
         channel.registerMessage(
             TerminalCommandPacketHandler.class,
             TerminalCommandPacket.class,
-            0,
+            pktId++,
             Side.SERVER
+        );
+        ICBMSentry.channel.registerMessage(
+            PacketHandlerTurret.class, PacketTurret.class, pktId++, Side.CLIENT
+        );
+        ICBMSentry.channel.registerMessage(
+            TerminalOutputPacketHandler.class,
+            TerminalOutputPacket.class,
+            pktId++,
+            Side.CLIENT
         );
     }
 

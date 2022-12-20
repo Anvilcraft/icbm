@@ -4,9 +4,6 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import icbm.gangshao.packet.PacketHandlerTurret;
-import icbm.gangshao.packet.PacketTurret;
 import icbm.gangshao.platform.TTurretPlatform;
 import icbm.gangshao.render.BlockRenderingHandler;
 import icbm.gangshao.render.FXBeam;
@@ -18,8 +15,6 @@ import icbm.gangshao.render.RRailgun;
 import icbm.gangshao.shimian.GuiPlatformAccess;
 import icbm.gangshao.shimian.GuiPlatformSlots;
 import icbm.gangshao.shimian.GuiPlatformTerminal;
-import icbm.gangshao.terminal.TerminalOutputPacket;
-import icbm.gangshao.terminal.TerminalOutputPacketHandler;
 import icbm.gangshao.turret.mount.ESeat;
 import icbm.gangshao.turret.mount.TRailgunTurret;
 import icbm.gangshao.turret.sentries.TAATurret;
@@ -34,20 +29,6 @@ import net.minecraft.world.World;
 import universalelectricity.core.vector.Vector3;
 
 public class ClientProxy extends CommonProxy {
-    @Override
-    public void preInit() {
-        int pktId = 1;
-        ICBMSentry.channel.registerMessage(
-            PacketHandlerTurret.class, PacketTurret.class, pktId++, Side.CLIENT
-        );
-        ICBMSentry.channel.registerMessage(
-            TerminalOutputPacketHandler.class,
-            TerminalOutputPacket.class,
-            pktId++,
-            Side.CLIENT
-        );
-        super.preInit();
-    }
 
     @Override
     public void init() {
