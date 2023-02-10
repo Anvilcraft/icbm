@@ -11,6 +11,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import icbm.api.IItemFrequency;
 import icbm.api.RadarRegistry;
+import icbm.core.IICBMPeripheral;
 import icbm.core.MainBase;
 import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.daodan.EMissile;
@@ -36,7 +37,7 @@ import universalelectricity.prefab.implement.IRedstoneProvider;
 import universalelectricity.prefab.multiblock.IMultiBlock;
 
 public class TRadarTower extends TileEntityUniversalRunnable
-    implements IRedstoneProvider, IMultiBlock, IPeripheral {
+    implements IRedstoneProvider, IMultiBlock, IICBMPeripheral {
     public static final int MAX_BIAN_JING = 500;
     public float rotation;
     public int alarmRadius;

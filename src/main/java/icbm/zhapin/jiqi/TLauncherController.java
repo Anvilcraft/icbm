@@ -4,15 +4,15 @@ import calclavia.lib.TileEntityUniversalStorable;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import icbm.api.ILauncherController;
 import icbm.api.LauncherType;
+import icbm.core.IICBMPeripheral;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.vector.Vector3;
 
 public abstract class TLauncherController
-    extends TileEntityUniversalStorable implements ILauncherController, IPeripheral {
+    extends TileEntityUniversalStorable implements ILauncherController, IICBMPeripheral {
     protected Vector3 target;
     protected int frequency;
 

@@ -10,11 +10,13 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dan200.computercraft.api.ComputerCraftAPI;
 import icbm.core.di.ItICBM;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommand;
@@ -111,6 +113,11 @@ public class MainBase {
             GameRegistry.registerTileEntity(TileEntityMulti.class, "ICBMMulti");
             MainBase.isPreInit = true;
         }
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent ev) {
+        ComputerCraftAPI.registerPeripheralProvider(new ICBMPeripheralProvider());
     }
 
     @Mod.EventHandler
