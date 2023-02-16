@@ -74,9 +74,10 @@ public class ExRejuvenation extends ZhaPin {
                     }
 
                     oldChunk.isTerrainPopulated = false;
-                    chunkProviderGenerate.populate(
-                        chunkProviderGenerate, oldChunk.xPosition, oldChunk.zPosition
+                    chunkProviderServer.populate(
+                        chunkProviderServer, oldChunk.xPosition, oldChunk.zPosition
                     );
+                    oldChunk.isModified = true;
                 }
             } catch (final Exception e) {
                 System.out.println("ICBM Rejuvenation Failed!");
