@@ -8,8 +8,11 @@ import icbm.core.MainBase;
 import icbm.core.di.ItElectricICBM;
 import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.ItemUsePacket;
+import icbm.zhapin.jiqi.CruiseLauncherGuiPacket;
+import icbm.zhapin.jiqi.LauncherControlPanelGuiPacket;
 import icbm.zhapin.jiqi.LauncherManager;
 import icbm.zhapin.jiqi.TCruiseLauncher;
+import icbm.zhapin.jiqi.TLauncherControlPanel;
 import icbm.zhapin.jiqi.TLauncherController;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -283,7 +286,6 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                                 )
                             );
                         boolean doAirStrike = false;
-                        int errorCount = 0;
 
                         for (final TLauncherController missileLauncher : launchers) {
                             if (missileLauncher != null
@@ -294,7 +296,12 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                                         objectMouseOver.blockY,
                                         objectMouseOver.blockZ
                                     ));
-                                } else {
+
+                                    ICBMExplosion.channel.sendToServer(
+                                        new CruiseLauncherGuiPacket((TCruiseLauncher
+                                        ) missileLauncher)
+                                    );
+                                } else if (missileLauncher instanceof TLauncherController) {
                                     double previousY = 0.0;
 
                                     if (missileLauncher.getTarget() != null) {
@@ -306,12 +313,16 @@ public class ItLaserDesignator extends ItElectricICBM implements IItemFrequency 
                                         previousY,
                                         objectMouseOver.blockZ
                                     ));
+
+                                    ICBMExplosion.channel.sendToServer(
+                                        new LauncherControlPanelGuiPacket(
+                                            (TLauncherControlPanel) missileLauncher
+                                        )
+                                    );
                                 }
 
                                 if (missileLauncher.canLaunch()) {
                                     doAirStrike = true;
-                                } else {
-                                    ++errorCount;
                                 }
                             }
                         }
