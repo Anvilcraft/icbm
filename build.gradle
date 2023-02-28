@@ -27,7 +27,7 @@ sourceSets {
     api {}
 }
 
-version = "1.0.6"
+version = "1.0.7"
 group = "universalelectricity"
 archivesBaseName = "icbm"
 
