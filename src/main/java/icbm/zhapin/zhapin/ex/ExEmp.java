@@ -1,6 +1,5 @@
 package icbm.zhapin.zhapin.ex;
 
-import calclavia.lib.UniversalRecipes;
 import icbm.core.MainBase;
 import icbm.zhapin.ICBMExplosion;
 import icbm.zhapin.zhapin.ZhaPin;
@@ -8,9 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import universalelectricity.core.item.ElectricItemHelper;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.RecipeHelper;
 
@@ -41,28 +38,23 @@ public class ExEmp extends ZhaPin {
 
     @Override
     public void init() {
-        if (OreDictionary.getOres(UniversalRecipes.BATTERY).size() > 0) {
-            RecipeHelper.addRecipe(
-                (IRecipe) new ShapedOreRecipe(
-                    this.getItemStack(),
-                    new Object[] {
-                        "RBR",
-                        "BTB",
-                        "RBR",
-                        'T',
-                        ZhaPin.repulsive.getItemStack(),
-                        'R',
-                        Blocks.redstone_block,
-                        'B',
-                        ElectricItemHelper.getUncharged(
-                            OreDictionary.getOres(UniversalRecipes.BATTERY).get(0)
-                        ) }
-                ),
-                this.getUnlocalizedName(),
-                MainBase.CONFIGURATION,
-                true
-            );
-        }
+        RecipeHelper.addRecipe(
+            (IRecipe) new ShapedOreRecipe(
+                this.getItemStack(),
+                "RBR",
+                "BTB",
+                "RBR",
+                'T',
+                ZhaPin.repulsive.getItemStack(),
+                'R',
+                Blocks.redstone_block,
+                'B',
+                "battery"
+            ),
+            this.getUnlocalizedName(),
+            MainBase.CONFIGURATION,
+            true
+        );
     }
 
     @Override

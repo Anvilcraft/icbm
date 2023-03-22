@@ -3,7 +3,6 @@ package icbm.zhapin;
 import java.util.List;
 
 import basiccomponents.common.BasicComponents;
-import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -492,7 +491,7 @@ public class ICBMExplosion extends MainBase {
                                '!',
                                "circuitElite",
                                '@',
-                               UniversalRecipes.BATTERY_BOX,
+                               "batteryBox",
                                '#',
                                "motor",
                                'W',

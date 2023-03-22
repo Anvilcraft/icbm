@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import atomicscience.api.poison.PotionRadiation;
-import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -123,7 +122,6 @@ public class MainBase {
     @Mod.EventHandler
     public void postInit(final FMLPostInitializationEvent event) {
         if (!MainBase.isPostInit) {
-            UniversalRecipes.init();
             GameRegistry.addSmelting(
                 MainBase.bLiu, new ItemStack(MainBase.itSulfur, 4), 0.8f
             );

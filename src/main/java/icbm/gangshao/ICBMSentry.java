@@ -1,6 +1,5 @@
 package icbm.gangshao;
 
-import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -191,7 +190,7 @@ public class ICBMSentry extends MainBase {
                            'P',
                            Blocks.piston,
                            'A',
-                           UniversalRecipes.BATTERY,
+                           "battery",
                            'S',
                            "plateSteel",
                            'C',

@@ -1,6 +1,5 @@
 package icbm.wanyi;
 
-import calclavia.lib.UniversalRecipes;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
@@ -28,7 +27,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import universalelectricity.core.item.ElectricItemHelper;
 import universalelectricity.core.item.ItemElectric;
