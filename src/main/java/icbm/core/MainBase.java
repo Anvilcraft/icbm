@@ -95,6 +95,8 @@ public class MainBase {
             MainBase.itSulfur = new ItICBM("sulfur");
             GameRegistry.registerBlock(MainBase.bLiu, "bLiu");
             GameRegistry.registerBlock((Block) MainBase.bJia, "bJia");
+            GameRegistry.registerItem(MainBase.itDu, "poisonPowder");
+            GameRegistry.registerItem(MainBase.itSulfur, "sulfur");
             MainBase.liuGenData = new GenSulfur(
                                       "Sulfur Ore",
                                       "oreSulfur",
