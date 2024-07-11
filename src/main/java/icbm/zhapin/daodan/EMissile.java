@@ -665,7 +665,9 @@ public class EMissile extends Entity
 
     @Override
     protected void writeEntityToNBT(final NBTTagCompound nbt) {
-        nbt.setTag("kaiShi", this.origin.writeToNBT(new NBTTagCompound()));
+        if (this.origin != null) {
+            nbt.setTag("kaiShi", this.origin.writeToNBT(new NBTTagCompound()));
+        }
 
         if (this.target != null) {
             nbt.setTag("muBiao", this.target.writeToNBT(new NBTTagCompound()));
